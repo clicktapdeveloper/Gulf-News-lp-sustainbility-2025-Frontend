@@ -353,11 +353,6 @@ const CyberSourcePaymentModal: React.FC<CyberSourcePaymentModalProps> = ({
                  <CustomButton 
                    type="submit" 
                    disabled={loading}
-                   onClick={(e) => {
-                     console.log('Button clicked');
-                     e.preventDefault();
-                     handleSubmit(e);
-                   }}
                    className="w-full py-4 text-lg font-semibold"
                  >
                    {loading ? 'Processing...' : `Pay ${currency.toUpperCase()} ${amount.toFixed(2)}`}
