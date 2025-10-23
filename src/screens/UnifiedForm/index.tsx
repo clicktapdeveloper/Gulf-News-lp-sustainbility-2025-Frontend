@@ -220,7 +220,6 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     const config = FORM_CONFIGS[formType];
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [uploadedFiles, setUploadedFiles] = useState<Record<string, UploadedFile[]>>({}); // Used in PDF upload handlers
-    const [showPayment, setShowPayment] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
@@ -261,20 +260,18 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsSubmitting(true);
-
-        try {
-            if (formType === 'applyForNomination') {
-                // For nominations, show payment component
-                setShowPayment(true);
-            } else {
-                // For other forms, submit directly
+        
+        // For nomination forms, validation happens before payment
+        // Skip the old setShowPayment logic
+        if (formType !== 'applyForNomination') {
+            setIsSubmitting(true);
+            try {
                 await submitForm(formType, formData);
+            } catch (error) {
+                console.error('Form submission error:', error);
+            } finally {
+                setIsSubmitting(false);
             }
-        } catch (error) {
-            console.error('Form submission error:', error);
-        } finally {
-            setIsSubmitting(false);
         }
     };
 
@@ -342,7 +339,6 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             // Reset form and redirect to thankyou page
             setFormData({});
             setUploadedFiles({});
-            setShowPayment(false);
             
             // Redirect to thankyou page for nomination payment
             if (formType === 'applyForNomination') {
@@ -463,7 +459,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                     </div>
 
                     <div className="pt-2 flex justify-center">
-                        {formType === 'applyForNomination' && showPayment ? (
+                        {formType === 'applyForNomination' ? (
                             <NominationPayment
                                 formData={formData}
                                 onSuccess={handlePaymentSuccess}

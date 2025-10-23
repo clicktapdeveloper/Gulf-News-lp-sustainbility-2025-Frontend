@@ -2,6 +2,7 @@ import React from 'react';
 import CyberSourcePaymentModal from './CyberSourcePaymentModal';
 import { usePaymentModal } from '../../hooks/usePaymentModal';
 import CustomButton from '@/screens/CustomButton';
+import { showErrorToast } from '@/lib/toast';
 
 interface NominationPaymentProps {
   formData: Record<string, string>;
@@ -14,6 +15,18 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
   onSuccess, 
   onError 
 }) => {
+  const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'designation', 'companyName2', 'tradeLicense'];
+  
+  const validateForm = (): boolean => {
+    for (const field of requiredFields) {
+      if (!formData[field] || !formData[field].trim()) {
+        showErrorToast(`Please fill in all required fields. Missing: ${field}`);
+        return false;
+      }
+    }
+    return true;
+  };
+
   const { openModal, modalProps } = usePaymentModal({
     amount: 199,
     currency: 'AED',
@@ -31,12 +44,18 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
     description: 'Pay AED 199 to complete your nomination registration'
   });
 
+  const handleOpenModal = () => {
+    if (validateForm()) {
+      openModal();
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center">
         <CustomButton 
           type="button"
-          onClick={openModal}
+          onClick={handleOpenModal}
           className="min-w-40 px-6 py-2"
         >
           Pay AED 199 for Register
