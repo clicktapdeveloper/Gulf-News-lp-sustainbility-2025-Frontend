@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import CyberSourceHostedCheckout from './CyberSourceHostedCheckout';
+import React from 'react';
 import { mockCyberSourceHostedCheckoutService } from '../../lib/cybersource-hosted-checkout-mock';
 import CustomButton from '@/screens/CustomButton';
 
@@ -32,13 +31,6 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
   onError,
   onCancel
 }) => {
-  const [showBackendError, setShowBackendError] = useState(false);
-
-  const handleBackendError = (error: string) => {
-    console.error('Backend error:', error);
-    setShowBackendError(true);
-    onError?.(error);
-  };
 
   const handleFallbackPayment = async () => {
     // For testing purposes, simulate a successful payment using mock service
@@ -76,90 +68,6 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
       onError?.(error instanceof Error ? error.message : 'Mock payment failed');
     }
   };
-
-  if (showBackendError) {
-    return (
-      <div className="space-y-4">
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Backend Not Available
-          </h3>
-          
-          <div className="space-y-3 mb-6">
-            <div className="flex justify-between items-center py-2 border-b border-gray-100">
-              <span className="text-gray-600">Amount:</span>
-              <span className="font-semibold text-gray-900">
-                {amount.toFixed(2)} {currency.toUpperCase()}
-              </span>
-            </div>
-            
-            <div className="flex justify-between items-center py-2 border-b border-gray-100">
-              <span className="text-gray-600">Customer Email:</span>
-              <span className="font-medium text-gray-900">{customerEmail}</span>
-            </div>
-            
-            <div className="flex justify-between items-center py-2 border-b border-gray-100">
-              <span className="text-gray-600">Reference:</span>
-              <span className="font-medium text-gray-900">
-                {referenceNumber || `EVENT-${Date.now()}`}
-              </span>
-            </div>
-          </div>
-
-          <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-4">
-            <h4 className="text-sm font-medium text-yellow-800 mb-2">
-              Backend Endpoint Not Found
-            </h4>
-            <p className="text-sm text-yellow-700 mb-2">
-              The backend server is not running or the CyberSource Hosted Checkout endpoints are not implemented.
-            </p>
-            <p className="text-sm text-yellow-700">
-              <strong>Required endpoints:</strong>
-            </p>
-            <ul className="text-sm text-yellow-700 mt-1 ml-4 list-disc">
-              <li>POST /api/payments/cybersource-hosted/create-payment-params</li>
-              <li>POST /api/payments/cybersource-hosted/verify-response</li>
-              <li>POST /api/payments/cybersource-hosted/process-success</li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <CustomButton
-              onClick={handleFallbackPayment}
-              className="w-full"
-            >
-              Simulate Payment (Testing Only)
-            </CustomButton>
-            
-            <CustomButton
-              onClick={() => setShowBackendError(false)}
-              variant="outline"
-              className="w-full"
-            >
-              Try Again
-            </CustomButton>
-            
-            {onCancel && (
-              <CustomButton
-                onClick={onCancel}
-                variant="outline"
-                className="w-full"
-              >
-                Cancel
-              </CustomButton>
-            )}
-          </div>
-
-          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-            <p className="text-sm text-blue-700">
-              <strong>Note:</strong> This is a fallback for testing purposes. In production, 
-              ensure the backend endpoints are properly implemented.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-4">
