@@ -161,20 +161,72 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
   }
 
   return (
-    <CyberSourceHostedCheckout
-      amount={amount}
-      currency={currency}
-      customerEmail={customerEmail}
-      customerFirstName={customerFirstName}
-      customerLastName={customerLastName}
-      customerAddress={customerAddress}
-      customerCity={customerCity}
-      customerCountry={customerCountry}
-      referenceNumber={referenceNumber}
-      onSuccess={onSuccess}
-      onError={handleBackendError}
-      onCancel={onCancel}
-    />
+    <div className="space-y-4">
+      <div className="bg-white p-6 rounded-lg border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Payment Processing
+        </h3>
+        
+        <div className="space-y-3 mb-6">
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-gray-600">Amount:</span>
+            <span className="font-semibold text-gray-900">
+              {amount.toFixed(2)} {currency.toUpperCase()}
+            </span>
+          </div>
+          
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-gray-600">Customer Email:</span>
+            <span className="font-medium text-gray-900">{customerEmail}</span>
+          </div>
+          
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-gray-600">Reference:</span>
+            <span className="font-medium text-gray-900">
+              {referenceNumber || `EVENT-${Date.now()}`}
+            </span>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mb-4">
+          <h4 className="text-sm font-medium text-blue-800 mb-2">
+            Payment Simulation
+          </h4>
+          <p className="text-sm text-blue-700 mb-2">
+            This is a simulated payment for testing purposes.
+          </p>
+          <p className="text-sm text-blue-700">
+            Click the button below to simulate a successful payment.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          <CustomButton
+            onClick={handleFallbackPayment}
+            className="w-full"
+          >
+            Simulate Payment (Testing Only)
+          </CustomButton>
+          
+          {onCancel && (
+            <CustomButton
+              onClick={onCancel}
+              variant="outline"
+              className="w-full"
+            >
+              Cancel
+            </CustomButton>
+          )}
+        </div>
+
+        <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+          <p className="text-sm text-yellow-700">
+            <strong>Note:</strong> This is a simulation for testing purposes. 
+            In production, ensure proper payment processing is implemented.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 
