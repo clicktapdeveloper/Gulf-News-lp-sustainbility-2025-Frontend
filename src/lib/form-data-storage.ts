@@ -95,35 +95,7 @@ class FormDataStorageService {
         expiresAt
       };
 
-      // Try backend storage first
-      try {
-        const response = await fetch(`${this.baseURL}/store`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-            transactionId,
-            data: dataToStore
-          })
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log('Form data stored in backend successfully');
-          // Decrypt the data before returning
-          const decryptedData: DecryptedFormData = {
-            ...result.data,
-            formData: this.decryptFormData(result.data.formData)
-          };
-          return { success: true, data: decryptedData };
-        }
-      } catch (backendError) {
-        console.warn('Backend storage failed, falling back to localStorage:', backendError);
-      }
-
-      // Fallback to localStorage
+      // Store directly in localStorage (backend endpoints don't exist)
       const storageKey = this.generateStorageKey(transactionId);
       localStorage.setItem(storageKey, JSON.stringify(dataToStore));
       
@@ -154,32 +126,7 @@ class FormDataStorageService {
     try {
       console.log('Retrieving form data for transaction:', transactionId);
 
-      // Try backend retrieval first
-      try {
-        const response = await fetch(`${this.baseURL}/retrieve/${transactionId}`, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-          }
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.data) {
-            // Decrypt the form data
-            const decryptedData: DecryptedFormData = {
-              ...result.data,
-              formData: this.decryptFormData(result.data.formData)
-            };
-            console.log('Form data retrieved from backend successfully');
-            return { success: true, data: decryptedData };
-          }
-        }
-      } catch (backendError) {
-        console.warn('Backend retrieval failed, falling back to localStorage:', backendError);
-      }
-
-      // Fallback to localStorage
+      // Retrieve directly from localStorage (backend endpoints don't exist)
       const storageKey = this.generateStorageKey(transactionId);
       const storedData = localStorage.getItem(storageKey);
 
@@ -226,23 +173,7 @@ class FormDataStorageService {
     try {
       console.log('Deleting form data for transaction:', transactionId);
 
-      // Try backend deletion first
-      try {
-        const response = await fetch(`${this.baseURL}/delete/${transactionId}`, {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json',
-          }
-        });
-
-        if (response.ok) {
-          console.log('Form data deleted from backend successfully');
-        }
-      } catch (backendError) {
-        console.warn('Backend deletion failed, falling back to localStorage:', backendError);
-      }
-
-      // Fallback to localStorage
+      // Delete directly from localStorage (backend endpoints don't exist)
       const storageKey = this.generateStorageKey(transactionId);
       localStorage.removeItem(storageKey);
 
