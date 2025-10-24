@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { cyberSourceHostedCheckoutService, type PaymentRequest, type CyberSourceParams } from '../../lib/cybersource-hosted-checkout';
 import { showPaymentToast, showLoadingToast, dismissToast } from '../../lib/toast';
 import CustomButton from '../../screens/CustomButton';
@@ -28,7 +28,6 @@ const CyberSourceHostedCheckout: React.FC<CyberSourceHostedCheckoutProps> = ({
   customerCity = 'Dubai',
   customerCountry = 'AE',
   referenceNumber,
-  onSuccess,
   onError,
   onCancel
 }) => {

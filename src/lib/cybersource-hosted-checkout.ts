@@ -102,7 +102,7 @@ export class CyberSourceHostedCheckoutService {
         throw new Error(errorMessage);
       }
       
-      let result = {};
+      let result: any = {};
       try {
         result = bodyText ? JSON.parse(bodyText) : {};
       } catch (parseError) {
@@ -163,7 +163,7 @@ export class CyberSourceHostedCheckoutService {
         throw new Error(errorMessage);
       }
       
-      let result = {};
+      let result: any = {};
       try {
         result = bodyText ? JSON.parse(bodyText) : {};
       } catch (parseError) {
@@ -218,7 +218,7 @@ export class CyberSourceHostedCheckoutService {
         throw new Error(errorMessage);
       }
       
-      let result = {};
+      let result: any = {};
       try {
         result = bodyText ? JSON.parse(bodyText) : {};
       } catch (parseError) {

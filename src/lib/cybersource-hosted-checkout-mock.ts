@@ -5,10 +5,8 @@ import { ENV_CONFIG } from '../config/env';
 import type { PaymentRequest, CyberSourceParams, PaymentParamsResponse } from './cybersource-hosted-checkout';
 
 export class MockCyberSourceHostedCheckoutService {
-  private baseURL: string;
-
   constructor(baseURL?: string) {
-    this.baseURL = baseURL || `${ENV_CONFIG.API_BASE_URL}/api/payments/cybersource-hosted`;
+    // baseURL is not used in mock service
   }
 
   /**

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { cyberSourceHostedCheckoutService, type CyberSourceResponse } from '../../lib/cybersource-hosted-checkout';
+import { cyberSourceHostedCheckoutService, CyberSourceHostedCheckoutService, type CyberSourceResponse } from '../../lib/cybersource-hosted-checkout';
 import { showPaymentToast } from '../../lib/toast';
 import CustomButton from '../../screens/CustomButton';
 
@@ -54,8 +54,8 @@ const CyberSourceReturnHandler: React.FC<CyberSourceReturnHandlerProps> = ({
       }
 
       // Check if payment was successful
-      const isSuccessful = cyberSourceHostedCheckoutService.isPaymentSuccessful(responseData);
-      const statusMessage = cyberSourceHostedCheckoutService.getPaymentStatusMessage(responseData);
+      const isSuccessful = CyberSourceHostedCheckoutService.isPaymentSuccessful(responseData);
+      const statusMessage = CyberSourceHostedCheckoutService.getPaymentStatusMessage(responseData);
 
       const paymentResult = {
         success: isSuccessful,
