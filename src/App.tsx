@@ -14,6 +14,8 @@ import RegisterForAttendPage from './register-for-attend/page'
 import PaymentSuccess from './success/page'
 import PaymentCancel from './cancel/page'
 import ThankYouPage from './thankyou/page'
+import CyberSourceReturnPage from './cybersource-return/page'
+import CyberSourceHostedCheckoutDemo from './cybersource-hosted-demo/page'
 
 export default function App() {
 
@@ -42,6 +44,8 @@ export default function App() {
         <Route path="/success" element={<PaymentSuccess />} />
         <Route path="/cancel" element={<PaymentCancel />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
+        <Route path="/cybersource-return" element={<CyberSourceReturnPage />} />
+        <Route path="/cybersource-hosted-demo" element={<CyberSourceHostedCheckoutDemo />} />
       </Routes>
       <Footer />
     </div>

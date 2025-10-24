@@ -1,6 +1,5 @@
-import React from 'react';
-import CyberSourcePaymentModal from './CyberSourcePaymentModal';
-import { usePaymentModal } from '../../hooks/usePaymentModal';
+import React, { useState } from 'react';
+import CyberSourceHostedCheckoutFallback from './CyberSourceHostedCheckoutFallback';
 import CustomButton from '@/screens/CustomButton';
 import { showErrorToast } from '@/lib/toast';
 
@@ -15,6 +14,8 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
   onSuccess, 
   onError 
 }) => {
+  const [showHostedCheckout, setShowHostedCheckout] = useState(false);
+
   const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'designation', 'companyName2', 'tradeLicense'];
   
   const validateForm = (): boolean => {
@@ -27,43 +28,69 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
     return true;
   };
 
-  const { openModal, modalProps } = usePaymentModal({
-    amount: 199,
-    currency: 'AED',
-    referenceId: `nomination-${Date.now()}`,
-    customerEmail: formData.email || '',
-    onSuccess: () => {
-      console.log('Payment successful');
-      onSuccess?.();
-    },
-    onError: (error) => {
-      console.error('Payment error:', error);
-      onError?.(error);
-    },
-    title: 'Complete Nomination Payment',
-    description: 'Pay AED 199 to complete your nomination registration'
-  });
+  const handlePaymentSuccess = (paymentId?: string) => {
+    console.log('Payment successful:', paymentId);
+    onSuccess?.();
+  };
+
+  const handlePaymentError = (error: string) => {
+    console.error('Payment error:', error);
+    onError?.(error);
+  };
+
+  const handlePaymentCancel = () => {
+    console.log('Payment cancelled');
+    setShowHostedCheckout(false);
+  };
+
+  if (showHostedCheckout) {
+    return (
+      <div className="space-y-4">
+        <div className="flex justify-center">
+          <CustomButton 
+            type="button"
+            onClick={() => setShowHostedCheckout(false)}
+            variant="outline"
+            className="min-w-40 px-6 py-2"
+          >
+            ← Back to Form
+          </CustomButton>
+        </div>
+        
+        <CyberSourceHostedCheckoutFallback
+          amount={199}
+          currency="AED"
+          customerEmail={formData.email || ''}
+          customerFirstName={formData.firstName || 'Test'}
+          customerLastName={formData.lastName || 'User'}
+          customerAddress={formData.address || '123 Main Street'}
+          customerCity={formData.city || 'Dubai'}
+          customerCountry={formData.country || 'AE'}
+          referenceNumber={`nomination-${Date.now()}`}
+          onSuccess={handlePaymentSuccess}
+          onError={handlePaymentError}
+          onCancel={handlePaymentCancel}
+        />
+      </div>
+    );
+  }
 
   const handleOpenModal = () => {
     if (validateForm()) {
-      openModal();
+      setShowHostedCheckout(true);
     }
   };
 
   return (
-    <>
-      <div className="flex justify-center">
-        <CustomButton 
-          type="button"
-          onClick={handleOpenModal}
-          className="min-w-40 px-6 py-2"
-        >
-          Pay AED 199 for Register
-        </CustomButton>
-      </div>
-      
-      <CyberSourcePaymentModal {...modalProps} />
-    </>
+    <div className="flex justify-center">
+      <CustomButton 
+        type="button"
+        onClick={handleOpenModal}
+        className="min-w-40 px-6 py-2"
+      >
+        Pay AED 199 for Register
+      </CustomButton>
+    </div>
   );
 };
 

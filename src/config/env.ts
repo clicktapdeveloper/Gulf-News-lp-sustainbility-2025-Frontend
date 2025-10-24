@@ -23,6 +23,11 @@ export const ENV_CONFIG = {
   CYBERSOURCE_SECRET_KEY: import.meta.env.VITE_CYBERSOURCE_SECRET_KEY || '',
   CYBERSOURCE_RUN_ENVIRONMENT: import.meta.env.VITE_CYBERSOURCE_RUN_ENVIRONMENT || 'apitest.cybersource.com',
   
+  // CyberSource Hosted Checkout Configuration
+  CYBERSOURCE_ACCESS_KEY: import.meta.env.VITE_CYBERSOURCE_ACCESS_KEY || '',
+  CYBERSOURCE_PROFILE_ID: import.meta.env.VITE_CYBERSOURCE_PROFILE_ID || '',
+  CYBERSOURCE_ENVIRONMENT: import.meta.env.VITE_CYBERSOURCE_ENVIRONMENT || 'test',
+  
   // API Configuration
   API_BASE_URL: normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL),
   
