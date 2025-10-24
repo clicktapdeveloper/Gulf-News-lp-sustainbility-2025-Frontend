@@ -4,7 +4,16 @@
 import { ENV_CONFIG } from '../config/env';
 
 export interface StoredFormData {
-  formData: Record<string, string>;
+  formData: string; // Encrypted form data as string
+  uploadedFiles?: Record<string, string[]>; // File URLs
+  timestamp: number;
+  transactionId: string;
+  formType: string;
+  expiresAt: number;
+}
+
+export interface DecryptedFormData {
+  formData: Record<string, string>; // Decrypted form data
   uploadedFiles?: Record<string, string[]>; // File URLs
   timestamp: number;
   transactionId: string;
@@ -14,7 +23,7 @@ export interface StoredFormData {
 
 export interface StorageResponse {
   success: boolean;
-  data?: StoredFormData;
+  data?: DecryptedFormData;
   error?: string;
 }
 
@@ -22,7 +31,6 @@ class FormDataStorageService {
   private baseURL: string;
   private readonly STORAGE_KEY_PREFIX = 'gulfnews_form_';
   private readonly EXPIRY_HOURS = ENV_CONFIG.FORM_STORAGE_EXPIRY_HOURS; // Data expires after configured hours
-  private readonly ENCRYPTION_KEY = ENV_CONFIG.FORM_STORAGE_ENCRYPTION_KEY;
 
   constructor(baseURL?: string) {
     this.baseURL = baseURL || `${ENV_CONFIG.API_BASE_URL}/api/form-storage`;
@@ -104,7 +112,12 @@ class FormDataStorageService {
         if (response.ok) {
           const result = await response.json();
           console.log('Form data stored in backend successfully');
-          return { success: true, data: result.data };
+          // Decrypt the data before returning
+          const decryptedData: DecryptedFormData = {
+            ...result.data,
+            formData: this.decryptFormData(result.data.formData)
+          };
+          return { success: true, data: decryptedData };
         }
       } catch (backendError) {
         console.warn('Backend storage failed, falling back to localStorage:', backendError);
@@ -118,7 +131,12 @@ class FormDataStorageService {
       this.cleanupExpiredEntries();
 
       console.log('Form data stored in localStorage successfully');
-      return { success: true, data: dataToStore };
+      // Decrypt the data before returning
+      const decryptedData: DecryptedFormData = {
+        ...dataToStore,
+        formData: this.decryptFormData(dataToStore.formData)
+      };
+      return { success: true, data: decryptedData };
 
     } catch (error) {
       console.error('Error storing form data:', error);
@@ -149,7 +167,7 @@ class FormDataStorageService {
           const result = await response.json();
           if (result.success && result.data) {
             // Decrypt the form data
-            const decryptedData = {
+            const decryptedData: DecryptedFormData = {
               ...result.data,
               formData: this.decryptFormData(result.data.formData)
             };
@@ -184,7 +202,7 @@ class FormDataStorageService {
       }
 
       // Decrypt the form data
-      const decryptedData = {
+      const decryptedData: DecryptedFormData = {
         ...parsedData,
         formData: this.decryptFormData(parsedData.formData)
       };
@@ -282,8 +300,8 @@ class FormDataStorageService {
   /**
    * Get all stored form data (for debugging purposes)
    */
-  getAllStoredData(): StoredFormData[] {
-    const allData: StoredFormData[] = [];
+  getAllStoredData(): DecryptedFormData[] {
+    const allData: DecryptedFormData[] = [];
 
     try {
       for (let i = 0; i < localStorage.length; i++) {
@@ -296,7 +314,7 @@ class FormDataStorageService {
               allData.push({
                 ...parsedData,
                 formData: this.decryptFormData(parsedData.formData)
-              });
+              } as DecryptedFormData);
             }
           } catch (parseError) {
             console.warn('Skipping corrupted entry:', key);

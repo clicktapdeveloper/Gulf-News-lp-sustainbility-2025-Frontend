@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import CustomButton from '@/screens/CustomButton';
-import { formDataStorageService, type StoredFormData } from '@/lib/form-data-storage';
-import { showErrorToast } from '@/lib/toast';
+import { formDataStorageService, type DecryptedFormData } from '@/lib/form-data-storage';
 
 const NominationSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const transactionId = searchParams.get('transaction_id');
-  const [storedFormData, setStoredFormData] = useState<StoredFormData | null>(null);
+  const [storedFormData, setStoredFormData] = useState<DecryptedFormData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
