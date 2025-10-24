@@ -341,12 +341,23 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 return acc;
             }, {} as Record<string, string[]>);
 
+            console.log('=== UNIFIED FORM PAYMENT SUCCESS ===');
+            console.log('Payment ID received:', paymentId);
+            console.log('Generated Transaction ID:', transactionId);
+            console.log('Form Data:', formData);
+            console.log('Form Data with Payment:', formDataWithPayment);
+            console.log('Uploaded Files:', uploadedFiles);
+            console.log('Uploaded File URLs:', uploadedFileUrls);
+            console.log('Form Type:', formType);
+
             const storageResult = await formDataStorageService.storeFormData(
                 transactionId,
                 formDataWithPayment,
                 uploadedFileUrls,
                 formType
             );
+
+            console.log('Storage Result:', storageResult);
 
             if (!storageResult.success) {
                 console.warn('Failed to store form data:', storageResult.error);

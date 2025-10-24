@@ -80,7 +80,11 @@ class FormDataStorageService {
     formType: string = 'applyForNomination'
   ): Promise<StorageResponse> {
     try {
-      console.log('Storing form data for transaction:', transactionId);
+      console.log('=== STORING FORM DATA ===');
+      console.log('Transaction ID:', transactionId);
+      console.log('Form Data:', formData);
+      console.log('Uploaded Files:', uploadedFiles);
+      console.log('Form Type:', formType);
 
       const now = Date.now();
       const expiresAt = now + (this.EXPIRY_HOURS * 60 * 60 * 1000);
@@ -96,7 +100,14 @@ class FormDataStorageService {
 
       // Store directly in localStorage (backend endpoints don't exist)
       const storageKey = this.generateStorageKey(transactionId);
+      console.log('Storage Key:', storageKey);
+      console.log('Data to Store:', dataToStore);
+      
       localStorage.setItem(storageKey, JSON.stringify(dataToStore));
+      
+      // Verify storage
+      const stored = localStorage.getItem(storageKey);
+      console.log('Verification - Stored Data:', stored);
       
       // Clean up expired entries
       this.cleanupExpiredEntries();
@@ -107,6 +118,7 @@ class FormDataStorageService {
         ...dataToStore,
         formData: this.decryptFormData(dataToStore.formData)
       };
+      console.log('=== STORAGE COMPLETE ===');
       return { success: true, data: decryptedData };
 
     } catch (error) {
@@ -123,13 +135,20 @@ class FormDataStorageService {
    */
   async retrieveFormData(transactionId: string): Promise<StorageResponse> {
     try {
-      console.log('Retrieving form data for transaction:', transactionId);
+      console.log('=== RETRIEVING FORM DATA ===');
+      console.log('Transaction ID:', transactionId);
 
       // Retrieve directly from localStorage (backend endpoints don't exist)
       const storageKey = this.generateStorageKey(transactionId);
+      console.log('Storage Key:', storageKey);
+      
       const storedData = localStorage.getItem(storageKey);
+      console.log('Raw Stored Data:', storedData);
 
       if (!storedData) {
+        console.log('No data found for key:', storageKey);
+        console.log('All localStorage keys:', Object.keys(localStorage));
+        console.log('Keys starting with gulfnews_form_:', Object.keys(localStorage).filter(key => key.startsWith('gulfnews_form_')));
         return { 
           success: false, 
           error: 'No form data found for this transaction' 
@@ -137,9 +156,11 @@ class FormDataStorageService {
       }
 
       const parsedData: StoredFormData = JSON.parse(storedData);
+      console.log('Parsed Data:', parsedData);
 
       // Check if data has expired
       if (Date.now() > parsedData.expiresAt) {
+        console.log('Data has expired, removing from localStorage');
         localStorage.removeItem(storageKey);
         return { 
           success: false, 
@@ -154,6 +175,8 @@ class FormDataStorageService {
       };
 
       console.log('Form data retrieved from localStorage successfully');
+      console.log('Decrypted Data:', decryptedData);
+      console.log('=== RETRIEVAL COMPLETE ===');
       return { success: true, data: decryptedData };
 
     } catch (error) {
