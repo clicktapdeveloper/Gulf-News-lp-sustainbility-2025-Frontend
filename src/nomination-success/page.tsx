@@ -7,6 +7,7 @@ const NominationSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const transactionId = searchParams.get('transaction_id');
+  const objectId = searchParams.get('object_id');
   const [storedFormData, setStoredFormData] = useState<DecryptedFormData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -170,12 +171,19 @@ const NominationSuccess: React.FC = () => {
           Your nomination for the Sustainability Excellence Awards 2025 has been submitted successfully. We will review your application and get back to you soon.
         </p>
 
-        {/* Transaction ID Display */}
-        {transactionId && (
+        {/* Transaction ID and Object ID Display */}
+        {(transactionId || objectId) && (
           <div className="bg-green-50 border border-green-200 rounded-md p-4 max-w-md mx-auto">
-            <p className="text-sm text-green-700">
-              <strong>Transaction ID:</strong> {transactionId}
-            </p>
+            {transactionId && (
+              <p className="text-sm text-green-700">
+                <strong>Transaction ID:</strong> {transactionId}
+              </p>
+            )}
+            {objectId && (
+              <p className="text-sm text-green-700">
+                <strong>Nomination ID:</strong> {objectId}
+              </p>
+            )}
           </div>
         )}
 

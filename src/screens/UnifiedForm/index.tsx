@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { ENV_CONFIG } from "@/config/env";
 import type { UploadedFile } from "@/lib/pdf-upload-service";
 import { showErrorToast, showSuccessToast } from "@/lib/toast";
-import { formDataStorageService } from "@/lib/form-data-storage";
+import { nominationAPIService, type NominationFormData } from "@/lib/nomination-api-service";
+import { nominationLocalStorageService } from "@/lib/nomination-localstorage-service";
 
 export interface FormConfig {
     title: string;
@@ -222,6 +223,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [uploadedFiles, setUploadedFiles] = useState<Record<string, UploadedFile[]>>({}); // Used in PDF upload handlers
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPayment, setShowPayment] = useState(false); // Control payment form visibility
     const navigate = useNavigate();
 
     // Track uploaded files for debugging
@@ -262,9 +264,19 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
-        // For nomination forms, validation happens before payment
-        // Skip the old setShowPayment logic
-        if (formType !== 'applyForNomination') {
+        if (formType === 'applyForNomination') {
+            // For nomination forms, submit to MongoDB with 'unpaid' status first
+            setIsSubmitting(true);
+            try {
+                await submitNominationForm();
+            } catch (error) {
+                console.error('Nomination form submission error:', error);
+                showErrorToast('Failed to submit nomination form. Please try again.');
+            } finally {
+                setIsSubmitting(false);
+            }
+        } else {
+            // For other forms, use the existing logic
             setIsSubmitting(true);
             try {
                 await submitForm(formType, formData);
@@ -273,6 +285,57 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             } finally {
                 setIsSubmitting(false);
             }
+        }
+    };
+
+    const submitNominationForm = async () => {
+        console.log('=== SUBMITTING NOMINATION FORM ===');
+        console.log('Form Data:', formData);
+        console.log('Uploaded Files:', uploadedFiles);
+
+        // Prepare uploaded file URLs
+        const uploadedFileUrls = Object.keys(uploadedFiles).reduce((acc, key) => {
+            acc[key] = uploadedFiles[key].map(file => file.url);
+            return acc;
+        }, {} as Record<string, string[]>);
+
+        // Prepare nomination form data
+        const nominationFormData: NominationFormData = {
+            firstName: formData.firstName || '',
+            lastName: formData.lastName || '',
+            email: formData.email || '',
+            companyName: formData.companyName2 || formData.companyName || '',
+            designation: formData.designation || '',
+            phone: formData.phone || '',
+            tradeLicense: formData.tradeLicense || '',
+            supportingDocument: uploadedFileUrls.supportingDocument?.join(',') || null,
+            message: formData.message || null
+        };
+
+        console.log('Prepared nomination form data:', nominationFormData);
+
+        // Submit to backend
+        const result = await nominationAPIService.submitNominationForm(nominationFormData);
+        
+        if (result.success && result.objectId) {
+            console.log('Nomination form submitted successfully with ObjectId:', result.objectId);
+            
+            // Save ObjectId and form data to localStorage
+            const saved = nominationLocalStorageService.saveNominationData(
+                result.objectId,
+                formData,
+                uploadedFileUrls
+            );
+            
+            if (saved) {
+                setShowPayment(true); // Automatically show payment form
+                showSuccessToast('Nomination form submitted successfully! Please complete your payment.');
+            } else {
+                throw new Error('Failed to save nomination data locally');
+            }
+        } else {
+            console.error('Failed to submit nomination form:', result.error);
+            throw new Error(result.error || 'Failed to submit nomination form');
         }
     };
 
@@ -333,73 +396,75 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     const handlePaymentSuccess = async (paymentId?: string) => {
         console.log('Payment successful, payment ID:', paymentId);
         
+        // Get saved nomination data from localStorage
+        const savedNominationData = nominationLocalStorageService.getNominationData();
+        
+        if (!savedNominationData || !savedNominationData.objectId) {
+            console.error('No saved nomination data found for payment update');
+            showErrorToast('Payment successful but failed to update nomination. Please contact support.');
+            return;
+        }
+        
         try {
             // Generate a transaction ID for this payment
             const transactionId = paymentId || `txn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             
-            // Add payment information to form data
-            const formDataWithPayment = {
-                ...formData,
-                paymentStatus: 'completed',
-                paymentAmount: '199',
+            console.log('=== UPDATING NOMINATION PAYMENT STATUS ===');
+            console.log('Saved ObjectId:', savedNominationData.objectId);
+            console.log('Payment ID received:', paymentId);
+            console.log('Generated Transaction ID:', transactionId);
+
+            // Prepare payment data
+            const paymentData = {
+                paymentAmount: 199,
                 paymentCurrency: 'AED',
                 paymentDate: new Date().toISOString(),
                 paymentReference: transactionId,
-                transactionId: transactionId,
+                paymentStatus: 'completed',
                 paymentMethod: 'cybersource_hosted',
                 cybersourceTransactionId: transactionId,
                 authCode: '831000', // Mock auth code for cybersource_hosted
                 authTime: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
-                cardType: 'Visa', // Mock card type
-                status: 'submitted'
+                cardType: 'Visa' // Mock card type
             };
-            
-            // Store form data securely before submitting to backend
-            const uploadedFileUrls = Object.keys(uploadedFiles).reduce((acc, key) => {
-                acc[key] = uploadedFiles[key].map(file => file.url);
-                return acc;
-            }, {} as Record<string, string[]>);
 
-            console.log('=== UNIFIED FORM PAYMENT SUCCESS ===');
-            console.log('Payment ID received:', paymentId);
-            console.log('Generated Transaction ID:', transactionId);
-            console.log('Form Data:', formData);
-            console.log('Form Data with Payment:', formDataWithPayment);
-            console.log('Uploaded Files:', uploadedFiles);
-            console.log('Uploaded File URLs:', uploadedFileUrls);
-            console.log('Form Type:', formType);
+            console.log('Payment data for update:', paymentData);
 
-            const storageResult = await formDataStorageService.storeFormData(
-                transactionId,
-                formDataWithPayment,
-                uploadedFileUrls,
-                formType
+            // Update the nomination with payment information using saved ObjectId
+            const updateResult = await nominationAPIService.updateNominationPayment(
+                savedNominationData.objectId, 
+                paymentData
             );
-
-            console.log('Storage Result:', storageResult);
-
-            if (!storageResult.success) {
-                console.warn('Failed to store form data:', storageResult.error);
+            
+            if (updateResult.success) {
+                console.log('Nomination payment updated successfully:', updateResult);
+                
+                // Update localStorage status to 'paid'
+                const localStorageUpdated = nominationLocalStorageService.updateNominationStatus(paymentData);
+                
+                if (localStorageUpdated) {
+                    console.log('LocalStorage status updated to paid');
+                }
+                
+                showSuccessToast('Payment successful! Your nomination has been completed.');
+                
+                // Navigate to success page with transaction ID and ObjectId
+                navigate(`/nomination/success?transaction_id=${transactionId}&object_id=${savedNominationData.objectId}`);
+            } else {
+                console.error('Failed to update nomination payment:', updateResult.error);
+                showErrorToast('Payment successful! Your nomination data is saved, but payment update failed. Please contact support.');
+                navigate(`/nomination/success?transaction_id=${transactionId}&object_id=${savedNominationData.objectId}`);
             }
             
-            // Submit the form data to backend after successful payment
-            await submitForm(formType, formDataWithPayment);
-            
-            // Show success message
-            showSuccessToast('Nomination submitted successfully!');
-            
-            // Reset form and redirect to success page with transaction ID
+            // Reset form and clear localStorage
             setFormData({});
             setUploadedFiles({});
+            setShowPayment(false);
+            nominationLocalStorageService.clearNominationData();
             
-            // Redirect to success page with transaction ID for nomination payment
-            if (formType === 'applyForNomination') {
-                navigate(`/nomination/success?transaction_id=${transactionId}`);
-            }
         } catch (error) {
-            console.error('Failed to submit form after payment:', error);
-            // Show error message to user
-            showErrorToast('Payment successful but failed to submit form. Please contact support.');
+            console.error('Failed to update nomination after payment:', error);
+            showErrorToast('Payment successful but failed to update nomination. Please contact support.');
         }
     };
 
@@ -512,11 +577,21 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
                     <div className="pt-2 flex justify-center">
                         {formType === 'applyForNomination' ? (
-                            <NominationPayment
-                                formData={formData}
-                                onSuccess={handlePaymentSuccess}
-                                onError={handlePaymentError}
-                            />
+                            showPayment ? (
+                                <NominationPayment
+                                    formData={formData}
+                                    onSuccess={handlePaymentSuccess}
+                                    onError={handlePaymentError}
+                                />
+                            ) : (
+                                <CustomButton 
+                                    type="submit" 
+                                    className="min-w-40 px-6 py-2"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? 'Submitting...' : 'Submit Nomination Form'}
+                                </CustomButton>
+                            )
                         ) : (
                             <CustomButton 
                                 type="submit" 
