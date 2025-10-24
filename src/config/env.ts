@@ -3,7 +3,7 @@
 
 const normalizeApiBaseUrl = (url: string) => {
   let normalized = (url || '').trim();
-  if (!normalized) return 'http://localhost:5000';
+  if (!normalized) return 'https://backend.gulfnews-events.com';
   if (!/^https?:\/\//i.test(normalized)) {
     normalized = `https://${normalized}`;
   }
@@ -52,6 +52,10 @@ export const ENV_CONFIG = {
   TWILIO_ACCOUNT_SID: import.meta.env.VITE_TWILIO_ACCOUNT_SID || '',
   TWILIO_AUTH_TOKEN: import.meta.env.VITE_TWILIO_AUTH_TOKEN || '',
   TWILIO_FROM_NUMBER: import.meta.env.VITE_TWILIO_FROM_NUMBER || '',
+  
+  // Form Data Storage Configuration
+  FORM_STORAGE_ENCRYPTION_KEY: import.meta.env.VITE_FORM_STORAGE_ENCRYPTION_KEY || 'default-key-change-in-production',
+  FORM_STORAGE_EXPIRY_HOURS: parseInt(import.meta.env.VITE_FORM_STORAGE_EXPIRY_HOURS || '24'),
 };
 
 // Validation function to check if required environment variables are set

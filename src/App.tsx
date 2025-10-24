@@ -16,6 +16,10 @@ import PaymentCancel from './cancel/page'
 import ThankYouPage from './thankyou/page'
 import CyberSourceReturnPage from './cybersource-return/page'
 import CyberSourceHostedCheckoutDemo from './cybersource-hosted-demo/page'
+import NominationSuccess from './nomination-success/page'
+import NominationError from './nomination-error/page'
+import NominationCancelled from './nomination-cancelled/page'
+import FormStorageDemo from './form-storage-demo/page'
 
 export default function App() {
 
@@ -46,6 +50,10 @@ export default function App() {
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/cybersource-return" element={<CyberSourceReturnPage />} />
         <Route path="/cybersource-hosted-demo" element={<CyberSourceHostedCheckoutDemo />} />
+        <Route path="/nomination/success" element={<NominationSuccess />} />
+        <Route path="/nomination/error" element={<NominationError />} />
+        <Route path="/nomination/cancelled" element={<NominationCancelled />} />
+        <Route path="/form-storage-demo" element={<FormStorageDemo />} />
       </Routes>
       <Footer />
     </div>

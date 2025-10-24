@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ENV_CONFIG } from "@/config/env";
 import type { UploadedFile } from "@/lib/pdf-upload-service";
 import { showErrorToast, showSuccessToast } from "@/lib/toast";
+import { formDataStorageService } from "@/lib/form-data-storage";
 
 export interface FormConfig {
     title: string;
@@ -316,10 +317,13 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
         // Note: Nomination forms redirect is handled in handlePaymentSuccess
     };
 
-    const handlePaymentSuccess = async () => {
-        console.log('Payment successful');
+    const handlePaymentSuccess = async (paymentId?: string) => {
+        console.log('Payment successful, payment ID:', paymentId);
         
         try {
+            // Generate a transaction ID for this payment
+            const transactionId = paymentId || `txn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            
             // Add payment information to form data
             const formDataWithPayment = {
                 ...formData,
@@ -327,8 +331,26 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 paymentAmount: '199',
                 paymentCurrency: 'AED',
                 paymentDate: new Date().toISOString(),
-                paymentReference: `nomination-${Date.now()}`
+                paymentReference: transactionId,
+                transactionId: transactionId
             };
+            
+            // Store form data securely before submitting to backend
+            const uploadedFileUrls = Object.keys(uploadedFiles).reduce((acc, key) => {
+                acc[key] = uploadedFiles[key].map(file => file.url);
+                return acc;
+            }, {} as Record<string, string[]>);
+
+            const storageResult = await formDataStorageService.storeFormData(
+                transactionId,
+                formDataWithPayment,
+                uploadedFileUrls,
+                formType
+            );
+
+            if (!storageResult.success) {
+                console.warn('Failed to store form data:', storageResult.error);
+            }
             
             // Submit the form data to backend after successful payment
             await submitForm(formType, formDataWithPayment);
@@ -336,13 +358,13 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             // Show success message
             showSuccessToast('Nomination submitted successfully!');
             
-            // Reset form and redirect to thankyou page
+            // Reset form and redirect to success page with transaction ID
             setFormData({});
             setUploadedFiles({});
             
-            // Redirect to thankyou page for nomination payment
+            // Redirect to success page with transaction ID for nomination payment
             if (formType === 'applyForNomination') {
-                navigate('/thankyou#apply-for-nomination');
+                navigate(`/nomination/success?transaction_id=${transactionId}`);
             }
         } catch (error) {
             console.error('Failed to submit form after payment:', error);
