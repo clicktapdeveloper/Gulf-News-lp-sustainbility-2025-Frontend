@@ -28,12 +28,11 @@ export interface StorageResponse {
 }
 
 class FormDataStorageService {
-  private baseURL: string;
   private readonly STORAGE_KEY_PREFIX = 'gulfnews_form_';
   private readonly EXPIRY_HOURS = ENV_CONFIG.FORM_STORAGE_EXPIRY_HOURS; // Data expires after configured hours
 
-  constructor(baseURL?: string) {
-    this.baseURL = baseURL || `${ENV_CONFIG.API_BASE_URL}/api/form-storage`;
+  constructor() {
+    // No backend API calls needed - using localStorage only
   }
 
   /**
