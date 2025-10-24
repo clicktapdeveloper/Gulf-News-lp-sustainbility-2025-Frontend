@@ -50,66 +50,66 @@ const NominationSuccess: React.FC = () => {
     navigate('/apply-for-nomination');
   };
 
-  const handleDownloadReceipt = () => {
-    if (!storedFormData) return;
+//   const handleDownloadReceipt = () => {
+//     if (!storedFormData) return;
     
-    // Create a receipt with form data
-    const receiptData = {
-      transactionId: transactionId,
-      submissionDate: new Date(storedFormData.timestamp).toLocaleString(),
-      nominee: {
-        name: `${storedFormData.formData.firstName} ${storedFormData.formData.lastName}`,
-        email: storedFormData.formData.email,
-        phone: storedFormData.formData.phone,
-        designation: storedFormData.formData.designation,
-        company: storedFormData.formData.companyName2,
-        tradeLicense: storedFormData.formData.tradeLicense
-      },
-      payment: {
-        amount: storedFormData.formData.paymentAmount,
-        currency: storedFormData.formData.paymentCurrency,
-        status: storedFormData.formData.paymentStatus,
-        date: storedFormData.formData.paymentDate
-      },
-      supportingDocuments: storedFormData.uploadedFiles?.supportingDocument || []
-    };
+//     // Create a receipt with form data
+//     const receiptData = {
+//       transactionId: transactionId,
+//       submissionDate: new Date(storedFormData.timestamp).toLocaleString(),
+//       nominee: {
+//         name: `${storedFormData.formData.firstName} ${storedFormData.formData.lastName}`,
+//         email: storedFormData.formData.email,
+//         phone: storedFormData.formData.phone,
+//         designation: storedFormData.formData.designation,
+//         company: storedFormData.formData.companyName2,
+//         tradeLicense: storedFormData.formData.tradeLicense
+//       },
+//       payment: {
+//         amount: storedFormData.formData.paymentAmount,
+//         currency: storedFormData.formData.paymentCurrency,
+//         status: storedFormData.formData.paymentStatus,
+//         date: storedFormData.formData.paymentDate
+//       },
+//       supportingDocuments: storedFormData.uploadedFiles?.supportingDocument || []
+//     };
 
-    const receiptText = `
-GULF NEWS SUSTAINABILITY EXCELLENCE AWARDS 2025
-NOMINATION RECEIPT
+//     const receiptText = `
+// GULF NEWS SUSTAINABILITY EXCELLENCE AWARDS 2025
+// NOMINATION RECEIPT
 
-Transaction ID: ${receiptData.transactionId}
-Submission Date: ${receiptData.submissionDate}
+// Transaction ID: ${receiptData.transactionId}
+// Submission Date: ${receiptData.submissionDate}
 
-NOMINEE INFORMATION:
-Name: ${receiptData.nominee.name}
-Email: ${receiptData.nominee.email}
-Phone: ${receiptData.nominee.phone}
-Designation: ${receiptData.nominee.designation}
-Company: ${receiptData.nominee.company}
-Trade License: ${receiptData.nominee.tradeLicense}
+// NOMINEE INFORMATION:
+// Name: ${receiptData.nominee.name}
+// Email: ${receiptData.nominee.email}
+// Phone: ${receiptData.nominee.phone}
+// Designation: ${receiptData.nominee.designation}
+// Company: ${receiptData.nominee.company}
+// Trade License: ${receiptData.nominee.tradeLicense}
 
-PAYMENT INFORMATION:
-Amount: ${receiptData.payment.amount} ${receiptData.payment.currency}
-Status: ${receiptData.payment.status}
-Payment Date: ${receiptData.payment.date}
+// PAYMENT INFORMATION:
+// Amount: ${receiptData.payment.amount} ${receiptData.payment.currency}
+// Status: ${receiptData.payment.status}
+// Payment Date: ${receiptData.payment.date}
 
-SUPPORTING DOCUMENTS:
-${receiptData.supportingDocuments.length > 0 ? receiptData.supportingDocuments.join('\n') : 'No documents uploaded'}
+// SUPPORTING DOCUMENTS:
+// ${receiptData.supportingDocuments.length > 0 ? receiptData.supportingDocuments.join('\n') : 'No documents uploaded'}
 
-Thank you for your nomination!
-    `.trim();
+// Thank you for your nomination!
+//     `.trim();
 
-    const blob = new Blob([receiptText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `nomination-receipt-${transactionId}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
+//     const blob = new Blob([receiptText], { type: 'text/plain' });
+//     const url = URL.createObjectURL(blob);
+//     const a = document.createElement('a');
+//     a.href = url;
+//     a.download = `nomination-receipt-${transactionId}.txt`;
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//     URL.revokeObjectURL(url);
+//   };
 
   if (isLoading) {
     return (

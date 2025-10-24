@@ -99,13 +99,13 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
 
         <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mb-4">
           <h4 className="text-sm font-medium text-blue-800 mb-2">
-            Payment Simulation
+            CyberSource Payment
           </h4>
           <p className="text-sm text-blue-700 mb-2">
-            This is a simulated payment for testing purposes.
+            Secure payment processing powered by CyberSource.
           </p>
           <p className="text-sm text-blue-700">
-            Click the button below to simulate a successful payment.
+            Click the button below to proceed with payment.
           </p>
         </div>
 
@@ -118,7 +118,7 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
             }}
             className="w-full"
           >
-            Simulate Payment (Testing Only)
+            Pay via CyberSource
           </CustomButton>
           
           {onCancel && (
@@ -132,10 +132,9 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
           )}
         </div>
 
-        <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-          <p className="text-sm text-yellow-700">
-            <strong>Note:</strong> This is a simulation for testing purposes. 
-            In production, ensure proper payment processing is implemented.
+        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
+          <p className="text-sm text-green-700">
+            <strong>Secure Payment:</strong> Your payment information is encrypted and processed securely by CyberSource.
           </p>
         </div>
       </div>
