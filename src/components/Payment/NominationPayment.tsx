@@ -31,6 +31,7 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
   const handlePaymentSuccess = (paymentId?: string) => {
     console.log('=== NOMINATION PAYMENT SUCCESS ===');
     console.log('Payment ID received:', paymentId);
+    console.log('onSuccess function:', onSuccess);
     console.log('Calling onSuccess callback...');
     onSuccess?.(paymentId);
     console.log('=== NOMINATION PAYMENT SUCCESS COMPLETE ===');

@@ -42,7 +42,7 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
 
   const handleFallbackPayment = async () => {
     // For testing purposes, simulate a successful payment using mock service
-    console.log('=== FALLBACK PAYMENT SIMULATION ===');
+    console.log('=== FALLBACK PAYMENT SIMULATION STARTED ===');
     console.log('Using fallback payment simulation with mock service');
     
     try {
@@ -66,6 +66,7 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
         const mockPaymentId = `761${Date.now()}${Math.floor(Math.random() * 1000000)}`; // Generate unique transaction ID
         console.log('Mock payment successful:', mockPaymentId);
         console.log('Calling onSuccess with payment ID:', mockPaymentId);
+        console.log('onSuccess function:', onSuccess);
         onSuccess?.(mockPaymentId);
         console.log('=== FALLBACK PAYMENT SIMULATION COMPLETE ===');
       }, 2000);
@@ -202,7 +203,11 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
 
         <div className="space-y-3">
           <CustomButton
-            onClick={handleFallbackPayment}
+            onClick={() => {
+              console.log('=== PAYMENT BUTTON CLICKED ===');
+              console.log('handleFallbackPayment function:', handleFallbackPayment);
+              handleFallbackPayment();
+            }}
             className="w-full"
           >
             Simulate Payment (Testing Only)
