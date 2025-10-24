@@ -257,14 +257,14 @@ Thank you for your nomination!
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          {storedFormData && (
+          {/* {storedFormData && (
             <CustomButton 
               onClick={handleDownloadReceipt}
               className="px-6 py-2"
             >
               Download Receipt
             </CustomButton>
-          )}
+          )} */}
           
           <CustomButton 
             onClick={handleReturnHome}
