@@ -5,7 +5,7 @@ import { showErrorToast } from '@/lib/toast';
 
 interface NominationPaymentProps {
   formData: Record<string, string>;
-  onSuccess?: () => void;
+  onSuccess?: (paymentId?: string) => void;
   onError?: (error: string) => void;
 }
 
@@ -30,7 +30,7 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
 
   const handlePaymentSuccess = (paymentId?: string) => {
     console.log('Payment successful:', paymentId);
-    onSuccess?.();
+    onSuccess?.(paymentId);
   };
 
   const handlePaymentError = (error: string) => {
