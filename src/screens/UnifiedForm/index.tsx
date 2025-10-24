@@ -277,6 +277,10 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     };
 
     const submitForm = async (type: string, data: Record<string, string>) => {
+        console.log('=== SUBMIT FORM TO BACKEND ===');
+        console.log('Form Type:', type);
+        console.log('Form Data:', data);
+        
         let endpoint: string;
         
         switch (type) {
@@ -293,6 +297,9 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 throw new Error('Unknown form type');
         }
         
+        console.log('API Endpoint:', `${ENV_CONFIG.API_BASE_URL}${endpoint}`);
+        console.log('Request Body:', JSON.stringify(data));
+        
         const response = await fetch(`${ENV_CONFIG.API_BASE_URL}${endpoint}`, {
             method: 'POST',
             headers: {
@@ -301,12 +308,18 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             body: JSON.stringify(data),
         });
 
+        console.log('Response Status:', response.status);
+        console.log('Response OK:', response.ok);
+
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Response Error:', errorText);
             throw new Error('Failed to submit form');
         }
 
         const result = await response.json();
         console.log('Form submitted successfully:', result);
+        console.log('=== BACKEND SUBMISSION COMPLETE ===');
         
         // Redirect to thankyou page with appropriate hash (only for non-nomination forms)
         if (type === 'inquireAboutSponsorship') {
@@ -332,7 +345,13 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 paymentCurrency: 'AED',
                 paymentDate: new Date().toISOString(),
                 paymentReference: transactionId,
-                transactionId: transactionId
+                transactionId: transactionId,
+                paymentMethod: 'cybersource_hosted',
+                cybersourceTransactionId: transactionId,
+                authCode: '831000', // Mock auth code for cybersource_hosted
+                authTime: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
+                cardType: 'Visa', // Mock card type
+                status: 'submitted'
             };
             
             // Store form data securely before submitting to backend

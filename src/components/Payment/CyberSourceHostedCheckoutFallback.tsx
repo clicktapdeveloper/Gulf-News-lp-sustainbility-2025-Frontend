@@ -63,7 +63,7 @@ const CyberSourceHostedCheckoutFallback: React.FC<CyberSourceHostedCheckoutFallb
       
       // Simulate successful payment after a short delay
       setTimeout(() => {
-        const mockPaymentId = `761${Date.now()}${Math.floor(Math.random() * 1000000)}`; // Generate unique transaction ID
+        const mockPaymentId = `761${Date.now()}${Math.floor(Math.random() * 1000000)}`; // Generate unique transaction ID in cybersource format
         console.log('Mock payment successful:', mockPaymentId);
         console.log('Calling onSuccess with payment ID:', mockPaymentId);
         console.log('onSuccess function:', onSuccess);
