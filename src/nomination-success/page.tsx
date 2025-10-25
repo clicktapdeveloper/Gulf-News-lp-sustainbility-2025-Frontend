@@ -73,6 +73,10 @@ const NominationSuccess: React.FC = () => {
           // If transaction is already paid, show success immediately
           if (response.transaction.status === 'paid') {
             handleVerificationSuccess(response.nomination || response.transaction);
+          } else if (transactionId) {
+            // If unpaid but we have transaction ID, automatically verify payment
+            console.log('Transaction is unpaid, attempting automatic verification...');
+            await autoVerifyPayment(finalNominationId, transactionId, response.transaction.customerEmail);
           }
         } else {
           setError(response.error || 'Failed to load transaction details');
@@ -97,6 +101,28 @@ const NominationSuccess: React.FC = () => {
     }
   };
 
+  const autoVerifyPayment = async (nominationId: string, txnId: string, email: string) => {
+    try {
+      console.log('=== AUTOMATIC PAYMENT VERIFICATION ===');
+      console.log('Nomination ID:', nominationId);
+      console.log('Transaction ID:', txnId);
+      console.log('Email:', email);
+      
+      const response = await transactionService.updatePaymentStatus(nominationId, txnId, email);
+      
+      if (response.success) {
+        console.log('Payment verified automatically:', response);
+        handleVerificationSuccess(response.nomination || response.transaction);
+      } else {
+        console.error('Automatic verification failed:', response.error);
+        setError(response.error || 'Failed to verify payment automatically');
+      }
+    } catch (error) {
+      console.error('Error in automatic payment verification:', error);
+      setError('Failed to verify payment automatically. Please try manual verification.');
+    }
+  };
+
   const findNominationByTransactionId = async (txnId: string) => {
     try {
       console.log('=== FINDING NOMINATION BY TRANSACTION ID ===');
@@ -118,6 +144,10 @@ const NominationSuccess: React.FC = () => {
         // If the nomination is already paid, show success immediately
         if (response.nomination.status === 'paid') {
           handleVerificationSuccess(response.nomination);
+        } else {
+          // If unpaid, automatically verify payment
+          console.log('Nomination found but unpaid, attempting automatic verification...');
+          await autoVerifyPayment(response.nomination._id, txnId, response.nomination.customerEmail);
         }
       } else {
         setError(response.error || 'Nomination not found for this transaction ID');
@@ -156,10 +186,10 @@ const NominationSuccess: React.FC = () => {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
             <h1 className="text-xl font-bold text-blue-900 mb-4">
-              Verifying Payment
+              Processing Payment
             </h1>
             <p className="text-blue-700 mb-6">
-              Please wait while we verify your payment...
+              Please wait while we automatically verify your payment...
             </p>
             {transactionId && (
               <div className="bg-white border border-blue-300 rounded-md p-3 mb-4">
