@@ -15,48 +15,79 @@ const NominationSuccess: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Get nomination ID from URL params or localStorage
-    const urlNominationId = objectId;
-    const storedNominationId = localStorage.getItem('nominationId');
-    
-    const finalNominationId = urlNominationId || storedNominationId;
-    
-    if (finalNominationId) {
-      setNominationId(finalNominationId);
-      
-      // Store transaction ID and email in localStorage for verification
-      if (transactionId) {
-        localStorage.setItem('transactionId', transactionId);
-      }
-      
-      // Get email from localStorage if available
-      const storedEmail = localStorage.getItem('nominationEmail');
-      if (!storedEmail) {
-        // Try to get from nomination data
-        const nominationData = localStorage.getItem('gulfnews_nomination_data');
-        if (nominationData) {
-          try {
-            const parsed = JSON.parse(nominationData);
-            if (parsed.formData?.email) {
-              localStorage.setItem('nominationEmail', parsed.formData.email);
-            }
-          } catch (error) {
-            console.error('Error parsing nomination data:', error);
-          }
-        }
-      }
-    } else if (transactionId) {
-      // If we only have transaction ID but no nomination ID, 
-      // we need to find the nomination by transaction ID
-      console.log('Only transaction ID available, attempting to find nomination...');
-      findNominationByTransactionId(transactionId);
-    }
+    // Always attempt to load transaction details when page loads
+    loadTransactionDetails();
   }, [objectId, transactionId]);
 
-  const findNominationByTransactionId = async (txnId: string) => {
+  const loadTransactionDetails = async () => {
     try {
       setLoading(true);
       setError(null);
+      
+      // Get nomination ID from URL params or localStorage
+      const urlNominationId = objectId;
+      const storedNominationId = localStorage.getItem('nominationId');
+      const finalNominationId = urlNominationId || storedNominationId;
+      
+      if (finalNominationId) {
+        console.log('Loading transaction details for nomination ID:', finalNominationId);
+        setNominationId(finalNominationId);
+        
+        // Store transaction ID and email in localStorage for verification
+        if (transactionId) {
+          localStorage.setItem('transactionId', transactionId);
+        }
+        
+        // Get email from localStorage if available
+        const storedEmail = localStorage.getItem('nominationEmail');
+        if (!storedEmail) {
+          // Try to get from nomination data
+          const nominationData = localStorage.getItem('gulfnews_nomination_data');
+          if (nominationData) {
+            try {
+              const parsed = JSON.parse(nominationData);
+              if (parsed.formData?.email) {
+                localStorage.setItem('nominationEmail', parsed.formData.email);
+              }
+            } catch (error) {
+              console.error('Error parsing nomination data:', error);
+            }
+          }
+        }
+        
+        // Call the transaction API
+        const response = await transactionService.getTransactionDetails(finalNominationId);
+        
+        if (response.success && response.transaction) {
+          console.log('Transaction details loaded:', response.transaction);
+          
+          // If transaction is already paid, show success immediately
+          if (response.transaction.status === 'paid') {
+            handleVerificationSuccess(response.nomination || response.transaction);
+          }
+        } else {
+          setError(response.error || 'Failed to load transaction details');
+        }
+        
+      } else if (transactionId) {
+        // If we only have transaction ID but no nomination ID, 
+        // we need to find the nomination by transaction ID
+        console.log('Only transaction ID available, attempting to find nomination...');
+        await findNominationByTransactionId(transactionId);
+      } else {
+        setError('No nomination ID or transaction ID found');
+      }
+      
+    } catch (error) {
+      console.error('Error loading transaction details:', error);
+      setError('Failed to load transaction details. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const findNominationByTransactionId = async (txnId: string) => {
+    try {
       console.log('Searching for nomination with transaction ID:', txnId);
       
       const response = await transactionService.findNominationByTransactionId(txnId);
@@ -81,8 +112,6 @@ const NominationSuccess: React.FC = () => {
     } catch (error) {
       console.error('Error finding nomination by transaction ID:', error);
       setError('Unable to find nomination. Please contact support.');
-    } finally {
-      setLoading(false);
     }
   };
 
