@@ -218,12 +218,32 @@ const NominationSuccess: React.FC = () => {
               </div>
             </div>
           </div>
-        ) : (
+        ) : nominationId ? (
           <PaymentVerification
             nominationId={nominationId}
             onSuccess={handleVerificationSuccess}
             onError={handleVerificationError}
           />
+        ) : (
+          <div className="text-center">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+              <svg className="h-12 w-12 text-yellow-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+              <h1 className="text-xl font-bold text-yellow-900 mb-4">
+                Nomination ID Not Found
+              </h1>
+              <p className="text-yellow-700 mb-6">
+                Unable to find nomination ID for verification. This might happen if you accessed this page directly.
+              </p>
+              <CustomButton
+                onClick={() => navigate('/apply-for-nomination')}
+                className="px-6 py-2"
+              >
+                Return to Nomination Form
+              </CustomButton>
+            </div>
+          </div>
         )}
       </div>
     </div>
