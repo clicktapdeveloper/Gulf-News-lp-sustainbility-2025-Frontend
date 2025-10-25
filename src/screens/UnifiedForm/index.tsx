@@ -404,13 +404,20 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     };
 
     const handlePaymentSuccess = async (paymentId?: string) => {
+        console.log('=== PAYMENT SUCCESS HANDLER CALLED ===');
         console.log('Payment successful, payment ID:', paymentId);
         
         // Get saved nomination data from localStorage
         const savedNominationData = nominationLocalStorageService.getNominationData();
         
+        console.log('=== SAVED NOMINATION DATA CHECK ===');
+        console.log('savedNominationData:', savedNominationData);
+        console.log('savedNominationData?.objectId:', savedNominationData?.objectId);
+        console.log('typeof savedNominationData?.objectId:', typeof savedNominationData?.objectId);
+        
         if (!savedNominationData || !savedNominationData.objectId) {
             console.error('No saved nomination data found for payment update');
+            console.error('savedNominationData:', savedNominationData);
             showErrorToast('Payment successful but failed to update nomination. Please contact support.');
             return;
         }
@@ -459,11 +466,23 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 showSuccessToast('Payment successful! Your nomination has been completed.');
                 
                 // Navigate to success page with transaction ID and ObjectId
-                navigate(`/nomination/success?transaction_id=${transactionId}&object_id=${savedNominationData.objectId}`);
+                const navigationUrl = `/nomination/success?transaction_id=${transactionId}&object_id=${savedNominationData.objectId}`;
+                console.log('=== NAVIGATION TO SUCCESS PAGE ===');
+                console.log('Navigation URL:', navigationUrl);
+                console.log('Transaction ID:', transactionId);
+                console.log('Object ID:', savedNominationData.objectId);
+                navigate(navigationUrl);
             } else {
                 console.error('Failed to update nomination payment:', updateResult.error);
                 showErrorToast('Payment successful! Your nomination data is saved, but payment update failed. Please contact support.');
-                navigate(`/nomination/success?transaction_id=${transactionId}&object_id=${savedNominationData.objectId}`);
+                
+                // Navigate to success page with transaction ID and ObjectId even if update failed
+                const navigationUrl = `/nomination/success?transaction_id=${transactionId}&object_id=${savedNominationData.objectId}`;
+                console.log('=== NAVIGATION TO SUCCESS PAGE (UPDATE FAILED) ===');
+                console.log('Navigation URL:', navigationUrl);
+                console.log('Transaction ID:', transactionId);
+                console.log('Object ID:', savedNominationData.objectId);
+                navigate(navigationUrl);
             }
             
             // Reset form and clear localStorage
