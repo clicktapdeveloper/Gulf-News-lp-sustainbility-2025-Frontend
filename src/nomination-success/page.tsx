@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import CustomButton from '@/screens/CustomButton';
 import PaymentVerification from '@/components/PaymentVerification';
-import { TransactionService } from '@/lib/transaction-service';
+import { TransactionService, transactionService } from '@/lib/transaction-service';
 
 const NominationSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -11,6 +11,8 @@ const NominationSuccess: React.FC = () => {
   const objectId = searchParams.get('object_id');
   const [verificationComplete, setVerificationComplete] = useState(false);
   const [nominationId, setNominationId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Get nomination ID from URL params or localStorage
@@ -43,8 +45,46 @@ const NominationSuccess: React.FC = () => {
           }
         }
       }
+    } else if (transactionId) {
+      // If we only have transaction ID but no nomination ID, 
+      // we need to find the nomination by transaction ID
+      console.log('Only transaction ID available, attempting to find nomination...');
+      findNominationByTransactionId(transactionId);
     }
   }, [objectId, transactionId]);
+
+  const findNominationByTransactionId = async (txnId: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      console.log('Searching for nomination with transaction ID:', txnId);
+      
+      const response = await transactionService.findNominationByTransactionId(txnId);
+      
+      if (response.success && response.nomination) {
+        console.log('Nomination found:', response.nomination);
+        setNominationId(response.nomination._id);
+        
+        // Store transaction ID and email for verification
+        localStorage.setItem('transactionId', txnId);
+        if (response.nomination.customerEmail) {
+          localStorage.setItem('nominationEmail', response.nomination.customerEmail);
+        }
+        
+        // If the nomination is already paid, show success immediately
+        if (response.nomination.status === 'paid') {
+          handleVerificationSuccess(response.nomination);
+        }
+      } else {
+        setError(response.error || 'Nomination not found for this transaction ID');
+      }
+    } catch (error) {
+      console.error('Error finding nomination by transaction ID:', error);
+      setError('Unable to find nomination. Please contact support.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleVerificationSuccess = (nomination: any) => {
     console.log('Payment verified successfully:', nomination);
@@ -67,20 +107,52 @@ const NominationSuccess: React.FC = () => {
     navigate('/apply-for-nomination');
   };
 
-  if (!nominationId) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center max-w-md mx-auto px-4">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-            <svg className="h-12 w-12 text-yellow-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <h1 className="text-xl font-bold text-blue-900 mb-4">
+              Verifying Payment
+            </h1>
+            <p className="text-blue-700 mb-6">
+              Please wait while we verify your payment...
+            </p>
+            {transactionId && (
+              <div className="bg-white border border-blue-300 rounded-md p-3 mb-4">
+                <p className="text-sm text-blue-700">
+                  <strong>Transaction ID:</strong> {transactionId}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!nominationId && error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+            <svg className="h-12 w-12 text-red-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
-            <h1 className="text-xl font-bold text-yellow-900 mb-4">
-              Nomination ID Not Found
+            <h1 className="text-xl font-bold text-red-900 mb-4">
+              Verification Error
             </h1>
-            <p className="text-yellow-700 mb-6">
-              Unable to find nomination ID for verification. This might happen if you accessed this page directly.
+            <p className="text-red-700 mb-6">
+              {error}
             </p>
+            {transactionId && (
+              <div className="bg-white border border-red-300 rounded-md p-3 mb-4">
+                <p className="text-sm text-red-700">
+                  <strong>Transaction ID:</strong> {transactionId}
+                </p>
+              </div>
+            )}
             <CustomButton
               onClick={() => navigate('/apply-for-nomination')}
               className="px-6 py-2"

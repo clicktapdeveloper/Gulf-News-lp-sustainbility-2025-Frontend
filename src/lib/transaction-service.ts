@@ -99,6 +99,63 @@ class TransactionService {
   }
 
   /**
+   * Find nomination by transaction ID
+   * @param transactionId - The transaction ID from CyberSource
+   * @returns Promise<TransactionResponse> Nomination details
+   */
+  async findNominationByTransactionId(transactionId: string): Promise<TransactionResponse> {
+    try {
+      console.log('=== FINDING NOMINATION BY TRANSACTION ID ===');
+      console.log('Transaction ID:', transactionId);
+      console.log('Base URL:', this.baseURL);
+
+      const response = await fetch(`${this.baseURL}/api/nominations/by-transaction/${transactionId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('API Response status:', response.status);
+
+      const bodyText = await response.text();
+      console.log('API Response body text:', bodyText);
+      
+      let result: any = {};
+      try {
+        result = bodyText ? JSON.parse(bodyText) : {};
+      } catch (parseError) {
+        console.error('JSON parse error:', parseError);
+        throw new Error(`Invalid JSON response from server: ${bodyText.substring(0, 100)}...`);
+      }
+      
+      console.log('Parsed result:', result);
+
+      if (!response.ok) {
+        const message = result?.error || result?.message || `HTTP ${response.status}`;
+        console.error('API Error:', message);
+        throw new Error(message);
+      }
+
+      console.log('Nomination found by transaction ID:', result);
+      console.log('=== NOMINATION SEARCH COMPLETE ===');
+      
+      return {
+        success: true,
+        transaction: result.transaction || result,
+        nomination: result.nomination
+      };
+
+    } catch (error) {
+      console.error('Error finding nomination by transaction ID:', error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to find nomination by transaction ID'
+      };
+    }
+  }
+
+  /**
    * Update payment status with verification
    * @param nominationId - The ObjectId of the nomination
    * @param transactionId - The transaction ID from CyberSource
