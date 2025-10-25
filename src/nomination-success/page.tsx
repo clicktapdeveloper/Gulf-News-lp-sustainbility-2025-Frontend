@@ -15,12 +15,19 @@ const NominationSuccess: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log('=== NOMINATION SUCCESS PAGE LOADED ===');
+    console.log('URL Parameters:', { objectId, transactionId });
+    console.log('localStorage nominationId:', localStorage.getItem('nominationId'));
+    console.log('localStorage nominationEmail:', localStorage.getItem('nominationEmail'));
+    console.log('localStorage transactionId:', localStorage.getItem('transactionId'));
+    
     // Always attempt to load transaction details when page loads
     loadTransactionDetails();
   }, [objectId, transactionId]);
 
   const loadTransactionDetails = async () => {
     try {
+      console.log('=== LOADING TRANSACTION DETAILS ===');
       setLoading(true);
       setError(null);
       
@@ -28,6 +35,8 @@ const NominationSuccess: React.FC = () => {
       const urlNominationId = objectId;
       const storedNominationId = localStorage.getItem('nominationId');
       const finalNominationId = urlNominationId || storedNominationId;
+      
+      console.log('Nomination ID sources:', { urlNominationId, storedNominationId, finalNominationId });
       
       if (finalNominationId) {
         console.log('Loading transaction details for nomination ID:', finalNominationId);
@@ -73,8 +82,10 @@ const NominationSuccess: React.FC = () => {
         // If we only have transaction ID but no nomination ID, 
         // we need to find the nomination by transaction ID
         console.log('Only transaction ID available, attempting to find nomination...');
+        console.log('Transaction ID:', transactionId);
         await findNominationByTransactionId(transactionId);
       } else {
+        console.log('No nomination ID or transaction ID found');
         setError('No nomination ID or transaction ID found');
       }
       
@@ -88,9 +99,11 @@ const NominationSuccess: React.FC = () => {
 
   const findNominationByTransactionId = async (txnId: string) => {
     try {
+      console.log('=== FINDING NOMINATION BY TRANSACTION ID ===');
       console.log('Searching for nomination with transaction ID:', txnId);
       
       const response = await transactionService.findNominationByTransactionId(txnId);
+      console.log('Find nomination response:', response);
       
       if (response.success && response.nomination) {
         console.log('Nomination found:', response.nomination);
