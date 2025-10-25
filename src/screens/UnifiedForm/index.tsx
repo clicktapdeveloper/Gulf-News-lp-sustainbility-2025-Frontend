@@ -328,6 +328,10 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             );
             
             if (saved) {
+                // Store nomination ID for payment verification
+                localStorage.setItem('nominationId', result.objectId);
+                localStorage.setItem('nominationEmail', formData.email || '');
+                
                 setShowPayment(true); // Automatically show payment form
                 showSuccessToast('Nomination form submitted successfully! Please complete your payment.');
             } else {
