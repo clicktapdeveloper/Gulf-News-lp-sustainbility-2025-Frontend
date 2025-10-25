@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CyberSourceHostedCheckoutModal from './CyberSourceHostedCheckoutModal';
 import CustomButton from '@/screens/CustomButton';
 import { showErrorToast } from '@/lib/toast';
@@ -27,6 +27,19 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
     }
     return true;
   };
+
+  // Automatically open the payment modal when the component mounts
+  useEffect(() => {
+    // Check if form is valid, then open modal automatically
+    const isValid = requiredFields.every(field => formData[field] && formData[field].trim());
+    if (isValid) {
+      setShowModal(true);
+    } else {
+      // If form is not valid, show which fields are missing
+      const missingFields = requiredFields.filter(field => !formData[field] || !formData[field].trim());
+      console.warn('Cannot auto-open payment: missing fields:', missingFields);
+    }
+  }, [formData]);
 
   const handlePaymentSuccess = (paymentId?: string) => {
     console.log('=== NOMINATION PAYMENT SUCCESS ===');
