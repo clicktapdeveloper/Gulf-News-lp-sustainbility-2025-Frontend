@@ -13,19 +13,45 @@ const NominationSuccess: React.FC = () => {
   const [nominationId, setNominationId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     console.log('=== NOMINATION SUCCESS PAGE LOADED ===');
+    console.log('Current URL:', window.location.href);
+    console.log('Search params:', searchParams.toString());
     console.log('URL Parameters:', { objectId, transactionId });
     console.log('localStorage nominationId:', localStorage.getItem('nominationId'));
     console.log('localStorage nominationEmail:', localStorage.getItem('nominationEmail'));
     console.log('localStorage transactionId:', localStorage.getItem('transactionId'));
+    console.log('All localStorage keys:', Object.keys(localStorage));
+    console.log('localStorage values:', {
+      nominationId: localStorage.getItem('nominationId'),
+      nominationEmail: localStorage.getItem('nominationEmail'),
+      transactionId: localStorage.getItem('transactionId'),
+      gulfnews_nomination_data: localStorage.getItem('gulfnews_nomination_data')
+    });
     
-    // Always attempt to load transaction details when page loads
+    setMounted(true);
+    
+    // Add a small delay to ensure all React state is properly initialized
+    const timer = setTimeout(() => {
+      console.log('=== TIMER TRIGGERED - LOADING TRANSACTION DETAILS ===');
+      loadTransactionDetails();
+    }, 100);
+    
+    // Also try immediately as a fallback
+    console.log('=== IMMEDIATE FALLBACK - LOADING TRANSACTION DETAILS ===');
     loadTransactionDetails();
-  }, [objectId, transactionId]);
+    
+    return () => clearTimeout(timer);
+  }, []); // Empty dependency array to run only once on mount
 
   const loadTransactionDetails = async () => {
+    if (!mounted) {
+      console.log('Component not mounted yet, skipping loadTransactionDetails');
+      return;
+    }
+    
     try {
       console.log('=== LOADING TRANSACTION DETAILS ===');
       setLoading(true);
@@ -34,9 +60,33 @@ const NominationSuccess: React.FC = () => {
       // Get nomination ID from URL params or localStorage
       const urlNominationId = objectId;
       const storedNominationId = localStorage.getItem('nominationId');
-      const finalNominationId = urlNominationId || storedNominationId;
       
-      console.log('Nomination ID sources:', { urlNominationId, storedNominationId, finalNominationId });
+      // Try alternative localStorage keys as fallback
+      const alternativeKeys = ['objectId', 'nominationObjectId', 'nomination_id'];
+      let alternativeNominationId = null;
+      
+      for (const key of alternativeKeys) {
+        const value = localStorage.getItem(key);
+        if (value) {
+          console.log(`Found alternative nomination ID in localStorage['${key}']:`, value);
+          alternativeNominationId = value;
+          break;
+        }
+      }
+      
+      const finalNominationId = urlNominationId || storedNominationId || alternativeNominationId;
+      
+      console.log('=== NOMINATION ID RESOLUTION ===');
+      console.log('URL objectId:', urlNominationId);
+      console.log('Stored nominationId:', storedNominationId);
+      console.log('Alternative nominationId:', alternativeNominationId);
+      console.log('Final nominationId:', finalNominationId);
+      console.log('objectId type:', typeof objectId);
+      console.log('objectId length:', objectId?.length);
+      console.log('storedNominationId type:', typeof storedNominationId);
+      console.log('storedNominationId length:', storedNominationId?.length);
+      
+      console.log('Nomination ID sources:', { urlNominationId, storedNominationId, alternativeNominationId, finalNominationId });
       
       if (finalNominationId) {
         console.log('Loading transaction details for nomination ID:', finalNominationId);
