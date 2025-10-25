@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import CustomButton from '@/screens/CustomButton';
 import PaymentVerification from '@/components/PaymentVerification';
@@ -15,43 +15,7 @@ const NominationSuccess: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    console.log('=== NOMINATION SUCCESS PAGE LOADED ===');
-    console.log('Current URL:', window.location.href);
-    console.log('Search params:', searchParams.toString());
-    console.log('URL Parameters:', { objectId, transactionId });
-    console.log('localStorage nominationId:', localStorage.getItem('nominationId'));
-    console.log('localStorage nominationEmail:', localStorage.getItem('nominationEmail'));
-    console.log('localStorage transactionId:', localStorage.getItem('transactionId'));
-    console.log('All localStorage keys:', Object.keys(localStorage));
-    console.log('localStorage values:', {
-      nominationId: localStorage.getItem('nominationId'),
-      nominationEmail: localStorage.getItem('nominationEmail'),
-      transactionId: localStorage.getItem('transactionId'),
-      gulfnews_nomination_data: localStorage.getItem('gulfnews_nomination_data')
-    });
-    
-    setMounted(true);
-    
-    // Add a small delay to ensure all React state is properly initialized
-    const timer = setTimeout(() => {
-      console.log('=== TIMER TRIGGERED - LOADING TRANSACTION DETAILS ===');
-      loadTransactionDetails();
-    }, 100);
-    
-    // Also try immediately as a fallback
-    console.log('=== IMMEDIATE FALLBACK - LOADING TRANSACTION DETAILS ===');
-    loadTransactionDetails();
-    
-    return () => clearTimeout(timer);
-  }, []); // Empty dependency array to run only once on mount
-
-  const loadTransactionDetails = async () => {
-    if (!mounted) {
-      console.log('Component not mounted yet, skipping loadTransactionDetails');
-      return;
-    }
-    
+  const loadTransactionDetails = useCallback(async () => {
     try {
       console.log('=== LOADING TRANSACTION DETAILS ===');
       setLoading(true);
@@ -122,11 +86,24 @@ const NominationSuccess: React.FC = () => {
           
           // If transaction is already paid, show success immediately
           if (response.transaction.status === 'paid') {
-            handleVerificationSuccess(response.nomination || response.transaction);
+            setVerificationComplete(true);
+            TransactionService.clearSensitiveData();
           } else if (transactionId) {
             // If unpaid but we have transaction ID, automatically verify payment
             console.log('Transaction is unpaid, attempting automatic verification...');
-            await autoVerifyPayment(finalNominationId, transactionId, response.transaction.customerEmail);
+            
+            const verifyResponse = await transactionService.updatePaymentStatus(
+              finalNominationId, 
+              transactionId, 
+              response.transaction.customerEmail
+            );
+            
+            if (verifyResponse.success) {
+              setVerificationComplete(true);
+              TransactionService.clearSensitiveData();
+            } else {
+              setError(verifyResponse.error || 'Failed to verify payment automatically');
+            }
           }
         } else {
           setError(response.error || 'Failed to load transaction details');
@@ -137,7 +114,42 @@ const NominationSuccess: React.FC = () => {
         // we need to find the nomination by transaction ID
         console.log('Only transaction ID available, attempting to find nomination...');
         console.log('Transaction ID:', transactionId);
-        await findNominationByTransactionId(transactionId);
+        
+        const findResponse = await transactionService.findNominationByTransactionId(transactionId);
+        
+        if (findResponse.success && findResponse.nomination) {
+          setNominationId(findResponse.nomination._id);
+          
+          // Store transaction ID and email for verification
+          localStorage.setItem('transactionId', transactionId);
+          if (findResponse.nomination.customerEmail) {
+            localStorage.setItem('nominationEmail', findResponse.nomination.customerEmail);
+          }
+          
+          // If the nomination is already paid, show success immediately
+          if (findResponse.nomination.status === 'paid') {
+            setVerificationComplete(true);
+            TransactionService.clearSensitiveData();
+          } else {
+            // If unpaid, automatically verify payment
+            console.log('Nomination found but unpaid, attempting automatic verification...');
+            
+            const verifyResponse = await transactionService.updatePaymentStatus(
+              findResponse.nomination._id, 
+              transactionId, 
+              findResponse.nomination.customerEmail
+            );
+            
+            if (verifyResponse.success) {
+              setVerificationComplete(true);
+              TransactionService.clearSensitiveData();
+            } else {
+              setError(verifyResponse.error || 'Failed to verify payment automatically');
+            }
+          }
+        } else {
+          setError(findResponse.error || 'Nomination not found for this transaction ID');
+        }
       } else {
         console.log('No nomination ID or transaction ID found');
         setError('No nomination ID or transaction ID found');
@@ -149,7 +161,7 @@ const NominationSuccess: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [objectId, transactionId]);
 
   const autoVerifyPayment = async (nominationId: string, txnId: string, email: string) => {
     try {
@@ -228,6 +240,34 @@ const NominationSuccess: React.FC = () => {
   const handleSubmitAnother = () => {
     navigate('/apply-for-nomination');
   };
+
+  // Set mounted flag immediately
+  useEffect(() => {
+    console.log('=== NOMINATION SUCCESS PAGE LOADED ===');
+    console.log('Current URL:', window.location.href);
+    console.log('Search params:', searchParams.toString());
+    console.log('URL Parameters:', { objectId, transactionId });
+    console.log('localStorage nominationId:', localStorage.getItem('nominationId'));
+    console.log('localStorage nominationEmail:', localStorage.getItem('nominationEmail'));
+    console.log('localStorage transactionId:', localStorage.getItem('transactionId'));
+    console.log('All localStorage keys:', Object.keys(localStorage));
+    console.log('localStorage values:', {
+      nominationId: localStorage.getItem('nominationId'),
+      nominationEmail: localStorage.getItem('nominationEmail'),
+      transactionId: localStorage.getItem('transactionId'),
+      gulfnews_nomination_data: localStorage.getItem('gulfnews_nomination_data')
+    });
+    
+    setMounted(true);
+  }, []); // Empty dependency array to run only once on mount
+
+  // Load transaction details after component is mounted
+  useEffect(() => {
+    if (mounted) {
+      console.log('=== TIMER TRIGGERED - LOADING TRANSACTION DETAILS ===');
+      loadTransactionDetails();
+    }
+  }, [mounted, loadTransactionDetails]);
 
   if (loading) {
     return (
