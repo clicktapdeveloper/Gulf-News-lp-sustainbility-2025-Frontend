@@ -306,7 +306,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             email: formData.email || '',
             companyName: formData.companyName2 || formData.companyName || '',
             designation: formData.designation || '',
-            phone: formData.phone || '',
+            phone: formData.phone ? `+971${formData.phone}` : '',
             tradeLicense: formData.tradeLicense || '',
             supportingDocument: uploadedFileUrls.supportingDocument?.join(',') || null,
             message: formData.message || null
@@ -344,6 +344,12 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
         console.log('Form Type:', type);
         console.log('Form Data:', data);
         
+        // Automatically add +971 country code to phone numbers
+        const processedData = { ...data };
+        if (processedData.phone) {
+            processedData.phone = `+971${processedData.phone}`;
+        }
+        
         let endpoint: string;
         
         switch (type) {
@@ -361,14 +367,14 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
         }
         
         console.log('API Endpoint:', `${ENV_CONFIG.API_BASE_URL}${endpoint}`);
-        console.log('Request Body:', JSON.stringify(data));
+        console.log('Request Body:', JSON.stringify(processedData));
         
         const response = await fetch(`${ENV_CONFIG.API_BASE_URL}${endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(processedData),
         });
 
         console.log('Response Status:', response.status);
@@ -524,7 +530,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                         type="tel"
                         name={field.name}
                         required={field.required}
-                        placeholder={field.placeholder}
+                        placeholder="Enter phone number"
                         className={`flex-1 ${baseInputClasses}`}
                         value={formData[field.name] || ''}
                         onChange={handleInputChange}
