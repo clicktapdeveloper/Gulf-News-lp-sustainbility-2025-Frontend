@@ -264,6 +264,12 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
+        // Prevent form submission if payment is already shown
+        if (showPayment) {
+            console.log('Payment already shown, preventing form submission');
+            return;
+        }
+        
         if (formType === 'applyForNomination') {
             // For nomination forms, submit to MongoDB with 'unpaid' status first
             setIsSubmitting(true);
@@ -290,6 +296,14 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
     const submitNominationForm = async () => {
         console.log('=== SUBMITTING NOMINATION FORM ===');
+        
+        // Prevent double submission
+        if (isSubmitting) {
+            console.log('Form already submitting, ignoring duplicate submission');
+            return;
+        }
+        
+        setIsSubmitting(true);
         console.log('Form Data:', formData);
         console.log('Uploaded Files:', uploadedFiles);
 
@@ -332,8 +346,13 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 localStorage.setItem('nominationId', result.objectId);
                 localStorage.setItem('nominationEmail', formData.email || '');
                 
-                setShowPayment(true); // Automatically show payment form
-                showSuccessToast('Nomination form submitted successfully! Please complete your payment.');
+                // Only show payment if not already shown
+                if (!showPayment) {
+                    setShowPayment(true); // Automatically show payment form
+                    showSuccessToast('Nomination form submitted successfully! Please complete your payment.');
+                } else {
+                    console.log('Payment form already shown, skipping duplicate display');
+                }
             } else {
                 throw new Error('Failed to save nomination data locally');
             }
