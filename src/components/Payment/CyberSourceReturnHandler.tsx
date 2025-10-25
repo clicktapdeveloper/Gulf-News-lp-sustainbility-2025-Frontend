@@ -80,6 +80,17 @@ const CyberSourceReturnHandler: React.FC<CyberSourceReturnHandlerProps> = ({
             message: 'Payment completed successfully'
           });
           
+          // Send message to parent window if this is opened in a popup
+          if (window.opener) {
+            window.opener.postMessage({
+              type: 'PAYMENT_SUCCESS',
+              paymentId: responseData.transaction_id,
+              amount: responseData.auth_amount || responseData.req_amount,
+              currency: responseData.req_currency || 'AED',
+              data: backendResult
+            }, window.location.origin);
+          }
+          
           onSuccess?.(backendResult);
           
         } catch (backendError) {
@@ -90,6 +101,17 @@ const CyberSourceReturnHandler: React.FC<CyberSourceReturnHandlerProps> = ({
             paymentId: responseData.transaction_id,
             message: 'Payment completed successfully'
           });
+          
+          // Send message to parent window even if backend processing fails
+          if (window.opener) {
+            window.opener.postMessage({
+              type: 'PAYMENT_SUCCESS',
+              paymentId: responseData.transaction_id,
+              amount: responseData.auth_amount || responseData.req_amount,
+              currency: responseData.req_currency || 'AED',
+              data: { success: true }
+            }, window.location.origin);
+          }
         }
       } else {
         // Show error toast
@@ -97,6 +119,14 @@ const CyberSourceReturnHandler: React.FC<CyberSourceReturnHandlerProps> = ({
           success: false, 
           error: statusMessage 
         });
+        
+        // Send error message to parent window if this is opened in a popup
+        if (window.opener) {
+          window.opener.postMessage({
+            type: 'PAYMENT_ERROR',
+            error: statusMessage
+          }, window.location.origin);
+        }
         
         onError?.(statusMessage);
       }
@@ -120,6 +150,14 @@ const CyberSourceReturnHandler: React.FC<CyberSourceReturnHandlerProps> = ({
         success: false, 
         error: errorMessage 
       });
+      
+      // Send error message to parent window if this is opened in a popup
+      if (window.opener) {
+        window.opener.postMessage({
+          type: 'PAYMENT_ERROR',
+          error: errorMessage
+        }, window.location.origin);
+      }
       
       onError?.(errorMessage);
     } finally {
