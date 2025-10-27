@@ -46,13 +46,13 @@ class TransactionService {
    * @param nominationId - The ObjectId of the nomination
    * @returns Promise<TransactionResponse> Transaction details
    */
-  async getTransactionDetails(nominationId: string): Promise<TransactionResponse> {
+  async getTransactionDetails(nominationId: string, transactionId: string): Promise<TransactionResponse> {
     try {
       console.log('=== GETTING TRANSACTION DETAILS ===');
       console.log('Nomination ID:', nominationId);
       console.log('Base URL:', this.baseURL);
 
-      const response = await fetch(`${this.baseURL}/api/nominations/${nominationId}/transaction`, {
+      const response = await fetch(`${this.baseURL}/api/nominations/${nominationId}/transaction/${transactionId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

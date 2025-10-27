@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import CustomButton from '@/screens/CustomButton';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { transactionService } from '@/lib/transaction-service';
 
 const NominationSuccess: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,20 @@ const NominationSuccess: React.FC = () => {
     console.log('=== NOMINATION SUCCESS USE EFFECT TRIGGERED ===');
     console.log('transactionId:', transactionId);
     console.log('objectId:', objectId);
+    const loadTransactionDetails = async () => {
+      if (!objectId || !transactionId) {
+        console.log('No objectId or transactionId found');
+        return;
+      }
+      const transactionDetailsResponse = await transactionService.getTransactionDetails(objectId, transactionId);
+      if (transactionDetailsResponse.success) {
+        const transactionDetails = transactionDetailsResponse.transaction;
+        console.log('transactionDetails:', transactionDetails);
+      } else {
+        console.log('Failed to get transaction details');
+      }
+    };
+    loadTransactionDetails();
   }, [transactionId, objectId]);
 
   return (
