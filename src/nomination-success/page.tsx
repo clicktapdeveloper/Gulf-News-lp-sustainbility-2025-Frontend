@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CustomButton from '@/screens/CustomButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const NominationSuccess: React.FC = () => {
   const navigate = useNavigate();
@@ -8,6 +8,17 @@ const NominationSuccess: React.FC = () => {
   const handleGoHome = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    const loadFormData = async () => {
+      const [searchParams] = useSearchParams();
+      const transactionId = searchParams.get('transaction_id');
+      const objectId = searchParams.get('object_id');
+      console.log('transactionId:', transactionId);
+        console.log('objectId:', objectId);
+      };
+      loadFormData();
+    }, []);
 
   return (
     <div className="flex flex-col items-center justify-center pt-12 sm:pt-0 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding relative space-y-[var(--space-y)]">
