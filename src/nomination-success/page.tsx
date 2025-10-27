@@ -12,13 +12,14 @@ const NominationSuccess: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log('...I am being called...')
     const loadFormData = async () => {
 
       console.log('transactionId:', transactionId);
         console.log('objectId:', objectId);
       };
       loadFormData();
-    }, []);
+    }, [transactionId]);
 
   return (
     <div className="flex flex-col items-center justify-center pt-12 sm:pt-0 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding relative space-y-[var(--space-y)]">
