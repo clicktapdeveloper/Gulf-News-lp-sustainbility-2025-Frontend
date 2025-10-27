@@ -7,19 +7,22 @@ const NominationSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
   const transactionId = searchParams.get('transaction_id');
   const objectId = searchParams.get('object_id');
+  
+  console.log('NominationSuccess component rendered');
+  console.log('Full URL:', window.location.href);
+  console.log('searchParams:', searchParams.toString());
+  console.log('transactionId:', transactionId);
+  console.log('objectId:', objectId);
+  
   const handleGoHome = () => {
     navigate('/');
   };
 
   useEffect(() => {
-    console.log('...I am being called...')
-    const loadFormData = async () => {
-
-      console.log('transactionId:', transactionId);
-        console.log('objectId:', objectId);
-      };
-      loadFormData();
-    }, [transactionId]);
+    console.log('=== NOMINATION SUCCESS USE EFFECT TRIGGERED ===');
+    console.log('transactionId:', transactionId);
+    console.log('objectId:', objectId);
+  }, [transactionId, objectId]);
 
   return (
     <div className="flex flex-col items-center justify-center pt-12 sm:pt-0 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding relative space-y-[var(--space-y)]">
