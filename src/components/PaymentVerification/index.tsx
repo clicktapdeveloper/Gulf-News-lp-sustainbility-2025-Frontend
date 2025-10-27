@@ -3,6 +3,7 @@ import { transactionService, TransactionService, type TransactionDetails } from 
 
 interface PaymentVerificationProps {
   nominationId: string;
+  transactionId?: string;
   onSuccess?: (nomination: any) => void;
   onError?: (error: Error) => void;
 }
