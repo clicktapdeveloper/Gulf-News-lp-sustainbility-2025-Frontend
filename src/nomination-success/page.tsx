@@ -4,16 +4,16 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const NominationSuccess: React.FC = () => {
   const navigate = useNavigate();
-
+  const [searchParams] = useSearchParams();
+  const transactionId = searchParams.get('transaction_id');
+  const objectId = searchParams.get('object_id');
   const handleGoHome = () => {
     navigate('/');
   };
 
   useEffect(() => {
     const loadFormData = async () => {
-      const [searchParams] = useSearchParams();
-      const transactionId = searchParams.get('transaction_id');
-      const objectId = searchParams.get('object_id');
+
       console.log('transactionId:', transactionId);
         console.log('objectId:', objectId);
       };
@@ -28,7 +28,7 @@ const NominationSuccess: React.FC = () => {
       <div className="z-10 w-full max-w-6xl mx-auto text-center space-y-[var(--space-y)]">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[60px] font-bold">
           <p className="text-[var(--tertiary-color)]">Thank You for Your</p>
-          <p className="text-[var(--secondary-color)]">Nomination Submission</p>
+          <p className="text-[var(--secondary-color)]">Nomination Submission {transactionId ? transactionId : objectId ? objectId : 'Testing...'}</p>
         </h1>
         <p className="text-gray-600 text-center text-lg">
           Your nomination for the Sustainability Excellence Awards 2025 has been submitted successfully. We will review your application and get back to you soon.
