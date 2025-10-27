@@ -10,6 +10,7 @@ interface PaymentVerificationProps {
 
 const PaymentVerification: React.FC<PaymentVerificationProps> = ({ 
   nominationId, 
+  transactionId,
   onSuccess, 
   onError 
 }) => {
@@ -20,7 +21,7 @@ const PaymentVerification: React.FC<PaymentVerificationProps> = ({
 
   useEffect(() => {
     loadTransactionDetails();
-  }, [nominationId]);
+  }, [nominationId, transactionId]);
 
   const loadTransactionDetails = async () => {
     try {
@@ -29,7 +30,23 @@ const PaymentVerification: React.FC<PaymentVerificationProps> = ({
       
       console.log('Loading transaction details for nomination:', nominationId);
       
-      const response = await transactionService.getTransactionDetails(nominationId);
+      let response;
+      
+      if (transactionId) {
+        // Use getTransactionDetails if we have both nominationId and transactionId
+        response = await transactionService.getTransactionDetails(nominationId, transactionId);
+      } else if (nominationId) {
+        // Fallback: try to find by nomination ID only
+        // This will likely need a transactionId from localStorage
+        const storedTransactionId = localStorage.getItem('transactionId');
+        if (storedTransactionId) {
+          response = await transactionService.getTransactionDetails(nominationId, storedTransactionId);
+        } else {
+          throw new Error('Transaction ID is required to load transaction details');
+        }
+      } else {
+        throw new Error('Nomination ID is required');
+      }
       
       if (response.success && response.transaction) {
         setTransactionDetails(response.transaction);
