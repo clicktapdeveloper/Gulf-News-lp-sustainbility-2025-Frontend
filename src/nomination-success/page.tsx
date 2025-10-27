@@ -6,7 +6,7 @@ const NominationSuccess: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const transactionId = searchParams.get('transaction_id');
-  const objectId = searchParams.get('object_id');
+  const objectId = localStorage.getItem('objectId');
   
   console.log('NominationSuccess component rendered');
   console.log('Full URL:', window.location.href);
