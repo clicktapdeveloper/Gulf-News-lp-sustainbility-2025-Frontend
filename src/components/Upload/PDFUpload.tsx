@@ -230,7 +230,7 @@ const PDFUpload: React.FC<PDFUploadProps> = ({
                     }
                   }}
                   disabled={uploading || uploadedFiles.length >= maxFiles}
-                  className="ml-3 !bg-[#596FEC] hover:bg-[#5458d4] text-white font-medium text-sm px-6 py-2 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                  className=" ml-3 !bg-[#596FEC] hover:bg-[#5458d4] text-white font-medium !text-sm !px-3 !py-1 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
                 >
                   {uploading ? 'Uploading...' : 'Upload file'}
                 </button>

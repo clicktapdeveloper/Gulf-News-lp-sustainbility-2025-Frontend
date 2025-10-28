@@ -1,6 +1,14 @@
 import { Calendar, Clock3, Instagram, Linkedin, MapPin, Twitter } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+    const navigate = useNavigate();
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
     return <footer className="w-full bg-secondary text-white">
         <div className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding">
             <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
@@ -31,10 +39,10 @@ const Footer = () => {
 
                 <nav className="flex flex-col !items-start gap-6 md:items-center md:gap-10">
                     <ul className="flex flex-col sm:flex-row items-start gap-4 sm:gap-8">
-                        <li><a href="#about" className="hover:underline !text-[var(--white-color)] text-sm ">About Event</a></li>
-                        <li><a href="#why" className="hover:underline !text-[var(--white-color)] text-sm ">Why Attend</a></li>
-                        <li><a href="#awards" className="hover:underline !text-[var(--white-color)] text-sm ">Awards Criteria</a></li>
-                        <li><a href="#sponsors" className="hover:underline !text-[var(--white-color)] text-sm ">Sponsors</a></li>
+                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('about-event')}>About Event</li>
+                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('why')}>Why Attend</li>
+                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('awards')}>Awards Criteria</li>
+                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('sponsors')}>Sponsors</li>
                     </ul>
                     <ul className="flex flex-col sm:flex-row !items-start gap-4 sm:gap-8">
                         {/* <li><a href="#terms" className="hover:underline !text-[var(--white-color)] text-sm ">Terms & Conditions</a></li>
