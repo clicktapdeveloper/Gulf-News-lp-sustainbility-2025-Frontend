@@ -14,7 +14,7 @@ const Why = () => {
             <Card iconSrc="/logo/card4.svg" title="Celebrate organizations redefining corporate responsibility" description="" variant="light" />
         </div>
         <div className="mx-auto w-5/6 sm:w-1/2 lg:w-1/6">
-            <CustomButton className="w-full !bg-white !text-secondary" onClick={() => navigate('/apply-for-nomination')}>Nominate Now</CustomButton>
+            <CustomButton className="w-full !bg-white !text-secondary" onClick={() => navigate('/register-for-attend')}>Register to Attend</CustomButton>
         </div>
     </div>
     </div>
