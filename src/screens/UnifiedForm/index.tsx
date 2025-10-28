@@ -359,6 +359,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             companyName: formData.companyName2 || formData.companyName || '',
             designation: formData.designation || '',
             phone: formData.phone ? `+971${formData.phone}` : '',
+            category: formData.category || undefined,
             tradeLicense: uploadedFileUrls.tradeLicense?.join(',') || undefined,
             supportingDocument: uploadedFileUrls.supportingDocument?.join(',') || undefined,
             message: formData.message || undefined

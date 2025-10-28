@@ -10,6 +10,7 @@ export interface NominationFormData {
   companyName: string;
   designation: string;
   phone: string;
+  category?: string | null;
   tradeLicense?: string | null;
   supportingDocument?: string | null;
   message?: string | null;
