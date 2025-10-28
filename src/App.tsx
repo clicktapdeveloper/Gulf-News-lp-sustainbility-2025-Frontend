@@ -43,6 +43,17 @@ export default function App() {
             <BecomeEventSponsor />
           </>
         } />
+        <Route path="/the-sustainability-excellence-awards-2025" element={
+          <>
+            <Hero />
+            <Event />
+            <Why />
+            <Award />
+            <Winner />
+            <SponsorBy />
+            <BecomeEventSponsor />
+          </>
+        } />
         <Route path="/apply-for-nomination" element={<ApplyForNominationPage />} />
         <Route path="/inquire-about-sponsorship" element={<InquireAboutSponsorshipPage />} />
         <Route path="/register-for-attend" element={<RegisterForAttendPage />} />
