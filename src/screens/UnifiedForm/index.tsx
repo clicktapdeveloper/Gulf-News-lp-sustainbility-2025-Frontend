@@ -622,7 +622,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
         if (field.type === 'tel') {
             return (
-                <div className="flex flex-col sm:flex-row items-start gap-2">
+                <div className="flex items-start gap-2">
                     <div className="flex items-center gap-2 rounded-md border border-[var(--border-color)]/40 bg-white px-3 py-[5px] text-sm min-w-fit sm:w-auto">
                         <span className="text-base">🇦🇪</span>
                         <span className="text-[var(--secondary-color)]">+971</span>
