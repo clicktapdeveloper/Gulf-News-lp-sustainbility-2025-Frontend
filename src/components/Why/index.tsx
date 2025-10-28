@@ -1,7 +1,9 @@
 import CustomButton from "@/screens/CustomButton";
 import Card from "@/screens/Card";
+import { useNavigate } from "react-router-dom";
 
 const Why = () => {
+    const navigate = useNavigate();
     return <div className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding bg-whitec">
     <div className="flex flex-col text-center gap-2 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding space-y-[var(--space-y)] bg-[url('/layout.svg'),_url('/why.svg')] bg-no-repeat bg-center bg-cover">
         <h1 className="text-2xl lg:text-title-text-size font-bold text-white">Why You Should Attend</h1>
@@ -12,7 +14,7 @@ const Why = () => {
             <Card iconSrc="/logo/card4.svg" title="Celebrate organizations redefining corporate responsibility" description="" variant="light" />
         </div>
         <div className="mx-auto w-5/6 sm:w-1/2 lg:w-1/6">
-            <CustomButton className="w-full !bg-white !text-secondary">Nominate Now</CustomButton>
+            <CustomButton className="w-full !bg-white !text-secondary" onClick={() => navigate('/apply-for-nomination')}>Nominate Now</CustomButton>
         </div>
     </div>
     </div>

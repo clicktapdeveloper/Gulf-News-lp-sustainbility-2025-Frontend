@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Event from './components/Event'
@@ -21,8 +21,15 @@ import NominationSuccess from './nomination-success/page'
 import NominationError from './nomination-error/page'
 import NominationCancelled from './nomination-cancelled/page'
 import FormStorageDemo from './form-storage-demo/page'
+import { useEffect } from 'react';
 
 export default function App() {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/the-sustainability-excellence-awards-2025');
+  }, []);
 
   return (
     <div 

@@ -33,7 +33,7 @@ const Hero = () => {
                     className="w-full sm:w-auto">Nominate Now</CustomButton>
                     <CustomButton variant="outline" 
                     onClick={() => navigate('/inquire-about-sponsorship')} 
-                    className="w-full sm:w-auto">Be a Sponsor</CustomButton>
+                    className="w-full sm:w-auto">Become a Sponsor</CustomButton>
                     <CustomButton 
                     onClick={() => navigate('/register-for-attend')} 
                     className="w-full sm:w-auto whitespace-nowrap">Register to Attend</CustomButton>

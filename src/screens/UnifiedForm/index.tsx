@@ -142,7 +142,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 name: "message",
                 label: "Message (1000 words)",
                 type: "textarea",
-                placeholder: "Text here",
+                placeholder: "Tell us why you should win",
                 required: false,
                 maxLength: 1000,
                 rows: 6,
