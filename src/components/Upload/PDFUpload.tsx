@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Upload, FileText, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
+import { FileText, CheckCircle, Trash2 } from 'lucide-react';
 import { pdfUploadService, type UploadedFile, type UploadResponse } from '../../lib/pdf-upload-service';
 import { showSuccessToast, showErrorToast, showLoadingToast, dismissToast } from '../../lib/toast';
-import CustomButton from '../../screens/CustomButton';
 
 interface PDFUploadProps {
   onUploadSuccess?: (uploadedFile: UploadedFile) => void;
