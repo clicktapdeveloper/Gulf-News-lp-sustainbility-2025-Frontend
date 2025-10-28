@@ -652,7 +652,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     };
 
     return (
-        <section className="py-2 lg:px-6">
+        <section className="py-2">
             {/* <div className="w-full max-w-4xl rounded-2xl border border-[var(--border-color)]/30 bg-white/80 backdrop-blur shadow-sm"> */}
             <div className="w-full rounded-2xl border border-[var(--border-color)]/30 bg-white/80 backdrop-blur shadow-sm">
                 <div className="px-6 pt-6 pb-2">
