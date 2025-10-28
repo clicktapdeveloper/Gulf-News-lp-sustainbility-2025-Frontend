@@ -172,7 +172,7 @@ button:focus-visible {
   --text-title-text-size: 55px;
   --text-title-text-size-mobile: 30px;
   --text-subtitle-text-size: 24px;
-  --text-form-text-size: 16px;
+  --text-form-text-size: 20px;
   
   --color-background: var(--background);
   --color-foreground: var(--foreground);

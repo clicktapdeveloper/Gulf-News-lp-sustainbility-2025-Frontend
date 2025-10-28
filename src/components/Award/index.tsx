@@ -4,7 +4,6 @@ import AutoCarousel from "@/components/AutoCarousel";
 
 const Award = () => {
     return <div className="flex flex-col text-center gap-2 px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding space-y-[var(--space-y)] bg-[url('/layout.svg'),_url('/award.svg')] bg-no-repeat bg-center bg-cover min-h-[400px] sm:min-h-[400px] lg:h-80">
-        {/* <h1 className="text-2xl sm:text-3xl lg:text-[var(--h1-size)] font-bold !text-white">Award Categories & Criteria</h1> */}
         <h1 className="text-2xl lg:text-title-text-size font-bold !text-white">Award Categories & Criteria</h1>
         <div className="mx-auto w-full max-w-6xl">
             <AutoCarousel className="-mx-2 sm:-mx-3">

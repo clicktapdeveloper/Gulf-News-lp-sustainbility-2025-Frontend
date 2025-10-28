@@ -4,14 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
     const navigate = useNavigate();
-    // return <div className="relative flex flex-col lg:flex-row py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding h-[600px]">
     return <div className="relative flex flex-col lg:flex-row h-[600px] overflow-hidden">
         <div className="py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding z-10 !backdrop-blur-none lg:!backdrop-blur-xs 2xl:backdrop-blur-none !bg-[#EBF1E7]/40 xl:!bg-transparent space-y-[var(--space-y)]">
             <h1 className='text-[34px] sm:text-[55px] lg:text-[50px] font-[600] leading-tight'>
                 <div className='text-[var(--secondary-color)] w-full whitespace-nowrap'>Celebrating Leaders<span className="text-black">,</span></div>
                 <div className='text-[var(--tertiary-color)] w-full'>Inspiring Change</div>
             </h1>
-            {/* <span className="space-y-[var(--space-y)]"> */}
                 <p className='text-[14px] md:text-[16px] lg:text-[18px] max-w-3xl !font-[650]' style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
                 Join the UAE's most impactful sustainability recognition event — honoring organizations and individuals driving environmental and social transformation.
                 </p>
@@ -44,7 +42,6 @@ const Hero = () => {
                         <h5 className='font-bold text-[var(--secondary-color)] text-sm sm:text-base'>Gulf News & BeingShe</h5>
                     </span>
                 </div>
-            {/* </span> */}
         </div>
         <img src="/hero.svg" alt="Hero" className="absolute top-0 right-0" />
         <img src="/logo/SEA.svg" alt="Hero" className="absolute top-96 lg:top-0 right-[100px] lg:right-[500px] h-[200px] lg:h-[500px]" />
