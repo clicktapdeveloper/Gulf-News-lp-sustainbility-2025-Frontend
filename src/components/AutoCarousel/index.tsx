@@ -6,7 +6,6 @@ type AutoCarouselProps = {
     pauseOnHover?: boolean
     className?: string
     showControls?: boolean
-    allowManualControl?: boolean
 }
 
 // A lightweight, dependency-free horizontal carousel with auto-scroll and seamless looping.
@@ -14,7 +13,7 @@ type AutoCarouselProps = {
 // - Duplicates the children once to enable an infinite-loop illusion
 // - Advances by one item per tick
 // - Responsive: shows 1/2/4 items per view via Tailwind basis classes
-const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500, pauseOnHover = true, className = '', showControls = false, allowManualControl = false }) => {
+const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500, pauseOnHover = true, className = '', showControls = false }) => {
     const originalChildrenArray = useMemo(() => React.Children.toArray(children), [children])
     const duplicatedChildrenArray = useMemo(() => originalChildrenArray.concat(originalChildrenArray), [originalChildrenArray])
 
