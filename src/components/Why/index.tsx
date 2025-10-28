@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Why = () => {
     const navigate = useNavigate();
-    return <div className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding bg-whitec">
+    return <div id="why" className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding bg-whitec">
     <div className="flex flex-col text-center gap-2 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding space-y-[var(--space-y)] bg-[url('/layout.svg'),_url('/why.svg')] bg-no-repeat bg-center bg-cover">
         <h1 className="text-2xl lg:text-title-text-size font-bold text-white">Why You Should Attend</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mx-auto w-full max-w-6xl px-6">

@@ -6,6 +6,12 @@ import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
@@ -32,10 +38,10 @@ const Navbar = () => {
                     </div>
                 </div>
                 <ul className='hidden xl:flex items-center gap-4 space-x-5 hover:cursor-pointer'>
-                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'>About Event</li>
-                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'>Why Attend</li>
-                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'>Awards Criteria</li>
-                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'>Sponsors</li>
+                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('about-event')}>About Event</li>
+                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('why')}>Why Attend</li>
+                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('awards')}>Awards Criteria</li>
+                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('sponsors')}>Sponsors</li>
                 </ul>
                 <CustomButton 
                 className="text-sm xl:text-base"
@@ -96,16 +102,16 @@ const Navbar = () => {
                 <div className='overflow-hidden'>
                     <div className='border-t border-[var(--border-color)] pt-4'>
                         <ul className='space-y-3 mb-4'>
-                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer'>
+                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('about-event'); setIsMobileMenuOpen(false); }}>
                                 About Event
                             </li>
-                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer'>
+                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('why'); setIsMobileMenuOpen(false); }}>
                                 Why Attend
                             </li>
-                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer'>
+                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('awards'); setIsMobileMenuOpen(false); }}>
                                 Awards Criteria
                             </li>
-                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer'>
+                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('sponsors'); setIsMobileMenuOpen(false); }}>
                                 Sponsors
                             </li>
                         </ul>

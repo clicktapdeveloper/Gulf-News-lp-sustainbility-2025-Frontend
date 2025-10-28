@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Award = () => {
   const navigate = useNavigate();
 
-    return <div className="flex flex-col text-center gap-2 px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding space-y-[var(--space-y)] bg-[url('/layout.svg'),_url('/award.svg')] bg-no-repeat bg-center bg-cover min-h-[400px] sm:min-h-[400px] lg:h-80">
+    return <div id="awards" className="flex flex-col text-center gap-2 px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding space-y-[var(--space-y)] bg-[url('/layout.svg'),_url('/award.svg')] bg-no-repeat bg-center bg-cover min-h-[400px] sm:min-h-[400px] lg:h-80">
         <h1 className="text-2xl lg:text-title-text-size font-bold !text-white">Award Categories</h1>
         <div className="mx-auto w-full max-w-6xl">
             <AutoCarousel className="-mx-2 sm:-mx-3">

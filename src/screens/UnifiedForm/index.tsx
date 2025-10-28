@@ -151,7 +151,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
         ]
     },
     inquireAboutSponsorship: {
-        title: "Send Us A Message",
+        title: "Become a Sponsor",
         description: "Submit your details to explore sponsorship opportunities at the Sustainability Excellence Awards 2025.",
         submitButtonText: "Submit",
         fields: [

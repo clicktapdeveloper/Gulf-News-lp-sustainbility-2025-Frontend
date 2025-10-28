@@ -1,7 +1,7 @@
 import CustomButton from "@/screens/CustomButton";
 
 const Event = () => {
-    return <div className="flex flex-col text-center gap-2 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding bg-[var(--white-color)] space-y-[var(--space-y-mobile)] lg:space-y-[var(--space-y)] px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding">
+    return <div id="about-event" className="flex flex-col text-center gap-2 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding bg-[var(--white-color)] space-y-[var(--space-y-mobile)] lg:space-y-[var(--space-y)] px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding">
         <h1 className="text-xl lg:text-title-text-size font-bold !text-[var(--secondary-color)]">About Event</h1>
         <p className="text-[14px] md:text-[16px] lg:text-[20px]"
         style={{ fontFamily: "'Nunito Sans', sans-serif" }}

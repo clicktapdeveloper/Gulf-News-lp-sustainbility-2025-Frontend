@@ -45,9 +45,9 @@ const Footer = () => {
 
             <div className="flex flex-col space-y-[var(--space-y)] sm:space-y-0 sm:flex-row-reverse justify-between items-center mt-10 border-t border-whitec/10 pt-6">
             <div className="flex items-center gap-5">
-                <a aria-label="LinkedIn" href="#linkedin" className="opacity-90 hover:opacity-100 !text-[var(--white-color)]"><Linkedin className="h-5 w-5 sm:h-6 sm:w-6" /></a>
-                <a aria-label="X" href="#x" className="opacity-90 hover:opacity-100 !text-[var(--white-color)]"><Twitter className="h-5 w-5 sm:h-6 sm:w-6" /></a>
-                <a aria-label="Instagram" href="#instagram" className="opacity-90 hover:opacity-100 !text-[var(--white-color)]"><Instagram className="h-5 w-5 sm:h-6 sm:w-6" /></a>
+                <a aria-label="LinkedIn" target="_blank" href="https://www.linkedin.com/company/gulf-news/" className="opacity-90 hover:opacity-100 !text-[var(--white-color)]"><Linkedin className="h-5 w-5 sm:h-6 sm:w-6" /></a>
+                <a aria-label="X" target="_blank" href="https://x.com/gulf_news" className="opacity-90 hover:opacity-100 !text-[var(--white-color)]"><Twitter className="h-5 w-5 sm:h-6 sm:w-6" /></a>
+                <a aria-label="Instagram" target="_blank" href="https://www.instagram.com/gulfnews/" className="opacity-90 hover:opacity-100 !text-[var(--white-color)]"><Instagram className="h-5 w-5 sm:h-6 sm:w-6" /></a>
             </div>
             <div>
                 {/* <p className="text-xs sm:text-sm text-center md:text-left">© 2025 sustainabilityexcellenceawards. All rights reserved.</p> */}
