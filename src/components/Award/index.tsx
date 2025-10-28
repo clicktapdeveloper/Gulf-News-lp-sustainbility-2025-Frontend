@@ -9,7 +9,7 @@ const Award = () => {
     return <div id="awards" className="flex flex-col text-center gap-2 px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding space-y-[var(--space-y)] bg-[url('/layout.svg'),_url('/award.svg')] bg-no-repeat bg-center bg-cover min-h-[400px] sm:min-h-[400px] lg:h-80">
         <h1 className="text-2xl lg:text-title-text-size font-bold !text-white">Award Categories</h1>
         <div className="mx-auto w-full max-w-6xl">
-            <AutoCarousel className="-mx-2 sm:-mx-3" showControls={true} allowManualControl={true}>
+            <AutoCarousel className="-mx-2 sm:-mx-3" showControls={true}>
                 {/* Row 1 */}
                 <CardCategory iconSrc="/logo/award1.svg" title="Green Construction Leadership Award" description="Sustainable building & energy efficiency." extraText="Construction" extraHref="/construction" variant="light" />
                 <CardCategory iconSrc="/logo/award2.svg" title="Sustainable Developer of the Year" description="Long-term sustainability in planning & renewable energy." extraText="Property Development" extraHref="/property-development" variant="dark" />
