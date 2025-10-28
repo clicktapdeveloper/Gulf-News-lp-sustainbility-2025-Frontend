@@ -46,7 +46,7 @@ const Hero = () => {
                 {/* Mobile view images - shown below buttons */}
                 <div className="block lg:hidden mt-8 relative">
                     <img src="/hero.svg" alt="Hero" className="w-full" />
-                    <img src="/logo/SEA.svg" alt="SEA Logo" className="absolute right-0 top-1/2 -translate-y-1/2 h-[200px]" />
+                    <img src="/logo/SEA.svg" alt="SEA Logo" className="absolute left-0 top-1/2 -translate-y-1/2 h-[200px]" />
                 </div>
         </div>
         {/* Desktop view images - absolute positioned */}
