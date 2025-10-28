@@ -87,36 +87,40 @@ const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500
 
     return (
         <div
-            ref={containerRef}
-            className={`relative overflow-hidden ${className}`}
+            className={`relative ${className}`}
             onMouseEnter={pauseOnHover ? () => setIsPaused(true) : undefined}
             onMouseLeave={pauseOnHover ? () => setIsPaused(false) : undefined}
         >
             <div
-                ref={trackRef}
-                className="flex items-stretch"
-                style={{
-                    transform: `translateX(${Number.isFinite(translateX) ? translateX : 0}px)`,
-                    transition: isAnimating ? 'transform 600ms ease' : 'none',
-                    willChange: 'transform'
-                }}
+                ref={containerRef}
+                className="overflow-hidden"
             >
-                {duplicatedChildrenArray.map((child, i) => (
-                    <div
-                        key={i}
-                        ref={i === 0 ? firstItemRef : undefined}
-                        className="flex-none basis-full sm:basis-1/2 lg:basis-1/3 px-2 sm:px-3"
-                    >
-                        {child}
-                    </div>
-                ))}
+                <div
+                    ref={trackRef}
+                    className="flex items-stretch"
+                    style={{
+                        transform: `translateX(${Number.isFinite(translateX) ? translateX : 0}px)`,
+                        transition: isAnimating ? 'transform 600ms ease' : 'none',
+                        willChange: 'transform'
+                    }}
+                >
+                    {duplicatedChildrenArray.map((child, i) => (
+                        <div
+                            key={i}
+                            ref={i === 0 ? firstItemRef : undefined}
+                            className="flex-none basis-full sm:basis-1/2 lg:basis-1/3 px-2 sm:px-3"
+                        >
+                            {child}
+                        </div>
+                    ))}
+                </div>
             </div>
             
             {showControls && (
                 <>
                     <button
                         onClick={handlePrev}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200"
+                        className="absolute !-left-2 sm:-left-12 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full !px-2 shadow-lg transition-all duration-200"
                         aria-label="Previous"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -125,7 +129,7 @@ const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500
                     </button>
                     <button
                         onClick={handleNext}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200"
+                        className="absolute !-right-2 sm:-right-12 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full !px-2 shadow-lg transition-all duration-200"
                         aria-label="Next"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
