@@ -38,14 +38,14 @@ const Hero = () => {
                     <CustomButton 
                     onClick={() => navigate('/register-for-attend')} 
                     className="w-full sm:w-auto whitespace-nowrap">Register to Attend</CustomButton>
-                    <span className='flex flex-col justify-center'>
+                    {/* <span className='flex flex-col justify-center'>
                         <small className='text-xs text-gray-500 leading-4'>Powered by</small>
                         <h5 className='font-bold text-[var(--secondary-color)] text-sm sm:text-base'>Gulf News & BeingShe</h5>
-                    </span>
+                    </span> */}
                 </div>
         </div>
         <img src="/hero.svg" alt="Hero" className="absolute top-0 right-0" />
-        <img src="/logo/SEA.svg" alt="Hero" className="absolute top-60 lg:top-10 right-[30px] lg:right-[500px] h-[200px] lg:h-[350px]" />
+        <img src="/logo/SEA.svg" alt="Hero" className="absolute top-64 lg:top-10 right-[30px] lg:right-[500px] h-[160px] lg:h-[350px]" />
     </div>
 }
 
