@@ -20,7 +20,7 @@ export interface FormConfig {
 export interface FormField {
     name: string;
     label: string;
-    type: 'text' | 'email' | 'tel' | 'textarea' | 'file' | 'pdf-upload';
+    type: 'text' | 'email' | 'tel' | 'textarea' | 'file' | 'pdf-upload' | 'select';
     placeholder: string;
     required: boolean;
     gridCols?: 1 | 2; // For grid layout
@@ -28,6 +28,7 @@ export interface FormField {
     rows?: number; // For textarea
     maxSize?: number; // For PDF upload (in MB)
     maxFiles?: number; // For PDF upload
+    options?: string[]; // For select dropdowns
 }
 
 const FORM_CONFIGS: Record<string, FormConfig> = {
@@ -91,6 +92,41 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 placeholder: "Enter your trade license",
                 required: true,
                 gridCols: 1
+            },
+            {
+                name: "category",
+                label: "Select Category",
+                type: "select",
+                placeholder: "Select Category",
+                required: true,
+                gridCols: 1,
+                options: [
+                    "Aviation",
+                    "Fragrances & Cosmetics",
+                    "Food & Agriculture",
+                    "Investments & ESG",
+                    "Travel & Hospitality",
+                    "Leadership (Individual)",
+                    "Start-Ups",
+                    "Technology",
+                    "Finance",
+                    "Energy Management",
+                    "Renewable Energy",
+                    "Food & Beverage",
+                    "Electric Vehicles",
+                    "Transport & Mobility",
+                    "Manufacturing",
+                    "Tourism & Hospitality",
+                    "Fashion & Textiles",
+                    "Retail",
+                    "Maritime & Logistics",
+                    "Healthcare",
+                    "Education",
+                    "Business Set-Up",
+                    "Free Zones",
+                    "Property Development",
+                    "Construction"
+                ]
             },
             {
                 name: "supportingDocument",
@@ -557,6 +593,27 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                         <p className="text-sm text-gray-500 mt-1">{field.placeholder}</p>
                     )}
                 </div>
+            );
+        }
+
+        if (field.type === 'select') {
+            return (
+                <select
+                    name={field.name}
+                    required={field.required}
+                    className={baseInputClasses}
+                    value={formData[field.name] || ''}
+                    onChange={(e) => setFormData(prev => ({ ...prev, [field.name]: e.target.value }))}
+                >
+                    <option value="" disabled>
+                        {field.placeholder || 'Select an option'}
+                    </option>
+                    {(field.options || []).map((option) => (
+                        <option key={option} value={option}>
+                            {option}
+                        </option>
+                    ))}
+                </select>
             );
         }
 
