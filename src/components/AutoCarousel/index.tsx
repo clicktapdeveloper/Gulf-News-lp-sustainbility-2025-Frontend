@@ -5,6 +5,8 @@ type AutoCarouselProps = {
     autoPlayMs?: number
     pauseOnHover?: boolean
     className?: string
+    showControls?: boolean
+    allowManualControl?: boolean
 }
 
 // A lightweight, dependency-free horizontal carousel with auto-scroll and seamless looping.
@@ -12,7 +14,7 @@ type AutoCarouselProps = {
 // - Duplicates the children once to enable an infinite-loop illusion
 // - Advances by one item per tick
 // - Responsive: shows 1/2/4 items per view via Tailwind basis classes
-const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500, pauseOnHover = true, className = '' }) => {
+const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500, pauseOnHover = true, className = '', showControls = false, allowManualControl = false }) => {
     const originalChildrenArray = useMemo(() => React.Children.toArray(children), [children])
     const duplicatedChildrenArray = useMemo(() => originalChildrenArray.concat(originalChildrenArray), [originalChildrenArray])
 
@@ -72,6 +74,18 @@ const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500
 
     const translateX = -(index * itemWidth)
 
+    const handleNext = useCallback(() => {
+        setIndex((prev) => prev + 1)
+        setIsAnimating(true)
+        setIsPaused(true)
+    }, [])
+
+    const handlePrev = useCallback(() => {
+        setIndex((prev) => prev - 1)
+        setIsAnimating(true)
+        setIsPaused(true)
+    }, [])
+
     return (
         <div
             ref={containerRef}
@@ -98,6 +112,29 @@ const AutoCarousel: React.FC<AutoCarouselProps> = ({ children, autoPlayMs = 2500
                     </div>
                 ))}
             </div>
+            
+            {showControls && (
+                <>
+                    <button
+                        onClick={handlePrev}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200"
+                        aria-label="Previous"
+                    >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button
+                        onClick={handleNext}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all duration-200"
+                        aria-label="Next"
+                    >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </>
+            )}
         </div>
     )
 }
