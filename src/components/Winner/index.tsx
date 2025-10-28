@@ -1,5 +1,3 @@
-import CardText from "@/screens/CardText";
-
 const Winner = () => {
     // return <div className="bg-[var(--white-color)] flex flex-col !items-start justify-center gap-7 pt-mobile-padding lg:pt-72 pb-10 px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding">
     return <div className="bg-[var(--secondary-color)] flex flex-col !items-start justify-center gap-7 pt-mobile-padding lg:pt-72 pb-10 px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding">
