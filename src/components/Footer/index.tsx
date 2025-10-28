@@ -1,5 +1,4 @@
 import { Calendar, Clock3, Instagram, Linkedin, MapPin, Twitter } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
     const scrollToSection = (id: string) => {
