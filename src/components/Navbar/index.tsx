@@ -15,17 +15,21 @@ const Navbar = () => {
             {/* Desktop Layout */}
             <div className='hidden xl:flex items-center justify-between bg-[var(--primary-color)] rounded-full px-6'>
                 <div className='flex items-center gap-3' onClick={() => navigate('/')}>
-                    <img 
-                        src="/logo/left.svg" 
-                        alt="Gulf News" 
-                        className="w-16 h-16 xl:w-[120px] xl:h-[80px]" 
-                    />
+                    <div className="w-16 h-16 xl:w-[120px] xl:h-[80px] overflow-hidden">
+                        <img 
+                            src="/logo/left.svg" 
+                            alt="Gulf News" 
+                            className="w-full h-full object-cover" 
+                        />
+                    </div>
                     <Separator orientation='vertical' className='h-8 xl:h-10 bg-[var(--border-color)]' />
-                    <img 
-                        src="/logo/right.svg" 
-                        alt="BeingShe" 
-                        className="w-16 h-16 xl:w-[120px] xl:h-[80px]" 
-                    />
+                    <div className="w-16 h-16 xl:w-[120px] xl:h-[80px] overflow-hidden">
+                        <img 
+                            src="/logo/right.svg" 
+                            alt="BeingShe" 
+                            className="w-full h-full object-contain" 
+                        />
+                    </div>
                 </div>
                 <ul className='hidden xl:flex items-center gap-4 space-x-5 hover:cursor-pointer'>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'>About Event</li>
@@ -41,17 +45,21 @@ const Navbar = () => {
                 {/* Mobile Header */}
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center gap-2' onClick={() => navigate('/')}>
-                        <img 
-                            src="/logo/left.svg" 
-                            alt="Gulf News" 
-                            className="w-20 h-16" 
-                        />
+                        <div className="w-20 h-16 overflow-hidden">
+                            <img 
+                                src="/logo/left.svg" 
+                                alt="Gulf News" 
+                                className="w-full h-full object-cover" 
+                            />
+                        </div>
                         <Separator orientation='vertical' className='h-6 bg-[var(--border-color)]' />
-                        <img 
-                            src="/logo/right.svg" 
-                            alt="BeingShe" 
-                            className="w-20 h-16" 
-                        />
+                        <div className="w-20 h-16 overflow-hidden">
+                            <img 
+                                src="/logo/right.svg" 
+                                alt="BeingShe" 
+                                className="w-full h-full object-cover" 
+                            />
+                        </div>
                     </div>
                     <button
                         onClick={toggleMobileMenu}
