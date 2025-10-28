@@ -88,10 +88,12 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
             {
                 name: "tradeLicense",
                 label: "Trade License",
-                type: "text",
-                placeholder: "Enter your trade license",
+                type: "pdf-upload",
+                placeholder: "Upload your trade license document (PDF)",
                 required: true,
-                gridCols: 1
+                gridCols: 1,
+                maxSize: 10, // 10MB limit
+                maxFiles: 1  // Maximum 1 file (single trade license)
             },
             {
                 name: "category",
@@ -357,9 +359,9 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             companyName: formData.companyName2 || formData.companyName || '',
             designation: formData.designation || '',
             phone: formData.phone ? `+971${formData.phone}` : '',
-            tradeLicense: formData.tradeLicense || '',
-            supportingDocument: uploadedFileUrls.supportingDocument?.join(',') || null,
-            message: formData.message || null
+            tradeLicense: uploadedFileUrls.tradeLicense?.join(',') || undefined,
+            supportingDocument: uploadedFileUrls.supportingDocument?.join(',') || undefined,
+            message: formData.message || undefined
         };
 
         console.log('Prepared nomination form data:', nominationFormData);
@@ -578,8 +580,8 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             return (
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        {field.label}
-                        {field.required && <span className="text-red-500 ml-1">*</span>}
+                        {/* {field.label} */}
+                        {/* {field.required && <span className="text-red-500 ml-1">*</span>} */}
                     </label>
                     <PDFUpload
                         onUploadSuccess={(uploadedFile) => handlePDFUploadSuccess(field.name, uploadedFile)}
@@ -620,7 +622,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
         if (field.type === 'tel') {
             return (
                 <div className="flex flex-col sm:flex-row items-start gap-2">
-                    <div className="flex items-center gap-2 rounded-md border border-[var(--border-color)]/40 bg-white px-3 py-2 text-sm min-w-fit sm:w-auto">
+                    <div className="flex items-center gap-2 rounded-md border border-[var(--border-color)]/40 bg-white px-3 py-[5px] text-sm min-w-fit sm:w-auto">
                         <span className="text-base">🇦🇪</span>
                         <span className="text-[var(--secondary-color)]">+971</span>
                         <span className="ml-1 select-none">▾</span>

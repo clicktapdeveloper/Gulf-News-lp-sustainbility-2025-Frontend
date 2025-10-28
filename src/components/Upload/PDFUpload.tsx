@@ -171,89 +171,85 @@ const PDFUpload: React.FC<PDFUploadProps> = ({
     <div className={`space-y-4 ${className}`}>
       {/* Upload Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* File Drop Zone */}
-        <div
-          className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-            dragActive
-              ? 'border-[var(--secondary-color)] bg-[var(--primary-color)] bg-opacity-20'
-              : error
-              ? 'border-red-300 bg-red-50'
-              : uploadedFiles.length > 0
-              ? 'border-green-300 bg-green-50'
-              : 'border-gray-300 hover:border-[var(--secondary-color)]'
-          } ${uploading || uploadedFiles.length >= maxFiles ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
-          <input
-            type="file"
-            accept={accept}
-            onChange={handleFileChange}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            disabled={uploading}
-          />
-          
-          <div className="space-y-4">
-            <div className="flex justify-center">
-              {uploading ? (
-                <div className="w-12 h-12 border-4 border-[var(--secondary-color)] border-t-transparent rounded-full animate-spin"></div>
-              ) : uploadedFiles.length > 0 ? (
-                <CheckCircle className="w-12 h-12 text-green-600" />
-              ) : file ? (
-                <CheckCircle className="w-12 h-12 text-blue-600" />
-              ) : error ? (
-                <AlertCircle className="w-12 h-12 text-red-600" />
-              ) : (
-                <Upload className="w-12 h-12 text-gray-400" />
-              )}
+        {/* Compact File Input with Integrated Button */}
+        <div className="relative flex items-center">
+          <div className="flex-1 relative">
+            <div
+              className={`relative flex items-center rounded-md border border-gray-300 bg-white transition-colors ${
+                dragActive
+                  ? 'border-[var(--secondary-color)]'
+                  : error
+                  ? 'border-red-300'
+                  : 'border-gray-300 hover:border-gray-400'
+              } ${uploading || uploadedFiles.length >= maxFiles ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrop}
+            >
+              <input
+                type="file"
+                accept={accept}
+                onChange={handleFileChange}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                disabled={uploading || uploadedFiles.length >= maxFiles}
+              />
+              
+              <div className="flex items-center !justify-between px-4 py-1 w-full">
+                <div className="flex items-center flex-1 min-w-0">
+                  {uploading ? (
+                    <div className="w-5 h-5 border-2 border-[var(--secondary-color)] border-t-transparent rounded-full animate-spin mr-3"></div>
+                  ) : uploadedFiles.length > 0 ? (
+                    <CheckCircle className="w-5 h-5 text-green-600 mr-3 flex-shrink-0" />
+                  ) : file ? (
+                    <CheckCircle className="w-5 h-5 text-blue-600 mr-3 flex-shrink-0" />
+                  ) : null}
+                  
+                  <div className={`text-sm truncate ${
+                    file || uploading ? 'text-gray-800 font-medium' : 'text-gray-400'
+                  }`}>
+                    {uploading ? 'Uploading...' : file ? file.name : uploadedFiles.length > 0 ? `${uploadedFiles.length} file(s) uploaded` : 'Upload a file'}
+                  </div>
+                </div>
+                
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!uploading && uploadedFiles.length < maxFiles) {
+                      const fileInput = document.createElement('input');
+                      fileInput.type = 'file';
+                      fileInput.accept = accept;
+                      fileInput.onchange = (e) => {
+                        const target = e.target as HTMLInputElement;
+                        if (target.files?.[0]) {
+                          handleFileSelect(target.files[0]);
+                        }
+                      };
+                      fileInput.click();
+                    }
+                  }}
+                  disabled={uploading || uploadedFiles.length >= maxFiles}
+                  className="ml-3 !bg-[#596FEC] hover:bg-[#5458d4] text-white font-medium text-sm px-6 py-2 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                >
+                  {uploading ? 'Uploading...' : 'Upload file'}
+                </button>
+              </div>
             </div>
-            
-            <div>
-              <p className="text-lg font-medium text-gray-700">
-                {uploading ? 'Uploading...' : uploadedFiles.length > 0 ? `${uploadedFiles.length} file(s) uploaded successfully` : file ? file.name : 'Drop your PDF here or click to browse'}
-              </p>
-              <p className="text-sm text-gray-500 mt-1">
-                Maximum file size: {maxSize}MB • Max files: {maxFiles}
-              </p>
-              {file && !uploading && (
-                <p className="text-sm text-gray-600 mt-1">
-                  Size: {formatFileSize(file.size)}
-                </p>
-              )}
-            </div>
-            
-            {error && (
-              <p className="text-sm text-red-600">{error}</p>
-            )}
           </div>
         </div>
 
-        {/* Upload Button - Only show when autoUpload is disabled or there's an error */}
-        {file && (!autoUpload || error) && (
-          <div className="flex justify-center space-x-4">
-            <CustomButton
-              type="submit"
-              disabled={uploading || uploadedFiles.length >= maxFiles}
-              className="px-6 py-2"
-            >
-              {uploading ? 'Uploading...' : uploadedFiles.length >= maxFiles ? `Max ${maxFiles} files reached` : 'Upload PDF'}
-            </CustomButton>
-            
-            <CustomButton
-              type="button"
-              variant="outline"
-              onClick={() => {
-                setFile(null);
-                setError(null);
-              }}
-              disabled={uploading}
-              className="px-6 py-2"
-            >
-              Cancel
-            </CustomButton>
-          </div>
+        {/* Error Message */}
+        {error && (
+          <p className="text-sm text-red-600 mt-1">{error}</p>
+        )}
+        
+        {/* File Info */}
+        {file && !uploading && (
+          <p className="text-xs text-gray-500 mt-1">
+            Size: {formatFileSize(file.size)} • Max size: {maxSize}MB • Max files: {maxFiles}
+          </p>
         )}
       </form>
 
