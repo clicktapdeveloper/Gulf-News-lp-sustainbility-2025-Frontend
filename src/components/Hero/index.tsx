@@ -36,7 +36,7 @@ const Hero = () => {
                     className="w-full sm:w-auto">Be a Sponsor</CustomButton>
                     <CustomButton 
                     onClick={() => navigate('/register-for-attend')} 
-                    className="w-full sm:w-auto">Register to Attend</CustomButton>
+                    className="w-full sm:w-auto whitespace-nowrap">Register to Attend</CustomButton>
                     <span className='flex flex-col justify-center'>
                         <small className='text-xs text-gray-500 leading-4'>Powered by</small>
                         <h5 className='font-bold text-[var(--secondary-color)] text-sm sm:text-base'>Gulf News & BeingShe</h5>
