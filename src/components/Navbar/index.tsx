@@ -21,7 +21,7 @@ const Navbar = () => {
             {/* Desktop Layout */}
             <div className='hidden xl:flex items-center justify-between bg-[var(--primary-color)] rounded-full px-6'>
                 <div className='flex items-center gap-3' onClick={() => navigate('/')}>
-                    <div className="w-16 h-16 xl:w-[120px] xl:h-[80px] overflow-hidden">
+                    <div className="w-16 h-16 xl:w-[150px] xl:h-[80px] overflow-hidden">
                         <img 
                             src="/logo/left.svg" 
                             alt="Gulf News" 
@@ -29,7 +29,7 @@ const Navbar = () => {
                         />
                     </div>
                     <Separator orientation='vertical' className='h-8 xl:h-10 bg-[var(--border-color)]' />
-                    <div className="w-16 h-16 xl:w-[120px] xl:h-[80px] overflow-hidden">
+                    <div className="w-16 h-16 xl:w-[150px] xl:h-[80px] overflow-hidden">
                         <img 
                             src="/logo/right.svg" 
                             alt="BeingShe" 
@@ -54,7 +54,7 @@ const Navbar = () => {
                 {/* Mobile Header */}
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center gap-2' onClick={() => navigate('/')}>
-                        <div className="w-26 h-16 overflow-hidden">
+                        <div className="w-32 h-16 overflow-hidden">
                             <img 
                                 src="/logo/left.svg" 
                                 alt="Gulf News" 
@@ -62,7 +62,7 @@ const Navbar = () => {
                             />
                         </div>
                         <Separator orientation='vertical' className='h-6 bg-[var(--border-color)]' />
-                        <div className="w-26 h-16 overflow-hidden">
+                        <div className="w-32 h-16 overflow-hidden">
                             <img 
                                 src="/logo/right.svg" 
                                 alt="BeingShe" 
