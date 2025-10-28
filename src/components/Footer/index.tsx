@@ -2,7 +2,6 @@ import { Calendar, Clock3, Instagram, Linkedin, MapPin, Twitter } from "lucide-r
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
-    const navigate = useNavigate();
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
