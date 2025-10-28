@@ -7,7 +7,7 @@ const Hero = () => {
     return <div className='flex flex-col lg:flex-row items-center justify-center py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding'>
         <div className="flex-2 space-y-[var(--space-y)] w-full lg:w-auto">
             <h1 className='text-[34px] sm:text-[55px] lg:text-[76px] font-[600] leading-tight'>
-                <div className='text-[var(--secondary-color)] w-full'>Celebrating Leaders<span className="text-black">,</span></div>
+                <div className='text-[var(--secondary-color)] w-full whitespace-nowrap'>Celebrating Leaders<span className="text-black">,</span></div>
                 <div className='text-[var(--tertiary-color)] w-full'>Inspiring Change</div>
             </h1>
             <p className='text-[14px] md:text-[16px] lg:text-[18px] max-w-2xl' style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
