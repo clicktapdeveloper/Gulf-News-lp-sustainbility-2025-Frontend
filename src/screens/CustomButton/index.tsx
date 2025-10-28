@@ -12,7 +12,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ children, variant, classNam
                 '!rounded-full !p-3 !px-6 relative overflow-hidden transition-all duration-300 ease-in-out',
                 variant === 'outline'
                     ? '!bg-transparent !border !border-[var(--secondary-color)] !text-[var(--secondary-color)] before:absolute before:inset-0 before:!bg-[var(--secondary-color)] before:scale-x-0 before:origin-left before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:!text-white'
-                    : '!bg-[var(--secondary-color)] text-white before:absolute before:inset-0 before:bg-white before:scale-x-0 before:origin-left before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:!text-[var(--secondary-color)]',
+                    : '!bg-[var(--secondary-color)] text-white before:absolute before:inset-0 before:bg-[#EBF1E7] before:scale-x-0 before:origin-left before:transition-transform before:duration-300 before:ease-in-out hover:before:scale-x-100 hover:!text-[var(--secondary-color)]',
                 className
             )}
             {...props}

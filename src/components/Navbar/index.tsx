@@ -45,7 +45,7 @@ const Navbar = () => {
                 {/* Mobile Header */}
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center gap-2' onClick={() => navigate('/')}>
-                        <div className="w-20 h-16 overflow-hidden">
+                        <div className="w-26 h-16 overflow-hidden">
                             <img 
                                 src="/logo/left.svg" 
                                 alt="Gulf News" 
@@ -53,11 +53,11 @@ const Navbar = () => {
                             />
                         </div>
                         <Separator orientation='vertical' className='h-6 bg-[var(--border-color)]' />
-                        <div className="w-20 h-16 overflow-hidden">
+                        <div className="w-26 h-16 overflow-hidden">
                             <img 
                                 src="/logo/right.svg" 
                                 alt="BeingShe" 
-                                className="w-full h-full object-cover" 
+                                className="w-full h-full object-contain" 
                             />
                         </div>
                     </div>
