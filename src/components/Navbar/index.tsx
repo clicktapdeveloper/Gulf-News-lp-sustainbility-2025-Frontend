@@ -37,7 +37,10 @@ const Navbar = () => {
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'>Awards Criteria</li>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'>Sponsors</li>
                 </ul>
-                <CustomButton className="text-sm xl:text-base">Register Now</CustomButton>
+                <CustomButton 
+                className="text-sm xl:text-base"
+                onClick={() => navigate('/apply-for-nomination')}
+                >Nominate Now</CustomButton>
             </div>
 
             {/* Mobile Layout */}
@@ -107,7 +110,9 @@ const Navbar = () => {
                             </li>
                         </ul>
                         <div className='w-full'>
-                            <CustomButton className="w-full text-center">Register Now</CustomButton>
+                            <CustomButton className="w-full text-center"
+                            onClick={() => navigate('/apply-for-nomination')}
+                            >Nominate Now</CustomButton>
                         </div>
                     </div>
                 </div>
