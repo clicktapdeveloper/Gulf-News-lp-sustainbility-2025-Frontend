@@ -315,7 +315,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 await submitNominationForm();
             } catch (error) {
                 console.error('Nomination form submission error:', error);
-                showErrorToast('Failed to submit nomination form. Please try again.');
+                showErrorToast('Failed to submit nomination form. Please try again with correct phone number and other compulsory data.');
             } finally {
                 setIsSubmitting(false);
             }
