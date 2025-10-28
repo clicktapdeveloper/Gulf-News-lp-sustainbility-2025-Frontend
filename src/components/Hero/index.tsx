@@ -31,13 +31,13 @@ const Hero = () => {
                 <div className='grid grid-cols-1 sm:grid-cols-2 !justify-start gap-3 sm:gap-4 w-full xl:w-3/4 pt-5'>
                     <CustomButton variant="outline" 
                     onClick={() => navigate('/apply-for-nomination')} 
-                    className="!w-full sm:w-auto !text-sm sm:!text-lg !whitespace-nowrap">Nominate Now</CustomButton>
+                    className="!w-full sm:w-auto !text-sm sm:!text-base !whitespace-nowrap">Nominate Now</CustomButton>
                     <CustomButton variant="outline" 
                     onClick={() => navigate('/inquire-about-sponsorship')} 
-                    className="!w-full sm:w-auto !text-sm sm:!text-lg !whitespace-nowrap">Become a Sponsor</CustomButton>
+                    className="!w-full sm:w-auto !text-sm sm:!text-base !whitespace-nowrap">Become a Sponsor</CustomButton>
                     <CustomButton 
                     onClick={() => navigate('/register-for-attend')} 
-                    className="w-full sm:w-auto !text-sm sm:!text-lg whitespace-nowrap col-span-2">Register to Attend</CustomButton>
+                    className="w-full sm:w-auto !text-sm sm:!text-base whitespace-nowrap col-span-2">Register to Attend</CustomButton>
                     {/* <span className='flex flex-col justify-center'>
                         <small className='text-xs text-gray-500 leading-4'>Powered by</small>
                         <h5 className='font-bold text-[var(--secondary-color)] text-sm sm:text-base'>Gulf News & BeingShe</h5>
