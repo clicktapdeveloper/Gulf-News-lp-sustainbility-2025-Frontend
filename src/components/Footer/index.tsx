@@ -54,10 +54,10 @@ const Footer = () => {
 
                 <nav className="flex flex-col !items-start gap-6 md:items-center md:gap-10">
                     <ul className="flex flex-col sm:flex-row items-start gap-4 sm:gap-8">
-                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('about-event')}>About Event</li>
-                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('why')}>Why Attend</li>
-                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('awards')}>Awards Criteria</li>
-                        <li className="hover:underline !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('sponsors')}>Sponsors</li>
+                        <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('about-event')}>About Event</li>
+                        <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('why')}>Why Attend</li>
+                        <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('awards')}>Awards Criteria</li>
+                        <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('sponsors')}>Sponsors</li>
                     </ul>
                     <ul className="flex flex-col sm:flex-row !items-start gap-4 sm:gap-8">
                         {/* <li><a href="#terms" className="hover:underline !text-[var(--white-color)] text-sm ">Terms & Conditions</a></li>
