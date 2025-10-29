@@ -1,6 +1,8 @@
 import CustomButton from "@/screens/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 const Event = () => {
+    const navigate = useNavigate();
     return <div id="about-event" className="flex flex-col text-center gap-2 py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding bg-[var(--white-color)] space-y-[var(--space-y-mobile)] lg:space-y-[var(--space-y)] px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding">
         <h1 className="text-xl lg:text-title-text-size font-bold !text-[var(--secondary-color)]">About Event</h1>
         <p className="text-[14px] md:text-[16px] lg:text-[20px]"
@@ -12,7 +14,7 @@ From renewable energy innovation to circular fashion, the event spotlights excel
 
         </p>
         <div className="mx-auto w-full sm:w-1/2 lg:w-1/6">
-            <CustomButton className="w-full">Nominate Now</CustomButton>
+            <CustomButton className="w-full" onClick={() => navigate('/apply-for-nomination')}>Nominate Now</CustomButton>
         </div>
     </div>
 }

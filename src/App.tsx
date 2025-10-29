@@ -28,8 +28,10 @@ export default function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/the-sustainability-excellence-awards-2025');
-  }, []);
+    if (window.location.pathname === '/') {
+      navigate('/the-sustainability-excellence-awards-2025');
+    }
+  }, [window.location.pathname]);
 
   return (
     <div 
