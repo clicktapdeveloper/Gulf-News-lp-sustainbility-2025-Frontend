@@ -470,6 +470,10 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             case 'inquireAboutSponsorship':
                 endpoint = '/api/sponsorship';
                 break;
+            case 'becomeEventSponsor':
+                // Reuse the same sponsorship endpoint for this form type
+                endpoint = '/api/sponsorship';
+                break;
             case 'registerForAttend':
                 endpoint = '/api/register-attendee';
                 break;
