@@ -159,7 +159,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
         fields: [
             {
                 name: "firstName",
-                label: "Fast Name",
+                label: "First Name",
                 type: "text",
                 placeholder: "Enter your first name",
                 required: true,
@@ -208,7 +208,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
         fields: [
             {
                 name: "firstName",
-                label: "Fast Name",
+                label: "First Name",
                 type: "text",
                 placeholder: "Enter your first name",
                 required: true,
@@ -257,7 +257,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
         fields: [
             {
                 name: "firstName",
-                label: "Fast Name",
+                label: "First Name",
                 type: "text",
                 placeholder: "Enter your first name",
                 required: true,
