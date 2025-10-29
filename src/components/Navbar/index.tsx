@@ -148,7 +148,7 @@ const Navbar = () => {
                         </ul>
                         <div className='w-full'>
                             <CustomButton className="w-full text-center"
-                            onClick={() => navigate('/apply-for-nomination')}
+                            onClick={() => { setIsMobileMenuOpen(false); navigate('/apply-for-nomination'); }}
                             >Nominate Now</CustomButton>
                         </div>
                     </div>
