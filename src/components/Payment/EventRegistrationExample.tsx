@@ -41,7 +41,13 @@ const EventRegistrationExample: React.FC = () => {
 
   const handleAttendeeChange = (index: number, field: string, value: string) => {
     const updatedAttendees = [...attendees];
-    updatedAttendees[index] = { ...updatedAttendees[index], [field]: value };
+    // Restrict phone number fields to only 9 digits
+    if (field === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '').slice(0, 9);
+      updatedAttendees[index] = { ...updatedAttendees[index], [field]: digitsOnly };
+    } else {
+      updatedAttendees[index] = { ...updatedAttendees[index], [field]: value };
+    }
     setAttendees(updatedAttendees);
   };
 
@@ -116,6 +122,9 @@ const EventRegistrationExample: React.FC = () => {
                   onChange={(e) => handleAttendeeChange(index, 'phone', e.target.value)}
                   className="w-full border rounded px-3 py-2"
                   required
+                  maxLength={9}
+                  pattern="[0-9]{9}"
+                  inputMode="numeric"
                 />
               </div>
               

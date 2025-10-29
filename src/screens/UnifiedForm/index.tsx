@@ -323,7 +323,15 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        
+        // Restrict phone number fields to only 9 digits
+        if (name === 'phone') {
+            // Remove all non-digit characters and limit to 9 digits
+            const digitsOnly = value.replace(/\D/g, '').slice(0, 9);
+            setFormData(prev => ({ ...prev, [name]: digitsOnly }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
     };
 
     const handlePDFUploadSuccess = (fieldName: string, uploadedFile: UploadedFile) => {
@@ -689,6 +697,9 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                         className={`flex-1 ${baseInputClasses}`}
                         value={formData[field.name] || ''}
                         onChange={handleInputChange}
+                        maxLength={9}
+                        pattern="[0-9]{9}"
+                        inputMode="numeric"
                     />
                 </div>
             );

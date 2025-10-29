@@ -44,7 +44,19 @@ const Form = () => {
                                 <span className="text-[var(--secondary-color)]">+971</span>
                                 <span className="ml-1 select-none">▾</span>
                             </div>
-                            <input type="tel" required placeholder="Enter phone number" className="flex-1 rounded-md border border-[var(--border-color)]/40 bg-white px-3 py-2 text-sm outline-none focus:border-[var(--secondary-color)] focus:ring-1 focus:ring-[var(--secondary-color)]" />
+                            <input 
+                                type="tel" 
+                                required 
+                                placeholder="Enter phone number" 
+                                className="flex-1 rounded-md border border-[var(--border-color)]/40 bg-white px-3 py-2 text-sm outline-none focus:border-[var(--secondary-color)] focus:ring-1 focus:ring-[var(--secondary-color)]"
+                                maxLength={9}
+                                pattern="[0-9]{9}"
+                                inputMode="numeric"
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+                                    e.target.value = value;
+                                }}
+                            />
                         </div>
                     </div>
 

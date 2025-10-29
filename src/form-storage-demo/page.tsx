@@ -129,8 +129,14 @@ const FormStorageDemo: React.FC = () => {
               <input
                 type="tel"
                 value={testFormData.phone}
-                onChange={(e) => setTestFormData(prev => ({ ...prev, phone: e.target.value }))}
+                onChange={(e) => {
+                  const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 9);
+                  setTestFormData(prev => ({ ...prev, phone: digitsOnly }));
+                }}
                 className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                maxLength={9}
+                pattern="[0-9]{9}"
+                inputMode="numeric"
               />
             </div>
           </div>
