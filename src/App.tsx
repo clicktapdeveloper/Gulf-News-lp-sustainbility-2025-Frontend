@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Event from './components/Event'
@@ -26,12 +26,28 @@ import { useEffect } from 'react';
 export default function App() {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (window.location.pathname === '/') {
-      navigate('/the-sustainability-excellence-awards-2025');
+    if (location.pathname === '/') {
+      const target = '/the-sustainability-excellence-awards-2025' + (location.hash || '');
+      navigate(target, { replace: true });
     }
-  }, [window.location.pathname]);
+  }, [location.pathname, location.hash, navigate]);
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      // wait for the section to mount before scrolling
+      const timeout = setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 0);
+      return () => clearTimeout(timeout);
+    }
+  }, [location.pathname, location.hash]);
 
   return (
     <div 

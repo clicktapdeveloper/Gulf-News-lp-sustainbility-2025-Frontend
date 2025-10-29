@@ -1,11 +1,22 @@
 import { Calendar, Clock3, Facebook, Instagram, Linkedin, MapPin, Send, Twitter, Youtube } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Footer = () => {
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+
     const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+        const homePath = "/the-sustainability-excellence-awards-2025";
+
+        if (pathname === "/" || pathname === homePath) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
         }
+
+        navigate(`${homePath}#${id}`);
     };
     return <footer className="w-full bg-secondary text-white">
         <div className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding">

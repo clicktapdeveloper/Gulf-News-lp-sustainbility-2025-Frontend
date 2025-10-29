@@ -1,16 +1,22 @@
 import { useState } from 'react';
 import CustomButton from '../../screens/CustomButton';
 import { Separator } from '@/components/ui/separator';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const homePath = '/the-sustainability-excellence-awards-2025';
+        if (pathname === '/' || pathname === homePath) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
         }
+        navigate(`${homePath}#${id}`);
     };
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -20,7 +26,7 @@ const Navbar = () => {
         <nav className='flex flex-col gap-2 py-mobile-padding sm:py-tablet-padding xl:py-desktop-padding'>
             {/* Desktop Layout */}
             <div className='hidden xl:flex items-center justify-between bg-[var(--primary-color)] rounded-full px-6'>
-                <div className='flex items-center gap-3 hover:cursor-pointer' onClick={() => navigate('/')}>
+                <div className='flex items-center gap-3 hover:cursor-pointer' onClick={() => navigate('/the-sustainability-excellence-awards-2025')}>
                     <div className="w-16 h-16 xl:w-[150px] xl:h-[80px] overflow-hidden">
                         <img 
                             src="/logo/left.svg" 
@@ -53,7 +59,7 @@ const Navbar = () => {
             <div className={`xl:hidden bg-[var(--primary-color)] px-4 ${isMobileMenuOpen ? 'rounded-4xl pb-3' : 'rounded-full'}`}>
                 {/* Mobile Header */}
                 <div className='flex items-center justify-between'>
-                    <div className='flex items-center gap-2' onClick={() => navigate('/')}>
+                    <div className='flex items-center gap-2' onClick={() => navigate('/the-sustainability-excellence-awards-2025')}>
                         <div className="w-32 h-16 overflow-hidden">
                             <img 
                                 src="/logo/left.svg" 
