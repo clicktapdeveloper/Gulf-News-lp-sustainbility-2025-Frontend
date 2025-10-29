@@ -15,7 +15,7 @@ const SponsorBy = () => {
     return <div id="sponsors" className="bg-[var(--secondary-color)] px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding">
         <div className="bg-[var(--secondary-color)] flex py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding flex-col items-center justify-center text-center space-y-[var(--space-y)] text-[var(--card-color)]">
             <h1 className="text-2xl lg:text-title-text-size font-bold w-full">Platinum Sponsors</h1>
-            <span className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4 sm:gap-y-6 full w-full">
+            <span className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4 sm:gap-y-6 full w-full">
                 {sponsors.map((sponsor) => (
                     <SponsorCard 
                         key={sponsor.id} 
@@ -25,7 +25,7 @@ const SponsorBy = () => {
                 ))}
             </span>
             <h1 className="text-2xl lg:text-title-text-size font-bold w-full">Gold Sponsors</h1>
-            <span className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4 sm:gap-y-6 full w-full">
+            <span className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4 sm:gap-y-6 full w-full">
                 {sponsors.map((sponsor) => (
                     <SponsorCard 
                         key={sponsor.id} 
@@ -35,7 +35,7 @@ const SponsorBy = () => {
                 ))}
             </span>
             <h1 className="text-2xl lg:text-title-text-size font-bold w-full">Support Sponsors</h1>
-            <span className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4 sm:gap-y-6 full w-full">
+            <span className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4 sm:gap-y-6 full w-full">
                 {sponsors.map((sponsor) => (
                     <SponsorCard 
                         key={sponsor.id} 
