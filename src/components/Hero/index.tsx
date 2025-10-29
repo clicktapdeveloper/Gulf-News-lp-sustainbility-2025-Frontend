@@ -58,7 +58,7 @@ const Hero = () => {
                 </div>
         </div>
         {/* Desktop view images - absolute positioned */}
-        <img src="/hero.svg" alt="Hero" className="hidden lg:block absolute top-0 right-0" />
+        <img src="/hero.svg" alt="Hero" className="hidden lg:block absolute top-0 right-0 lg:right-40 h-[650px]" />
         {/* <img src="/logo/SEA.svg" alt="Hero" className="hidden lg:block absolute top-64 lg:top-10 right-[30px] lg:right-[500px] h-[160px] lg:h-[350px]" /> */}
         {/* <img src="/logo/SEA.svg" alt="Hero" className="hidden lg:block absolute top-64 lg:top-10 sm:!right-standard-tablet-padding lg:!right-standard-desktop-padding xl:!right-standard-xl-padding h-[160px] lg:h-[300px]" /> */}
         <img src="/logo/SEA.svg" alt="Hero" className="hidden lg:block absolute top-64 lg:top-10 sm:!right-standard-tablet-padding lg:!right-standard-desktop-padding 2xl:!right-standard-xl-padding h-[160px] lg:h-[220px]" />
