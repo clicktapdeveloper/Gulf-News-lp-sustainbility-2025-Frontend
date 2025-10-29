@@ -10,6 +10,13 @@ const BackButton = ({ className = "" }: BackButtonProps) => {
 
     const handleBack = () => {
         navigate(-1); // Go back to previous page
+        // Small delay to ensure smooth scroll happens after route change
+        setTimeout(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }, 0);
     };
 
     return (

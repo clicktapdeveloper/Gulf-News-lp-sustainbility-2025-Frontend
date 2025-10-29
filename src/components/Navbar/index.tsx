@@ -33,7 +33,16 @@ const Navbar = () => {
         <nav className='flex flex-col gap-2 py-mobile-padding sm:py-tablet-padding xl:py-desktop-padding'>
             {/* Desktop Layout */}
             <div className='hidden xl:flex items-center justify-between bg-[var(--primary-color)] rounded-full px-6'>
-                <div className='flex items-center gap-3 hover:cursor-pointer' onClick={() => navigate('/the-sustainability-excellence-awards-2025')}>
+                <div className='flex items-center gap-3 hover:cursor-pointer' onClick={() => {
+                    navigate('/the-sustainability-excellence-awards-2025');
+                    // Small delay to ensure smooth scroll happens after route change
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }, 0);
+                }}>
                     <div className="w-16 h-16 xl:w-[150px] xl:h-[80px] overflow-hidden">
                         <img 
                             src="/logo/left.svg" 
@@ -66,7 +75,16 @@ const Navbar = () => {
             <div className={`xl:hidden bg-[var(--primary-color)] px-4 ${isMobileMenuOpen ? 'rounded-4xl pb-3' : 'rounded-full'}`}>
                 {/* Mobile Header */}
                 <div className='flex items-center justify-between'>
-                    <div className='flex items-center gap-2' onClick={() => navigate('/the-sustainability-excellence-awards-2025')}>
+                    <div className='flex items-center gap-2' onClick={() => {
+                        navigate('/the-sustainability-excellence-awards-2025');
+                        // Small delay to ensure smooth scroll happens after route change
+                        setTimeout(() => {
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        }, 0);
+                    }}>
                         <div className="w-32 h-16 overflow-hidden">
                             <img 
                                 src="/logo/left.svg" 

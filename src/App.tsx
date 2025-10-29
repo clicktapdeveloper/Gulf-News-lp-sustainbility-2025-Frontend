@@ -35,6 +35,17 @@ export default function App() {
     }
   }, [location.pathname, location.hash, navigate]);
 
+  // Scroll to top when pathname changes (without hash navigation)
+  useEffect(() => {
+    // Only scroll to top if there's no hash (hash navigation is handled separately)
+    if (!location.hash) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'instant' // Instant scroll for route changes
+      });
+    }
+  }, [location.pathname]);
+
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace('#', '');
