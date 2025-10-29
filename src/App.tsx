@@ -38,13 +38,19 @@ export default function App() {
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace('#', '');
-      // wait for the section to mount before scrolling
+      const scrollOffset = 100; // Offset in pixels to stop before the section
+      // wait for the section to mount and page to render before scrolling
       const timeout = setTimeout(() => {
         const el = document.getElementById(id);
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = window.pageYOffset + elementPosition - scrollOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
         }
-      }, 0);
+      }, 100); // Small delay to ensure page has rendered
       return () => clearTimeout(timeout);
     }
   }, [location.pathname, location.hash]);

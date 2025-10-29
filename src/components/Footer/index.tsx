@@ -7,11 +7,17 @@ const Footer = () => {
 
     const scrollToSection = (id: string) => {
         const homePath = "/the-sustainability-excellence-awards-2025";
+        const scrollOffset = 100; // Offset in pixels to stop before the section
 
         if (pathname === "/" || pathname === homePath) {
             const element = document.getElementById(id);
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = window.pageYOffset + elementPosition - scrollOffset;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
                 return;
             }
         }
