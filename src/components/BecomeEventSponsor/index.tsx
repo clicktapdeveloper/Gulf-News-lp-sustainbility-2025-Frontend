@@ -7,7 +7,7 @@ const BecomeEventSponsor = () => {
             {/* <h1 className="text-[var(--secondary-color)] text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8">Become Event Sponsor</h1> */}
             <h1 className="text-[var(--secondary-color)] text-center text-2xl lg:text-title-text-size font-bold mb-6 sm:mb-8">Become Event Sponsor</h1>
             <div className="w-full">
-                <UnifiedForm formType="registerForAttend" />
+                <UnifiedForm formType="becomeEventSponsor" />
             </div>
         </div>
     </div>

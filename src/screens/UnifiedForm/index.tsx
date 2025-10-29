@@ -249,11 +249,60 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 gridCols: 2
             }
         ]
+    },
+    becomeEventSponsor: {
+        title: "Send Us A Message",
+        description: "Join industry leaders, innovators, and changemakers shaping a sustainable future.",
+        submitButtonText: "Submit",
+        fields: [
+            {
+                name: "firstName",
+                label: "Fast Name",
+                type: "text",
+                placeholder: "Enter your first name",
+                required: true,
+                gridCols: 1
+            },
+            {
+                name: "lastName",
+                label: "Last Name",
+                type: "text",
+                placeholder: "Enter your last name",
+                required: true,
+                gridCols: 1
+            },
+            {
+                name: "email",
+                label: "Email",
+                type: "email",
+                placeholder: "Enter your email address",
+                required: true,
+                gridCols: 1
+            },
+            {
+                name: "phone",
+                label: "Phone",
+                type: "tel",
+                placeholder: "Enter phone number",
+                required: true,
+                gridCols: 1
+            },
+            {
+                name: "message",
+                label: "Tell us why you want to be sponsor?",
+                type: "textarea",
+                placeholder: "(1000 words)",
+                required: false,
+                maxLength: 1000,
+                rows: 6,
+                gridCols: 2
+            }
+        ]
     }
 };
 
 interface UnifiedFormProps {
-    formType: 'applyForNomination' | 'inquireAboutSponsorship' | 'registerForAttend';
+    formType: 'applyForNomination' | 'inquireAboutSponsorship' | 'registerForAttend' | 'becomeEventSponsor';
 }
 
 const UnifiedForm = ({ formType }: UnifiedFormProps) => {
