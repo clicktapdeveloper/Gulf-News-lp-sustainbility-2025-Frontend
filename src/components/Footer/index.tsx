@@ -65,7 +65,7 @@ const Footer = () => {
             </div>
             <div>
                 {/* <p className="text-xs sm:text-sm text-center md:text-left">© 2025 sustainabilityexcellenceawards. All rights reserved.</p> */}
-                <p className="text-[16px] lg:text-[20px] text-center md:text-left">© 2025 Gulf News. All rights reserved.</p>
+                <p className="text-[12px] lg:text-[16px] text-center md:text-left">© 2025 Gulf News. All rights reserved.</p>
             </div>
             </div>
         </div>
