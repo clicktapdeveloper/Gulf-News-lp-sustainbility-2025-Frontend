@@ -29,7 +29,7 @@ const Navbar = () => {
                         />
                     </div>
                     <Separator orientation='vertical' className='h-8 xl:h-10 bg-[var(--border-color)]' />
-                    <div className="w-16 h-16 xl:w-[150px] xl:h-[80px] overflow-hidden">
+                    <div className="w-16 h-16 xl:w-[100px] xl:h-[80px] overflow-hidden">
                         <img 
                             src="/logo/right.svg" 
                             alt="BeingShe" 
@@ -62,7 +62,7 @@ const Navbar = () => {
                             />
                         </div>
                         <Separator orientation='vertical' className='h-6 bg-[var(--border-color)]' />
-                        <div className="w-32 h-16 overflow-hidden">
+                        <div className="w-26 h-16 overflow-hidden">
                             <img 
                                 src="/logo/right.svg" 
                                 alt="BeingShe" 

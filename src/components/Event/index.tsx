@@ -6,7 +6,10 @@ const Event = () => {
         <p className="text-[14px] md:text-[16px] lg:text-[20px]"
         style={{ fontFamily: "'Nunito Sans', sans-serif" }}
         >
-        The Sustainability Excellence Awards 2025, powered by Gulf News and BeingShe, celebrates pioneers shaping a greener, more resilient future. From renewable energy innovation to circular fashion, this event recognizes excellence across industries championing sustainable progress.
+        {/* The Sustainability Excellence Awards 2025, powered by Gulf News and BeingShe, celebrates pioneers shaping a greener, more resilient future. From renewable energy innovation to circular fashion, this event recognizes excellence across industries championing sustainable progress. */}
+        Powered by Gulf News and BeingShe, the Sustainability Excellence Awards 2025 honors the pioneers shaping a greener, more resilient future of the UAE. <br /><br />
+From renewable energy innovation to circular fashion, the event spotlights excellence across industries leading the sustainable movement. 
+
         </p>
         <div className="mx-auto w-full sm:w-1/2 lg:w-1/6">
             <CustomButton className="w-full">Nominate Now</CustomButton>
