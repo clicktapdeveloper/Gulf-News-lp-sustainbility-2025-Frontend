@@ -408,6 +408,22 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             return acc;
         }, {} as Record<string, string[]>);
 
+        // Validate required file uploads
+        const tradeLicenseFiles = uploadedFileUrls.tradeLicense || [];
+        const supportingDocumentFiles = uploadedFileUrls.supportingDocument || [];
+        
+        if (tradeLicenseFiles.length === 0) {
+            setIsSubmitting(false);
+            showErrorToast('Please upload a Trade License document.');
+            return;
+        }
+        
+        if (supportingDocumentFiles.length === 0) {
+            setIsSubmitting(false);
+            showErrorToast('Please upload a Supporting Document.');
+            return;
+        }
+
         // Prepare nomination form data
         const nominationFormData: NominationFormData = {
             firstName: formData.firstName || '',
