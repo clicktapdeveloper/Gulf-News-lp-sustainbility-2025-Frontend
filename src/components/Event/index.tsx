@@ -13,8 +13,8 @@ const Event = () => {
 From renewable energy innovation to circular fashion, the event spotlights excellence across industries leading the sustainable movement. 
 
         </p>
-        <div className="mx-auto w-full sm:w-1/2 lg:w-1/6">
-            <CustomButton className="w-full" onClick={() => navigate('/apply-for-nomination')}>Nominate Now</CustomButton>
+        <div className="mx-auto w-full sm:w-1/2 lg:w-1/5">
+            <CustomButton className="w-full whitespace-nowrap" onClick={() => navigate('/apply-for-nomination')}>Nominate Now</CustomButton>
         </div>
     </div>
 }

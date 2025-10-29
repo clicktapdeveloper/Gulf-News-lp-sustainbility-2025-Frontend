@@ -13,7 +13,7 @@ const Why = () => {
             <Card iconSrc="/logo/card3.svg" title="Connect with investors, changemakers, and thought leaders" description="" variant="dark" />
             <Card iconSrc="/logo/card4.svg" title="Celebrate organizations redefining corporate responsibility" description="" variant="light" />
         </div>
-        <div className="mx-auto w-5/6 sm:w-1/2 lg:w-1/5">
+        <div className="mx-auto w-5/6 sm:w-1/2 lg:w-1/4">
             <CustomButton className="w-full !bg-white !text-secondary whitespace-nowrap" onClick={() => navigate('/register-for-attend')}>Register to Attend</CustomButton>
         </div>
     </div>
