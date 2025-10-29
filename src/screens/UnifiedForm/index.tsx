@@ -242,7 +242,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 name: "message",
                 label: "Message (1000 words)",
                 type: "textarea",
-                placeholder: "Text here",
+                placeholder: "Explain why you should become a sponsor",
                 required: false,
                 maxLength: 1000,
                 rows: 6,
