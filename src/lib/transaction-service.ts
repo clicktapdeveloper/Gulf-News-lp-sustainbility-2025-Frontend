@@ -82,6 +82,7 @@ class TransactionService {
 
       console.log('Transaction details retrieved successfully:', result);
       console.log('=== TRANSACTION DETAILS RETRIEVAL COMPLETE ===');
+      localStorage.clear();
       
       return {
         success: true,
