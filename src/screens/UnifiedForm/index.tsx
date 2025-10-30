@@ -146,7 +146,6 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 type: "textarea",
                 placeholder: "(1000 words)",
                 required: false,
-                maxLength: 1000,
                 rows: 6,
                 gridCols: 2
             }
@@ -195,7 +194,6 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 type: "textarea",
                 placeholder: "(1000 words)",
                 required: false,
-                maxLength: 1000,
                 rows: 6,
                 gridCols: 2
             }
@@ -244,7 +242,6 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 type: "textarea",
                 placeholder: "(1000 words)",
                 required: false,
-                maxLength: 1000,
                 rows: 6,
                 gridCols: 2
             }
@@ -293,7 +290,6 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 type: "textarea",
                 placeholder: "(1000 words)",
                 required: false,
-                maxLength: 1000,
                 rows: 6,
                 gridCols: 2
             }
@@ -356,6 +352,19 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
         console.error('PDF upload error:', error);
     };
 
+    const MAX_MESSAGE_WORDS = 1000;
+    const limitWords = (text: string, maxWords: number) => {
+        const words = text.trim().split(/\s+/);
+        if (words.filter(Boolean).length <= maxWords) return text;
+        return words.slice(0, maxWords).join(' ');
+    };
+
+    const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        const limited = limitWords(value, MAX_MESSAGE_WORDS);
+        setFormData(prev => ({ ...prev, [name]: limited }));
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
@@ -410,7 +419,6 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
         // Validate required file uploads
         const tradeLicenseFiles = uploadedFileUrls.tradeLicense || [];
-        const supportingDocumentFiles = uploadedFileUrls.supportingDocument || [];
         
         if (tradeLicenseFiles.length === 0) {
             setIsSubmitting(false);
@@ -418,11 +426,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
             return;
         }
         
-        if (supportingDocumentFiles.length === 0) {
-            setIsSubmitting(false);
-            showErrorToast('Please upload a Supporting Document.');
-            return;
-        }
+        // supportingDocument is optional; no validation required
 
         // Prepare nomination form data
         const nominationFormData: NominationFormData = {
@@ -645,11 +649,10 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                 <textarea
                     name={field.name}
                     rows={field.rows || 6}
-                    maxLength={field.maxLength}
                     placeholder={field.placeholder}
                     className={baseInputClasses}
                     value={formData[field.name] || ''}
-                    onChange={handleInputChange}
+                    onChange={handleTextAreaChange}
                 />
             );
         }
