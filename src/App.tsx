@@ -22,6 +22,9 @@ import NominationError from './nomination-error/page'
 import NominationCancelled from './nomination-cancelled/page'
 import FormStorageDemo from './form-storage-demo/page'
 import { useEffect } from 'react';
+import NominationsFromBackendPage from './nominations-from-backend/page'
+import AttendeeRegistrationsFromBackendPage from './attendee_registrations-from-backend/page'
+import SponsorshipRequestsFromBackendPage from './sponsorship_requests-from-backend/page'
 
 export default function App() {
 
@@ -109,6 +112,9 @@ export default function App() {
         <Route path="/nomination/error" element={<NominationError />} />
         <Route path="/nomination/cancelled" element={<NominationCancelled />} />
         <Route path="/form-storage-demo" element={<FormStorageDemo />} />
+        <Route path="/nominations-from-backend" element={<NominationsFromBackendPage />} />
+        <Route path="/attendee_registrations-from-backend" element={<AttendeeRegistrationsFromBackendPage />} />
+        <Route path="/sponsorship_requests-from-backend" element={<SponsorshipRequestsFromBackendPage />} />
       </Routes>
       <Footer />
     </div>
