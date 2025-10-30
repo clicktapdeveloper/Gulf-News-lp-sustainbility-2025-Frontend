@@ -112,7 +112,7 @@ Test page for CyberSource Hosted Checkout:
 import CyberSourceHostedCheckout from './components/Payment/CyberSourceHostedCheckout';
 
 <CyberSourceHostedCheckout
-  amount={199}
+  amount={1}
   currency="AED"
   customerEmail="customer@example.com"
   customerFirstName="John"
@@ -124,10 +124,10 @@ import CyberSourceHostedCheckout from './components/Payment/CyberSourceHostedChe
 
 ### Integration with Nomination Form
 
-The nomination form automatically uses the Hosted Checkout when the "Pay AED 199 for Register" button is clicked. The flow is:
+The nomination form automatically uses the Hosted Checkout when the "Pay AED 1 for Register" button is clicked. The flow is:
 
 1. User fills out nomination form
-2. Clicks "Pay AED 199 for Register"
+2. Clicks "Pay AED 1 for Register"
 3. Hosted Checkout component appears
 4. User clicks "Pay with CyberSource"
 5. Redirected to CyberSource payment page

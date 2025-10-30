@@ -73,14 +73,14 @@ const NominationPayment: React.FC<NominationPaymentProps> = ({
           onClick={handleOpenModal}
           className="min-w-40 px-6 py-2"
         >
-          Pay AED 199 for Register
+          Pay AED 1 for Register
         </CustomButton>
       </div>
 
       <CyberSourceHostedCheckoutModal
         isOpen={showModal}
         onClose={handleCloseModal}
-        amount={199}
+        amount={1}
         currency="AED"
         customerEmail={formData.email || ''}
         customerFirstName={formData.firstName || 'Test'}

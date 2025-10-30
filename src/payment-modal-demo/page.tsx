@@ -5,7 +5,7 @@ import CustomButton from '../screens/CustomButton';
 
 const PaymentModalDemo: React.FC = () => {
   const { openModal, modalProps } = usePaymentModal({
-    amount: 199,
+    amount: 1,
     currency: 'AED',
     referenceId: `demo-${Date.now()}`,
     customerEmail: 'demo@example.com',
@@ -38,7 +38,7 @@ const PaymentModalDemo: React.FC = () => {
           <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--card-color)] p-4 rounded-lg">
             <p className="text-sm text-gray-600 mb-1">Payment Amount</p>
             <p className="text-3xl font-bold text-[var(--secondary-color)]">
-              AED 199.00
+              AED 1.00
             </p>
           </div>
 

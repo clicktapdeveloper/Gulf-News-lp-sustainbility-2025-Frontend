@@ -34,7 +34,7 @@ VITE_EVENT_LOCATION=Grand Convention Center, Dubai
 
 ### For Nominations (`/apply-for-nomination`)
 - User fills out the nomination form
-- Clicks "Pay AED 199 for Register"
+- Clicks "Pay AED 1 for Register"
 - Redirects to Stripe Checkout
 - After successful payment, redirects to `/success` page
 - User receives confirmation email
