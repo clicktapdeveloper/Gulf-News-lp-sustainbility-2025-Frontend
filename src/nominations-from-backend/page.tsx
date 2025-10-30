@@ -49,6 +49,8 @@ export default function NominationsFromBackendPage() {
     { key: 'customerEmail', label: 'Customer Email' },
     { key: 'companyName', label: 'Company' },
     { key: 'category', label: 'Category' },
+    { key: 'tradeLicense', label: 'Trade License' },
+    { key: 'supportingDocument', label: 'Supporting Document(s)' },
     { key: 'transactionId', label: 'Transaction ID' }
   ], [])
 
@@ -86,6 +88,31 @@ export default function NominationsFromBackendPage() {
   const formatDate = (value: any) => {
     if (!value) return ''
     try { return new Date(value).toLocaleString() } catch { return String(value) }
+  }
+
+  const renderCell = (key: string, raw: any) => {
+    if (key === 'submittedAt' || key === 'createdAt') return formatDate(raw)
+    if (!raw) return ''
+    if (key === 'tradeLicense' || key === 'supportingDocument') {
+      const value = String(raw)
+      const urls = value.split(',').map(s => s.trim()).filter(Boolean)
+      if (urls.length === 0) return ''
+      if (urls.length === 1) return (
+        <a href={urls[0]} target="_blank" rel="noreferrer" className="text-[var(--secondary-color)] underline">View</a>
+      )
+      return (
+        <span>
+          <a href={urls[0]} target="_blank" rel="noreferrer" className="text-[var(--secondary-color)] underline">View 1</a>
+          {urls.slice(1).map((u, i) => (
+            <>
+              {', '}
+              <a key={i} href={u} target="_blank" rel="noreferrer" className="text-[var(--secondary-color)] underline">View {i + 2}</a>
+            </>
+          ))}
+        </span>
+      )
+    }
+    return String(raw ?? '')
   }
 
   const page = response?.pagination.page || params.page
@@ -148,7 +175,7 @@ export default function NominationsFromBackendPage() {
               <tr key={idx} className="odd:bg-slate-50/60">
                 {columns.map(col => (
                   <td key={String(col.key)} className="px-3 py-2 border-b border-slate-100 text-slate-800">
-                    {col.key === 'submittedAt' || col.key === 'createdAt' ? formatDate(row[col.key]) : String(row[col.key] ?? '')}
+                    {renderCell(String(col.key), row[col.key])}
                   </td>
                 ))}
               </tr>
