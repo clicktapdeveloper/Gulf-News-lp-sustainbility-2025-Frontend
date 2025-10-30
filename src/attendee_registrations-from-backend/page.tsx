@@ -72,7 +72,9 @@ export default function AttendeeRegistrationsFromBackendPage() {
   useEffect(() => { if (authorized) fetchData() }, [params.page, params.limit, authorized])
 
   const onAuthorize = () => {
-    if (authPassword === 'G^%64n3s') {
+    const normalize = (s: string) => s.normalize('NFKC').trim()
+    const expected = normalize('G^%64n3s')
+    if (normalize(authPassword) === expected) {
       setAuthorized(true)
       setError(null)
     } else {
