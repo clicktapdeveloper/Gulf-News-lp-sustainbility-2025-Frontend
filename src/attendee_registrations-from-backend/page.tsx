@@ -35,6 +35,8 @@ export default function AttendeeRegistrationsFromBackendPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [response, setResponse] = useState<ApiResponse | null>(null)
+  const [authorized, setAuthorized] = useState(false)
+  const [authPassword, setAuthPassword] = useState('')
 
   const columns = useMemo(() => [
     { key: 'submittedAt', label: 'Submitted At' },
@@ -64,10 +66,19 @@ export default function AttendeeRegistrationsFromBackendPage() {
     }
   }
 
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => { if (authorized) fetchData() }, [authorized])
 
   // Ensure pagination actions fetch immediately
-  useEffect(() => { fetchData() }, [params.page, params.limit])
+  useEffect(() => { if (authorized) fetchData() }, [params.page, params.limit, authorized])
+
+  const onAuthorize = () => {
+    if (authPassword === 'gulf_news_events_developed_by_clicktap') {
+      setAuthorized(true)
+      setError(null)
+    } else {
+      setError('Invalid password')
+    }
+  }
 
   const onInputChange = (field: keyof typeof defaultParams, value: string) => {
     setParams(prev => ({ ...prev, page: 1, [field]: value }))
@@ -83,6 +94,16 @@ export default function AttendeeRegistrationsFromBackendPage() {
 
   return (
     <div className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-8">
+      {!authorized && (
+        <div className="max-w-md mx-auto bg-white border border-slate-200 rounded-md p-6 text-slate-800">
+          <h2 className="text-lg font-semibold mb-2 text-[var(--secondary-color)]">Enter password</h2>
+          <input type="password" value={authPassword} onChange={e => setAuthPassword(e.target.value)} placeholder="Password" className="w-full rounded-md px-3 py-2 bg-white border border-slate-300 placeholder-slate-500 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[var(--secondary-color)]/40 mb-3" />
+          {error && <p className="text-sm text-red-600 mb-2">{error}</p>}
+          <CustomButton onClick={onAuthorize} className="w-full">Continue</CustomButton>
+        </div>
+      )}
+      {authorized && (
+      <>
       <h1 className="text-2xl font-semibold mb-4 text-[var(--secondary-color)]">Attendee registrations (from backend)</h1>
 
       <div className="bg-white border border-slate-200 rounded-md p-4 mb-4 text-slate-800">
@@ -153,6 +174,8 @@ export default function AttendeeRegistrationsFromBackendPage() {
           </select>
         </div>
       </div>
+      </>
+      )}
     </div>
   )
 }
