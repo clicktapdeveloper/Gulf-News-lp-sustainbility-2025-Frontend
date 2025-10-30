@@ -88,7 +88,7 @@ export default function NominationsFromBackendPage() {
   }, [params.page, params.limit, authorized])
 
   const onAuthorize = () => {
-    if (authPassword === 'gulf_news_events_developed_by_clicktap') {
+    if (authPassword === 'G^%64n3s') {
       setAuthorized(true)
       setError(null)
     } else {
