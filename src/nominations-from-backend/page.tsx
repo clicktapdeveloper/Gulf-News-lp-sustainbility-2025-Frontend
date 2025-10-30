@@ -47,6 +47,7 @@ export default function NominationsFromBackendPage() {
     { key: 'lastName', label: 'Last Name' },
     { key: 'email', label: 'Email' },
     { key: 'phone', label: 'Phone' },
+    { key: 'designation', label: 'Designation' },
     { key: 'customerEmail', label: 'Customer Email' },
     { key: 'companyName', label: 'Company' },
     { key: 'category', label: 'Category' },
