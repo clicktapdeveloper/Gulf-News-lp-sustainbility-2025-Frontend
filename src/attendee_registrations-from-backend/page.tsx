@@ -45,9 +45,9 @@ export default function AttendeeRegistrationsFromBackendPage() {
     { key: 'lastName', label: 'Last Name' },
     { key: 'email', label: 'Email' },
     { key: 'phone', label: 'Phone' },
-    { key: 'company', label: 'Company' },
-    { key: 'position', label: 'Position' },
-    { key: 'industry', label: 'Industry' }
+    // { key: 'company', label: 'Company' },
+    // { key: 'position', label: 'Position' },
+    // { key: 'industry', label: 'Industry' }
   ], [])
 
   const fetchData = async () => {

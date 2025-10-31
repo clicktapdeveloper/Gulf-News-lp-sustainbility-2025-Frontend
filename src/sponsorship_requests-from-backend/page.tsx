@@ -45,7 +45,7 @@ export default function SponsorshipRequestsFromBackendPage() {
     { key: 'contactPerson', label: 'Contact Person' },
     { key: 'email', label: 'Email' },
     { key: 'phone', label: 'Phone' },
-    { key: 'designation', label: 'Designation' }
+    // { key: 'designation', label: 'Designation' }
   ], [])
 
   const fetchData = async () => {
