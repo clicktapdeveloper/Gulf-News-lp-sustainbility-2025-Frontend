@@ -70,7 +70,7 @@ export default function SponsorshipRequestsFromBackendPage() {
   useEffect(() => { if (authorized) fetchData() }, [params.page, params.limit, authorized])
 
   const onAuthorize = () => {
-    if (authPassword === 'G^%64n3s') {
+    if (authPassword === 'G^%64n3s3') {
       setAuthorized(true)
       setError(null)
     } else {

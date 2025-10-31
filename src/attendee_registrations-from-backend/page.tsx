@@ -73,7 +73,7 @@ export default function AttendeeRegistrationsFromBackendPage() {
 
   const onAuthorize = () => {
     const normalize = (s: string) => s.normalize('NFKC').trim()
-    const expected = normalize('G^%64n3s#')
+    const expected = normalize('G^%64n3s3')
     if (normalize(authPassword) === expected) {
       setAuthorized(true)
       setError(null)
