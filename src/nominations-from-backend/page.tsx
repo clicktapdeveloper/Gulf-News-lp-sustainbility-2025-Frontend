@@ -157,7 +157,6 @@ export default function NominationsFromBackendPage() {
             <option value="">Status (any)</option>
             <option value="unpaid">unpaid</option>
             <option value="paid">paid</option>
-            <option value="submitted">submitted</option>
           </select>
           <select value={params.paymentStatus} onChange={e => onInputChange('paymentStatus', e.target.value)} className="w-full rounded-md px-3 py-2 bg-white border border-slate-300 text-slate-800 focus:outline-none">
             <option value="">Payment Status (any)</option>
@@ -196,7 +195,7 @@ export default function NominationsFromBackendPage() {
             </tr>
           </thead>
           <tbody>
-            {response?.data?.length ? response.data.map((row: any, idx: number) => (
+            {response?.data?.length ? response.data.filter(row => row.status !== 'submitted').map((row: any, idx: number) => (
               <tr key={idx} className="odd:bg-slate-50/60">
                 {columns.map(col => (
                   <td key={String(col.key)} className="px-3 py-2 border-b border-slate-100 text-slate-800">
