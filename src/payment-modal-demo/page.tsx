@@ -5,7 +5,7 @@ import CustomButton from '../screens/CustomButton';
 
 const PaymentModalDemo: React.FC = () => {
   const { openModal, modalProps } = usePaymentModal({
-    amount: 499,
+    amount: 523.95,
     currency: 'AED',
     referenceId: `demo-${Date.now()}`,
     customerEmail: 'demo@example.com',

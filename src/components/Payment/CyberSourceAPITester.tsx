@@ -33,7 +33,7 @@ const CyberSourceAPITester: React.FC = () => {
       addResult(`Testing endpoint: ${endpoint}`);
       
       const testData = {
-        amount: '499.00',
+        amount: '523.95',
         currency: 'AED',
         customerEmail: 'test@example.com',
         customerFirstName: 'Test',
