@@ -6,7 +6,7 @@ import Why from './components/Why'
 import Award from './components/Award'
 import AwardCriteria from './components/AwardCriteria'
 import Winner from './components/Winner'
-import SponsorBy from './components/SponsorBy'
+// import SponsorBy from './components/SponsorBy'
 import BecomeEventSponsor from './components/BecomeEventSponsor'
 import Footer from './components/Footer'
 import ApplyForNominationPage from './apply-for-nomination/page'
@@ -100,7 +100,7 @@ export default function App() {
             <AwardCriteria />
             <Why />
             <Winner />
-            <SponsorBy />
+            {/* <SponsorBy /> */}
             <BecomeEventSponsor />
           </>
         } />
