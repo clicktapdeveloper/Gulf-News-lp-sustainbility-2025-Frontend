@@ -377,7 +377,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
         
         // Validate terms acceptance for nomination form
         if (formType === 'applyForNomination' && !acceptedTerms) {
-            showErrorToast('Please accept the Terms & Conditions to proceed.');
+            showErrorToast('Please check the Terms & Conditions checkbox to proceed.');
             return;
         }
         
