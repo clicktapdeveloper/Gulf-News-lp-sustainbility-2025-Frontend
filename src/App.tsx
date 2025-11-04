@@ -25,6 +25,7 @@ import { useEffect } from 'react';
 import NominationsFromBackendPage from './nominations-from-backend/page'
 import AttendeeRegistrationsFromBackendPage from './attendee_registrations-from-backend/page'
 import SponsorshipRequestsFromBackendPage from './sponsorship_requests-from-backend/page'
+import TermsAndConditionsPage from './terms-and-conditions/page'
 
 export default function App() {
 
@@ -115,6 +116,7 @@ export default function App() {
         <Route path="/nominations-from-backend" element={<NominationsFromBackendPage />} />
         <Route path="/attendee_registrations-from-backend" element={<AttendeeRegistrationsFromBackendPage />} />
         <Route path="/sponsorship_requests-from-backend" element={<SponsorshipRequestsFromBackendPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
       </Routes>
       <Footer />
     </div>

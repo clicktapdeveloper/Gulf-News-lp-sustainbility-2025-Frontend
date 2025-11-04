@@ -60,8 +60,8 @@ const Footer = () => {
                         <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('sponsors')}>Sponsors</li>
                     </ul>
                     <ul className="flex flex-col sm:flex-row !items-start gap-4 sm:gap-8">
-                        {/* <li><a href="#terms" className="hover:underline !text-[var(--white-color)] text-sm ">Terms & Conditions</a></li>
-                        <li><a href="#privacy" className="hover:underline !text-[var(--white-color)] text-sm ">Privacy Policy</a></li> */}
+                        <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => navigate('/terms-and-conditions')}>Terms & Conditions</li>
+                        {/* <li><a href="#privacy" className="hover:underline !text-[var(--white-color)] text-sm ">Privacy Policy</a></li> */}
                     </ul>
                 </nav>
             </div>

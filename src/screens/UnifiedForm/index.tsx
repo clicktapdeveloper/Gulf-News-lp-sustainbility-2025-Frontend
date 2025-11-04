@@ -307,6 +307,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     const [uploadedFiles, setUploadedFiles] = useState<Record<string, UploadedFile[]>>({}); // Used in PDF upload handlers
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPayment, setShowPayment] = useState(false); // Control payment form visibility
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
     const navigate = useNavigate();
 
     // Track uploaded files for debugging
@@ -371,6 +372,12 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
         // Prevent form submission if payment is already shown
         if (showPayment) {
             console.log('Payment already shown, preventing form submission');
+            return;
+        }
+        
+        // Validate terms acceptance for nomination form
+        if (formType === 'applyForNomination' && !acceptedTerms) {
+            showErrorToast('Please accept the Terms & Conditions to proceed.');
             return;
         }
         
@@ -765,6 +772,31 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                             </div>
                         ))}
                     </div>
+
+                    {formType === 'applyForNomination' && (
+                        <div className="md:col-span-2 pt-2">
+                            <label className="flex items-start gap-3 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={acceptedTerms}
+                                    onChange={(e) => setAcceptedTerms(e.target.checked)}
+                                    required
+                                    className="mt-1 h-4 w-4 rounded border-gray-300 text-[var(--secondary-color)] focus:ring-[var(--secondary-color)]"
+                                />
+                                <span className="text-sm lg:text-form-text-size text-gray-700">
+                                    I agree to the{' '}
+                                    <a
+                                        href="/terms-and-conditions"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-[var(--secondary-color)] hover:underline font-medium"
+                                    >
+                                        Terms & Conditions
+                                    </a>
+                                </span>
+                            </label>
+                        </div>
+                    )}
 
                     <div className="pt-2 flex justify-center">
                         {formType === 'applyForNomination' ? (
