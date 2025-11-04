@@ -145,8 +145,12 @@ const TermsAndConditionsPage = () => {
                             <p className="mb-2">
                                 <strong>Organizing Committee – Sustainability Excellence Awards 2025</strong>
                             </p>
-                            <p className="mb-1">Email: [insert official email address]</p>
-                            <p>Website: [insert official link]</p>
+                            <p className="mb-1">
+                                Email: <a href="mailto:event@gulfnews-events.com" className="text-[var(--secondary-color)] hover:underline font-medium">event@gulfnews-events.com</a>
+                            </p>
+                            <p>
+                                Website: <a href="https://gulfnews-events.com" target="_blank" rel="noopener noreferrer" className="text-[var(--secondary-color)] hover:underline font-medium">https://gulfnews-events.com</a>
+                            </p>
                         </section>
                     </div>
                 </div>
