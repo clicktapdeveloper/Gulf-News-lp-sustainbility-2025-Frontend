@@ -88,7 +88,7 @@ export default function App() {
             <Award />
             <AwardCriteria />
             <Winner />
-            <SponsorBy />
+            {/* <SponsorBy /> */}
             <BecomeEventSponsor />
           </>
         } />

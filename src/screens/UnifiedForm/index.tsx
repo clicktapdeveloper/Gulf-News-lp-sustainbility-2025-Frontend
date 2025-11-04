@@ -369,15 +369,15 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
-        // Prevent form submission if payment is already shown
-        if (showPayment) {
-            console.log('Payment already shown, preventing form submission');
+        // Validate terms acceptance for nomination form first
+        if (formType === 'applyForNomination' && !acceptedTerms) {
+            showErrorToast('Please check the Terms & Conditions checkbox to proceed.');
             return;
         }
         
-        // Validate terms acceptance for nomination form
-        if (formType === 'applyForNomination' && !acceptedTerms) {
-            showErrorToast('Please check the Terms & Conditions checkbox to proceed.');
+        // Prevent form submission if payment is already shown
+        if (showPayment) {
+            console.log('Payment already shown, preventing form submission');
             return;
         }
         
@@ -780,7 +780,6 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                                     type="checkbox"
                                     checked={acceptedTerms}
                                     onChange={(e) => setAcceptedTerms(e.target.checked)}
-                                    required
                                     className="mt-1 h-4 w-4 rounded border-gray-300 text-[var(--secondary-color)] focus:ring-[var(--secondary-color)]"
                                 />
                                 <span className="text-sm lg:md text-gray-700">
