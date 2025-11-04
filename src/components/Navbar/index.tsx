@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const scrollToSection = (id: string) => {
@@ -59,12 +60,48 @@ const Navbar = () => {
                         />
                     </div>
                 </div>
-                <ul className='hidden xl:flex items-center gap-4 space-x-5 hover:cursor-pointer'>
+                <ul className='hidden xl:flex items-center gap-4 space-x-5 hover:cursor-pointer relative'>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('about-event')}>About Event</li>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('why')}>Why Attend</li>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('awards')}>Awards Categories</li>
-                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('awards-criteria')}>Awards Criteria</li>
-                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('sponsors')}>Sponsors</li>
+                    <li 
+                        className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full relative'
+                        onMouseEnter={() => setIsMoreMenuOpen(true)}
+                        onMouseLeave={() => setIsMoreMenuOpen(false)}
+                    >
+                        More
+                        {isMoreMenuOpen && (
+                            <ul className='absolute top-full left-0 mt-2 bg-[var(--primary-color)] rounded-lg shadow-lg py-2 min-w-[180px] z-50 border border-[var(--border-color)]'>
+                                <li 
+                                    className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-lg hover:bg-black/5 px-4 whitespace-nowrap' 
+                                    onClick={() => {
+                                        scrollToSection('awards-criteria');
+                                        setIsMoreMenuOpen(false);
+                                    }}
+                                >
+                                    Awards Criteria
+                                </li>
+                                <li 
+                                    className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-lg hover:bg-black/5 px-4 whitespace-nowrap' 
+                                    onClick={() => {
+                                        scrollToSection('sponsors');
+                                        setIsMoreMenuOpen(false);
+                                    }}
+                                >
+                                    Sponsors
+                                </li>
+                                <li 
+                                    className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-lg hover:bg-black/5 px-4 whitespace-nowrap' 
+                                    onClick={() => {
+                                        navigate('/terms-and-conditions');
+                                        setIsMoreMenuOpen(false);
+                                    }}
+                                >
+                                    Terms & Conditions
+                                </li>
+                            </ul>
+                        )}
+                    </li>
                 </ul>
                 <CustomButton 
                 className="text-sm xl:text-base"
@@ -148,6 +185,9 @@ const Navbar = () => {
                             </li>
                             <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('sponsors'); setIsMobileMenuOpen(false); }}>
                                 Sponsors
+                            </li>
+                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { navigate('/terms-and-conditions'); setIsMobileMenuOpen(false); }}>
+                                Terms & Conditions
                             </li>
                         </ul>
                         <div className='w-full'>

@@ -14,7 +14,7 @@ Creates signed payment parameters for CyberSource Hosted Checkout.
 **Request Body:**
 ```json
 {
-  "amount": "1.00",
+  "amount": "199.00",
   "currency": "AED",
   "customerEmail": "customer@example.com",
   "customerFirstName": "John",
@@ -40,7 +40,7 @@ Creates signed payment parameters for CyberSource Hosted Checkout.
     "locale": "en",
     "transaction_type": "sale",
     "reference_number": "EVENT-1234567890",
-    "amount": "1.00",
+    "amount": "199.00",
     "currency": "AED",
     "bill_to_email": "customer@example.com",
     "bill_to_forename": "John",
@@ -88,7 +88,7 @@ Processes successful payments and updates database.
   "transaction_id": "1234567890",
   "decision": "ACCEPT",
   "reason_code": "100",
-  "auth_amount": "1.00",
+  "auth_amount": "199.00",
   "auth_code": "831000",
   "auth_time": "2025-01-21T10:30:00Z",
   // ... other CyberSource response fields

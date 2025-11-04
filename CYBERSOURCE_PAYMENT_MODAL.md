@@ -31,7 +31,7 @@ import CyberSourcePaymentModal from '../components/Payment/CyberSourcePaymentMod
 
 const MyComponent = () => {
   const { openModal, modalProps } = usePaymentModal({
-    amount: 1,
+    amount: 199,
     currency: 'AED',
     onSuccess: (paymentId) => console.log('Success:', paymentId),
     onError: (error) => console.log('Error:', error),
@@ -61,7 +61,7 @@ const MyComponent = () => {
       <CyberSourcePaymentModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        amount={1}
+        amount={199}
         currency="AED"
         onSuccess={(paymentId) => {
           console.log('Payment successful:', paymentId);
