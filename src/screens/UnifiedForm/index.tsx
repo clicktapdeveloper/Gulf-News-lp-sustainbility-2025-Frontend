@@ -103,31 +103,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
                 required: true,
                 gridCols: 1,
                 options: [
-                    "Construction",
-                    "Property Development",
-                    "Free Zones",
-                    "Business Set Up",
-                    "Education",
-                    "Healthcare",
-                    "Maritime & Logistics",
-                    "Retail",
-                    "Fashion & Textiles",
-                    "Tourism & Hospitality",
-                    "Manufacturing",
-                    "Transport & Mobility",
-                    "Electric Vehicles",
-                    "Food & Beverage",
-                    "Renewable Energy",
-                    "Energy Management",
-                    "Finance",
-                    "Technology",
-                    "Start-Ups",
-                    "Leadership (Individual)",
-                    "Aviation",
-                    "Fragrances & Cosmetics",
-                    "Food & Agriculture",
-                    "Investments & ESG",
-                    "Travel & Hospitality"
+                    ​"Green Construction Leadership Award", "Sustainable Developer of the Year", "Future-Ready Free Zone Award", "Green Business Enabler Award", "Sustainability in Education Excellence Award", "Healthcare Sustainability Leader", "Ports & Logistics Trailblazer", "Sustainable Retail Champion", "Ethical Fashion & Textile Excellence Award", "Responsible Travel & Hospitality Award", "Eco-Efficient Manufacturer of the Year", "Green Mobility Award", "Electric Vehicle of the Year Award", "Sustainable F&B Brand of the Year", "Clean Energy Pioneer Award", "Energy Efficiency Leader Award", "Green Finance Leadership Award", "Sustainable Digital Innovation Award", "Next-Gen Green Business Award", "Changemaker of the Year", "Eco-Airline of the Year", "Green Essence Award", "Regenerative Agriculture Excellence Award", "Impact Investment Leadership Award", "Sustainable Travel Award" 
                 ]
             },
             {
