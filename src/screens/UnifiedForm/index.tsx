@@ -783,7 +783,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                                     required
                                     className="mt-1 h-4 w-4 rounded border-gray-300 text-[var(--secondary-color)] focus:ring-[var(--secondary-color)]"
                                 />
-                                <span className="text-sm lg:text-form-text-size text-gray-700">
+                                <span className="text-sm lg:md text-gray-700">
                                     I agree to the{' '}
                                     <a
                                         href="/terms-and-conditions"
