@@ -6,8 +6,10 @@ const TermsAndConditionsPage = () => {
             <div className="absolute -left-4 -top-6 z-20 px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding">
                 <BackButton />
             </div>
-            <div className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding">
-                <div className="max-w-4xl mx-auto">
+            <div 
+            className="px-standard-mobile-padding sm:px-standard-tablet-padding lg:px-standard-desktop-padding 2xl:px-standard-xl-padding py-mobile-padding sm:py-tablet-padding lg:py-desktop-padding"
+            >
+                <div className="mx-auto">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[60px] font-bold mb-6">
                         <p className="text-[var(--tertiary-color)]">Terms &</p>
                         <p className="text-[var(--secondary-color)]">Conditions</p>
