@@ -41,6 +41,9 @@ export default {
         '7xl': 'var(--text-7xl)',
         '8xl': 'var(--text-8xl)',
       },
+      animation: {
+        'spin-slow': 'spin 10s linear infinite',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

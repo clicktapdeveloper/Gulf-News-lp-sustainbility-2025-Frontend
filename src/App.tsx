@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import Event from './components/Event'
 import Why from './components/Why'
 import Award from './components/Award'
+import AwardCriteria from './components/AwardCriteria'
 import Winner from './components/Winner'
 import SponsorBy from './components/SponsorBy'
 import BecomeEventSponsor from './components/BecomeEventSponsor'
@@ -26,6 +27,7 @@ import NominationsFromBackendPage from './nominations-from-backend/page'
 import AttendeeRegistrationsFromBackendPage from './attendee_registrations-from-backend/page'
 import SponsorshipRequestsFromBackendPage from './sponsorship_requests-from-backend/page'
 import TermsAndConditionsPage from './terms-and-conditions/page'
+import NotFoundPage from './not-found/page'
 
 export default function App() {
 
@@ -84,6 +86,7 @@ export default function App() {
             <Event />
             <Why />
             <Award />
+            <AwardCriteria />
             <Winner />
             <SponsorBy />
             <BecomeEventSponsor />
@@ -93,8 +96,9 @@ export default function App() {
           <>
             <Hero />
             <Event />
-            <Why />
             <Award />
+            <AwardCriteria />
+            <Why />
             <Winner />
             <SponsorBy />
             <BecomeEventSponsor />
@@ -117,6 +121,7 @@ export default function App() {
         <Route path="/attendee_registrations-from-backend" element={<AttendeeRegistrationsFromBackendPage />} />
         <Route path="/sponsorship_requests-from-backend" element={<SponsorshipRequestsFromBackendPage />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </div>

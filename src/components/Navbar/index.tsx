@@ -62,7 +62,8 @@ const Navbar = () => {
                 <ul className='hidden xl:flex items-center gap-4 space-x-5 hover:cursor-pointer'>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('about-event')}>About Event</li>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('why')}>Why Attend</li>
-                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('awards')}>Awards Criteria</li>
+                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('awards')}>Awards Categories</li>
+                    <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('awards-criteria')}>Awards Criteria</li>
                     <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('sponsors')}>Sponsors</li>
                 </ul>
                 <CustomButton 
@@ -140,6 +141,9 @@ const Navbar = () => {
                                 Why Attend
                             </li>
                             <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('awards'); setIsMobileMenuOpen(false); }}>
+                                Awards Categories
+                            </li>
+                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('awards-criteria'); setIsMobileMenuOpen(false); }}>
                                 Awards Criteria
                             </li>
                             <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('sponsors'); setIsMobileMenuOpen(false); }}>

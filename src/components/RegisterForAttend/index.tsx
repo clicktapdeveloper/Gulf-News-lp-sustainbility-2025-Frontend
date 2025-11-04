@@ -9,8 +9,8 @@ const RegisterForAttend = () => {
             </h1>
             <UnifiedForm formType="registerForAttend" />
         </div>
-        <div className="absolute right-0 top-0">
-            <img src="/hero.svg" alt="Hero" />
+        <div className="absolute right-0 top-0 hidden lg:block">
+            <img src="/hero.svg" alt="Hero" className="w-auto h-auto max-w-md lg:max-w-lg xl:max-w-xl" />
         </div>
     </div>
 }

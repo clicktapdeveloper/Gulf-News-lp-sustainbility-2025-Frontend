@@ -775,7 +775,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
                     {formType === 'applyForNomination' && (
                         <div className="md:col-span-2 pt-2">
-                            <label className="flex items-start gap-3 cursor-pointer">
+                            <label className="flex items-center gap-3 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     checked={acceptedTerms}
@@ -810,7 +810,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                                 <CustomButton 
                                     type="submit" 
                                     className="min-w-40 px-6 py-2"
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting || !acceptedTerms}
                                 >
                                     {isSubmitting ? 'Submitting...' : 'Submit Nomination Form'}
                                 </CustomButton>
