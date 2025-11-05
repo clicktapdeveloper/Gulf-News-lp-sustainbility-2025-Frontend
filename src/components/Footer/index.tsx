@@ -45,11 +45,11 @@ const Footer = () => {
                             <Clock3 className="w-4 h-4 sm:w-5 sm:h-5" />
                             <p className="text-[16px] lg:text-[20px]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>6:00 PM - 8:30 PM</p>
                         </span>
+                    </div>
                         <span className='flex items-center gap-2'>
                             <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-                            <p className="text-[16px] lg:text-[20px]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>Dubai, UAE</p>
+                            <p className="text-[16px] lg:text-[20px]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>SEE Institute, The Sustainability City Dubai</p>
                         </span>
-                    </div>
                 </div>
 
                 <nav className="flex flex-col !items-start gap-6 md:items-center md:gap-10">

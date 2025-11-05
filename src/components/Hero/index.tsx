@@ -30,12 +30,11 @@ const Hero = () => {
                         <Clock3 className="w-4 h-4 sm:w-5 sm:h-5" />
                         <p className="text-[16px] lg:text-[20px] !font-[650]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>6:00 PM - 8:30 PM</p>
                     </span>
-                    <Separator orientation='vertical' className='hidden sm:block h-6 bg-[var(--border-color)]' />
+                </div>
                     <span className='flex items-center gap-2'>
                         <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-                        <p className="text-[16px] lg:text-[20px] !font-[650]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>Dubai, UAE</p>
+                        <p className="text-[16px] lg:text-[20px] !font-[650]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>SEE Institute, The Sustainability City Dubai</p>
                     </span>
-                </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 !justify-start gap-3 sm:gap-4 w-full xl:w-3/4 pt-5'>
                     <CustomButton variant="outline" 
                     onClick={() => navigate('/apply-for-nomination')} 
