@@ -80,7 +80,10 @@ const Navbar = () => {
                         More
                         {isMoreMenuOpen && (
                             <ul className='absolute top-8 left-0 mt-2 bg-[var(--primary-color)] rounded-lg shadow-lg py-2 min-w-[180px] z-50 border border-[var(--border-color)]'>
-                            <li className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full' onClick={() => scrollToSection('why')}>Why Attend</li>
+                            <li 
+                            // className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-full'
+                            className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-lg hover:bg-black/5 px-4 whitespace-nowrap' 
+                            onClick={() => scrollToSection('why')}>Why Attend</li>
                                 <li 
                                     className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-lg hover:bg-black/5 px-4 whitespace-nowrap' 
                                     onClick={() => {
