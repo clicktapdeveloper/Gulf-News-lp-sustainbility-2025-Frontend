@@ -785,7 +785,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
                                 <CustomButton 
                                     type="submit" 
                                     className="min-w-40 px-6 py-2"
-                                    disabled={isSubmitting || !acceptedTerms}
+                                    disabled={isSubmitting}
                                 >
                                     {isSubmitting ? 'Submitting...' : 'Submit Nomination Form'}
                                 </CustomButton>
