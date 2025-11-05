@@ -87,7 +87,7 @@ const Navbar = () => {
                                 <li 
                                     className='hover:text-[var(--secondary-color)] font-semibold p-2 rounded-lg hover:bg-black/5 px-4 whitespace-nowrap' 
                                     onClick={() => {
-                                        scrollToSection('sponsors');
+                                        scrollToSection('be-a-sponsor');
                                         setIsMoreMenuOpen(false);
                                     }}
                                 >
@@ -188,7 +188,7 @@ const Navbar = () => {
                             <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('why'); setIsMobileMenuOpen(false); }}>
                                 Why Attend
                             </li>
-                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('sponsors'); setIsMobileMenuOpen(false); }}>
+                            <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { scrollToSection('be-a-sponsor'); setIsMobileMenuOpen(false); }}>
                                 Be a Sponsor
                             </li>
                             <li className='hover:text-[var(--secondary-color)] font-semibold p-3 rounded-lg hover:bg-black/5 transition-colors cursor-pointer' onClick={() => { navigate('/terms-and-conditions'); setIsMobileMenuOpen(false); }}>

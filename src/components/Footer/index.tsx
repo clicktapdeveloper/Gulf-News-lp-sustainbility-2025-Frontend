@@ -58,7 +58,7 @@ const Footer = () => {
                         <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('awards')}>Awards Categories</li>
                         <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('awards-criteria')}>Awards Criteria</li>
                         <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('why')}>Why Attend</li>
-                        <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('sponsors')}>Be a Sponsor</li>
+                        <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => scrollToSection('be-a-sponsor')}>Be a Sponsor</li>
                     </ul>
                     <ul className="flex flex-col sm:flex-row !items-start gap-4 sm:gap-8">
                         <li className="hover:cursor-pointer !text-[var(--white-color)] text-sm " onClick={() => navigate('/terms-and-conditions')}>Terms & Conditions</li>
