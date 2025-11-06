@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FileText, CheckCircle, Trash2 } from 'lucide-react';
-import { pdfUploadService, type UploadedFile, type UploadResponse, type DeleteResponse } from '../../lib/pdf-upload-service';
+import { pdfUploadService, type UploadedFile, type UploadResponse } from '../../lib/pdf-upload-service';
 import { showSuccessToast, showErrorToast, showLoadingToast, dismissToast } from '../../lib/toast';
 
 interface PDFUploadProps {
@@ -125,10 +125,6 @@ const PDFUpload: React.FC<PDFUploadProps> = ({
     }
   };
 
-  const deletePDF = async (fileKey: string): Promise<DeleteResponse> => {
-    return await pdfUploadService.deletePDF(fileKey);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -142,32 +138,15 @@ const PDFUpload: React.FC<PDFUploadProps> = ({
     await uploadFile(file);
   };
 
-  const handleDelete = async (fileKey: string, fileName: string) => {
+  const handleDelete = (fileKey: string, fileName: string) => {
     if (!fileKey) {
       showErrorToast('Invalid file key');
       return;
     }
 
-    const loadingToastId = showLoadingToast('Deleting PDF...');
-    
-    try {
-      const result = await deletePDF(fileKey);
-      dismissToast(loadingToastId);
-      
-      if (result && result.success) {
-        setUploadedFiles(prev => prev.filter(file => file.key !== fileKey));
-        showSuccessToast(`PDF deleted: ${fileName}`);
-      } else {
-        const errorMsg = result?.error || 'Failed to delete PDF';
-        console.error('Delete failed:', errorMsg);
-        showErrorToast(errorMsg);
-      }
-    } catch (error) {
-      dismissToast(loadingToastId);
-      const errorMsg = error instanceof Error ? error.message : 'Failed to delete PDF';
-      console.error('Delete error:', error);
-      showErrorToast(errorMsg);
-    }
+    // Simply remove from frontend list
+    setUploadedFiles(prev => prev.filter(file => file.key !== fileKey));
+    showSuccessToast(`PDF removed: ${fileName}`);
   };
 
   const formatFileSize = (bytes: number): string => {
