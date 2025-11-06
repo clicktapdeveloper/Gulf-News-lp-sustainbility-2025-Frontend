@@ -74,9 +74,21 @@ export class PDFUploadService {
     try {
       console.log('PDFUploadService - Deleting file:', fileKey);
       
-      const response = await fetch(`${this.baseURL}/api/delete/${fileKey}`, {
+      // URL encode the fileKey to handle special characters
+      const encodedFileKey = encodeURIComponent(fileKey);
+      const response = await fetch(`${this.baseURL}/api/delete/${encodedFileKey}`, {
         method: 'DELETE'
       });
+
+      // Check if response is OK
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('PDFUploadService - Delete HTTP error:', response.status, errorText);
+        return {
+          success: false,
+          error: `Delete failed: ${response.status} ${response.statusText}`
+        };
+      }
 
       const result = await response.json();
       console.log('PDFUploadService - Delete response:', result);

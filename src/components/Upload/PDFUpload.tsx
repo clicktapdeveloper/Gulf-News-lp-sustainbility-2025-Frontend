@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FileText, CheckCircle, Trash2 } from 'lucide-react';
-import { pdfUploadService, type UploadedFile, type UploadResponse } from '../../lib/pdf-upload-service';
+import { pdfUploadService, type UploadedFile, type UploadResponse, type DeleteResponse } from '../../lib/pdf-upload-service';
 import { showSuccessToast, showErrorToast, showLoadingToast, dismissToast } from '../../lib/toast';
 
 interface PDFUploadProps {
@@ -125,9 +125,8 @@ const PDFUpload: React.FC<PDFUploadProps> = ({
     }
   };
 
-  const deletePDF = async (fileKey: string): Promise<boolean> => {
-    const result = await pdfUploadService.deletePDF(fileKey);
-    return result.success;
+  const deletePDF = async (fileKey: string): Promise<DeleteResponse> => {
+    return await pdfUploadService.deletePDF(fileKey);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -144,21 +143,30 @@ const PDFUpload: React.FC<PDFUploadProps> = ({
   };
 
   const handleDelete = async (fileKey: string, fileName: string) => {
+    if (!fileKey) {
+      showErrorToast('Invalid file key');
+      return;
+    }
+
     const loadingToastId = showLoadingToast('Deleting PDF...');
     
     try {
-      const success = await deletePDF(fileKey);
+      const result = await deletePDF(fileKey);
       dismissToast(loadingToastId);
       
-      if (success) {
+      if (result && result.success) {
         setUploadedFiles(prev => prev.filter(file => file.key !== fileKey));
         showSuccessToast(`PDF deleted: ${fileName}`);
       } else {
-        showErrorToast('Failed to delete PDF');
+        const errorMsg = result?.error || 'Failed to delete PDF';
+        console.error('Delete failed:', errorMsg);
+        showErrorToast(errorMsg);
       }
     } catch (error) {
       dismissToast(loadingToastId);
-      showErrorToast('Failed to delete PDF');
+      const errorMsg = error instanceof Error ? error.message : 'Failed to delete PDF';
+      console.error('Delete error:', error);
+      showErrorToast(errorMsg);
     }
   };
 
@@ -283,7 +291,12 @@ const PDFUpload: React.FC<PDFUploadProps> = ({
                   </a>
                   
                   <button
-                    onClick={() => handleDelete(uploadedFile.key, uploadedFile.originalname)}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleDelete(uploadedFile.key, uploadedFile.originalname);
+                    }}
                     className="p-1 text-red-600 hover:text-red-800 transition-colors"
                     title="Delete file"
                   >
