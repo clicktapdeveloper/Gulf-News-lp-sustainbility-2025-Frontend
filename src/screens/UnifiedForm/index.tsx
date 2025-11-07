@@ -35,7 +35,7 @@ const FORM_CONFIGS: Record<string, FormConfig> = {
     applyForNomination: {
         title: "Nominate Now",
         description: "",
-        submitButtonText: "Pay AED 523.95 for Register",
+        submitButtonText: "Pay AED 500 for Register",
         fields: [
             {
                 name: "firstName",
@@ -555,7 +555,7 @@ const UnifiedForm = ({ formType }: UnifiedFormProps) => {
 
             // Prepare payment data
             const paymentData = {
-                paymentAmount: 523.95,
+                paymentAmount: 525,
                 paymentCurrency: 'AED',
                 paymentDate: new Date().toISOString(),
                 paymentReference: transactionId,
