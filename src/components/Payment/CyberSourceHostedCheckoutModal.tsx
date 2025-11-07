@@ -173,6 +173,10 @@ const CyberSourceHostedCheckoutModal: React.FC<CyberSourceHostedCheckoutModalPro
     onClose();
   };
 
+  const VAT_RATE = 0.05;
+  const baseAmount = amount / (1 + VAT_RATE);
+  const vatAmount = amount - baseAmount;
+
   if (!isOpen) return null;
 
   return (
@@ -199,7 +203,21 @@ const CyberSourceHostedCheckoutModal: React.FC<CyberSourceHostedCheckoutModalPro
               
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Amount:</span>
+                  <span className="text-gray-600">Base Amount:</span>
+                  <span className="font-medium text-gray-900">
+                    {baseAmount.toFixed(2)} {currency.toUpperCase()}
+                  </span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-gray-600">VAT 5%:</span>
+                  <span className="font-medium text-gray-900">
+                    {vatAmount.toFixed(2)} {currency.toUpperCase()}
+                  </span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Total:</span>
                   <span className="font-semibold text-gray-900">
                     {amount.toFixed(2)} {currency.toUpperCase()}
                   </span>
@@ -224,6 +242,9 @@ const CyberSourceHostedCheckoutModal: React.FC<CyberSourceHostedCheckoutModalPro
                   </span>
                 </div>
               </div>
+              <p className="mt-3 text-sm text-gray-600">
+                CyberSource will charge a total of {amount.toFixed(2)} {currency.toUpperCase()}.
+              </p>
             </div>
           </div>
 
