@@ -23,7 +23,7 @@ const Hero = () => {
                 <div className='flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4'>
                     <span className='flex items-center gap-2'>
                         <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
-                        <p className="text-[16px] lg:text-[20px] !font-[650]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>26 November 2025</p>
+                        <p className="text-[16px] lg:text-[20px] !font-[650]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>10 December 2025</p>
                     </span>
                     <Separator orientation='vertical' className='hidden sm:block h-6 bg-[var(--border-color)]' />
                     <span className='flex items-center gap-2'>

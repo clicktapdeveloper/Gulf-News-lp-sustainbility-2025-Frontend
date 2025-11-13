@@ -39,7 +39,7 @@ const Footer = () => {
                     <div className='flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mt-5'>
                         <span className='flex items-center gap-2'>
                             <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
-                            <p className="text-[16px] lg:text-[20px]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>26 November 2025</p>
+                            <p className="text-[16px] lg:text-[20px]" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>10 December 2025</p>
                         </span>
                         <span className='flex items-center gap-2'>
                             <Clock3 className="w-4 h-4 sm:w-5 sm:h-5" />
